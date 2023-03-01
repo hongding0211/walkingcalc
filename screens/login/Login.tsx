@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Image, View } from 'react-native'
 
 import styles from './style'
+import Button from '../../components/Button'
 import ThemedText from '../../components/General/Text'
 import ThemedView from '../../components/General/View'
 
@@ -29,6 +30,13 @@ const Login: React.FC = () => {
         >
           {t('subTitle')}
         </ThemedText>
+      </View>
+
+      <View style={styles.btnGroup}>
+        <Button
+          title={t('login')}
+          onPress={handleLoginWithSSO}
+        />
       </View>
     </ThemedView>
   )

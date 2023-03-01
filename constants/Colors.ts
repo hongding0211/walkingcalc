@@ -1,5 +1,6 @@
 export enum Color {
   Primary = '#316FE2',
+  Danger = '#F7524A',
   Background = '#F6F6F8',
 }
 
