@@ -1,15 +1,19 @@
 export enum Color {
-  Primary = '#0000ff',
+  Primary = '#316FE2',
+  Background = '#F6F6F8',
 }
 
 export enum Typography {
-  Text = '#000000',
+  Primary = '#212222',
+  Second = '#ADADAD',
 }
 
 export enum ColorDark {
-  Primary = '#0000ff',
+  Primary = '#316FE2',
+  Background = '#0D0D0D',
 }
 
 export enum TypographyDark {
-  Text = '#ffffff',
+  Primary = '#FFFFFF',
+  Second = '#999999',
 }
