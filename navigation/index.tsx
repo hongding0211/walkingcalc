@@ -28,6 +28,10 @@ const LoginScreen: React.FC = () => {
         <Stack.Screen
           name="SSO"
           component={SSO}
+          options={{
+            headerTitle: '',
+            headerTransparent: true,
+          }}
         />
       </Stack.Group>
     </Stack.Navigator>

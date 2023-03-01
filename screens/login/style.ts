@@ -9,6 +9,7 @@ export default StyleSheet.create({
   },
   center: {
     flexDirection: 'column',
+    marginBottom: 40,
   },
   title: {
     fontSize: 28,
@@ -24,5 +25,12 @@ export default StyleSheet.create({
     height: 52,
     resizeMode: 'contain',
     marginBottom: 20,
+  },
+  btnGroup: {
+    flexDirection: 'column',
+    position: 'absolute',
+    bottom: 85,
+    left: 20,
+    right: 20,
   },
 })
