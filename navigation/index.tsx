@@ -19,6 +19,9 @@ const LoginScreen: React.FC = () => {
         <Stack.Screen
           name="Login"
           component={Login}
+          options={{
+            headerShown: false,
+          }}
         />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
