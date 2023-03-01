@@ -7,6 +7,8 @@ import { ThemeContext } from './feature/theme/themeContext'
 import useCachedResources from './hooks/useCachedResources'
 import Navigation from './navigation'
 
+import './i18n'
+
 export default function App() {
   const isLoadingComplete = useCachedResources()
 

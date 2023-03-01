@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Image, View } from 'react-native'
 
 import styles from './style'
@@ -8,6 +9,7 @@ import ThemedView from '../../components/General/View'
 
 const Login: React.FC = () => {
   const navigation = useNavigation<any>()
+  const { t } = useTranslation('login')
 
   const handleLoginWithSSO = useCallback(() => {
     navigation.navigate('SSO')
@@ -25,7 +27,7 @@ const Login: React.FC = () => {
           type="SECOND"
           style={styles.subTitle}
         >
-          登录以继续
+          {t('subTitle')}
         </ThemedText>
       </View>
     </ThemedView>
