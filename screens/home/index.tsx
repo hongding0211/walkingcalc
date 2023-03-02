@@ -46,6 +46,14 @@ const Home: React.FC = () => {
     setShowJoinGroup(v)
   }, [])
 
+  const handleCreateGroup = useCallback((groupId: string) => {
+    // TODO
+  }, [])
+
+  const handleJoinGroup = useCallback((groupId: string) => {
+    // TODO
+  }, [])
+
   const handleLogout = useCallback(() => {
     Alert.alert(t('confirmLogout'), '', [
       {
@@ -98,7 +106,7 @@ const Home: React.FC = () => {
           title={t('createGroup') + ''}
           onClose={() => handleShowCreateGroup(false)}
         >
-          <CreateGroup />
+          <CreateGroup onConfirm={handleCreateGroup} />
         </Modal>
       )}
       {showJoinGroup && (
@@ -106,7 +114,7 @@ const Home: React.FC = () => {
           title={t('joinGroup') + ''}
           onClose={() => handleShowJoinGroup(false)}
         >
-          <JoinGroup />
+          <JoinGroup onConfirm={handleJoinGroup} />
         </Modal>
       )}
       {showAboutModal && (
