@@ -65,7 +65,7 @@ const Modal: React.FC<IModal> = props => {
               </Pressable>
             </View>
           )}
-          <ScrollView style={[styles.content, { marginBottom: hideTitle ? 0 : 16 }]}>{children}</ScrollView>
+          <ScrollView style={styles.content}>{children}</ScrollView>
         </ThemedView>
       </Pressable>
     </>

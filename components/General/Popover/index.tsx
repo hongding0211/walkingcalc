@@ -1,20 +1,20 @@
 import React, { useCallback, useState } from 'react'
-import { Dimensions, Pressable, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 interface IPopover {
   children?: React.ReactNode
   content?: React.ReactNode
   align?: 'flex-start' | 'flex-end'
+  show?: boolean
 }
 
 const Popover: React.FC<IPopover> = props => {
-  const { children, align = 'flex-start', content } = props
+  const { children, align = 'flex-start', content, show } = props
 
   const [childrenElemSize, setChildrenElemSize] = useState({
     width: -1,
     height: -1,
   })
-  const [showContent, setShowContent] = useState(false)
 
   const handleChildrenLayout = useCallback((e: any) => {
     const { width, height } = e.nativeEvent.layout
@@ -24,51 +24,24 @@ const Popover: React.FC<IPopover> = props => {
     })
   }, [])
 
-  const handleToggleContent = useCallback(() => {
-    setShowContent(!showContent)
-  }, [showContent])
-
-  const handleEndTouch = useCallback(() => {
-    setShowContent(false)
-  }, [])
-
   return (
     <>
-      {showContent && (
-        <View
-          onTouchEnd={handleEndTouch}
-          style={styles.mask}
-        />
-      )}
-
-      <View
-        style={[
-          styles.container,
-          {
-            alignItems: align,
-          },
-        ]}
-      >
-        <Pressable
-          onLayout={handleChildrenLayout}
-          onPress={handleToggleContent}
-        >
-          {children}
-        </Pressable>
-
-        {childrenElemSize.width !== -1 && content && showContent && (
-          <View
-            style={[
-              styles.content,
-              {
-                top: childrenElemSize.height,
-              },
-            ]}
-          >
-            {content}
-          </View>
-        )}
+      <View style={[styles.container]}>
+        <View onLayout={handleChildrenLayout}>{children}</View>
       </View>
+
+      {childrenElemSize.width !== -1 && content && show && (
+        <View
+          style={[
+            styles.content,
+            {
+              top: childrenElemSize.height,
+            },
+          ]}
+        >
+          {content}
+        </View>
+      )}
     </>
   )
 }
@@ -78,8 +51,10 @@ export default Popover
 const styles = StyleSheet.create({
   mask: {
     position: 'absolute',
-    height: Dimensions.get('window').height,
-    width: Dimensions.get('window').width,
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
   container: {
     position: 'relative',
@@ -87,5 +62,6 @@ const styles = StyleSheet.create({
   content: {
     position: 'absolute',
     margin: 8,
+    zIndex: 100,
   },
 })

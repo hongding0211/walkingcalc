@@ -4,6 +4,7 @@ import { Pressable, StyleSheet, View } from 'react-native'
 
 import { useAppSelector } from '../../../app/store'
 import ThemedText from '../../../components/General/Text'
+import ThemedView from '../../../components/General/View'
 import { Color, ColorDark } from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
 
@@ -15,6 +16,7 @@ interface IItem {
 interface IMenu {
   onLogout?: () => void
   onShowAbout?: () => void
+  onTouchEnd?: () => void
 }
 
 const Item: React.FC<IItem> = ({ title, onPress }) => {
@@ -35,17 +37,15 @@ const Item: React.FC<IItem> = ({ title, onPress }) => {
   )
 }
 
-const Menu: React.FC<IMenu> = ({ onLogout, onShowAbout }) => {
+const Menu: React.FC<IMenu> = ({ onLogout, onShowAbout, onTouchEnd }) => {
   const theme = useContext(ThemeContext)
   const userInfo = useAppSelector(state => state.user.data)
   const { t } = useTranslation('home')
 
   return (
-    <View
-      style={[
-        styles.menu,
-        { backgroundColor: theme.scheme === 'LIGHT' ? Color.BackgroundSecond : ColorDark.BackgroundSecond },
-      ]}
+    <ThemedView
+      style={styles.menu}
+      onTouchEnd={onTouchEnd}
     >
       <Item title={userInfo?.name} />
       <Item
@@ -56,7 +56,7 @@ const Menu: React.FC<IMenu> = ({ onLogout, onShowAbout }) => {
         title={t('about')}
         onPress={onShowAbout}
       />
-    </View>
+    </ThemedView>
   )
 }
 

@@ -1,6 +1,6 @@
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import React, { useCallback, useContext } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
 
@@ -18,7 +18,9 @@ interface IHeader {
   onLogout?: () => void
 }
 
-const Index: React.FC<IHeader> = ({ onAdd, onShowAbout, onLogout }) => {
+const Header: React.FC<IHeader> = ({ onAdd, onShowAbout, onLogout }) => {
+  const [showPopoverContent, setShowPopoverContent] = useState(false)
+
   const userInfo = useAppSelector(state => state.user.data)
   const { t } = useTranslation('home')
   const theme = useContext(ThemeContext)
@@ -47,20 +49,24 @@ const Index: React.FC<IHeader> = ({ onAdd, onShowAbout, onLogout }) => {
           <Menu
             onShowAbout={onShowAbout}
             onLogout={onLogout}
+            onTouchEnd={() => setShowPopoverContent(false)}
           />
         }
+        show={showPopoverContent}
         align="flex-end"
       >
-        <Avatar
-          name={userInfo?.name}
-          source={userInfo?.avatar}
-        />
+        <Pressable onPress={() => setShowPopoverContent(!showPopoverContent)}>
+          <Avatar
+            name={userInfo?.name}
+            source={userInfo?.avatar}
+          />
+        </Pressable>
       </Popover>
     </View>
   )
 }
 
-export default Index
+export default Header
 
 const styles = StyleSheet.create({
   header: {

@@ -4,5 +4,10 @@
   "about": "About",
   "confirmLogout": "Confirm logout?",
   "confirm": "Confirm",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "createGroup": "New group",
+  "joinGroup": "Join group",
+  "groupName":"Group name",
+  "groupMembers":"Group members",
+  "groupId": "Group ID"
 }
