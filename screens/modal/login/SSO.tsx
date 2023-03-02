@@ -47,7 +47,6 @@ const SSO: React.FC = () => {
         token,
       })
     )
-    // TODO 登录成功后的跳转 & 提示
     navigation.goBack()
   }, [userLoginData])
 
