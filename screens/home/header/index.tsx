@@ -3,11 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import React, { useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
+import Popover from 'react-native-popover-view'
 
 import Menu from './menu'
 import { useAppSelector } from '../../../app/store'
 import Avatar from '../../../components/General/Avatar'
-import Popover from '../../../components/General/Popover'
 import ThemedText from '../../../components/General/Text'
 import { Color, ColorDark } from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
@@ -45,22 +45,28 @@ const Header: React.FC<IHeader> = ({ onAdd, onShowAbout, onLogout }) => {
         />
       </Pressable>
       <Popover
-        content={
-          <Menu
-            onShowAbout={onShowAbout}
-            onLogout={onLogout}
-            onTouchEnd={() => setShowPopoverContent(false)}
-          />
+        from={
+          <View onTouchEnd={() => setShowPopoverContent(!showPopoverContent)}>
+            <Avatar
+              name={userInfo?.name}
+              source={userInfo?.avatar}
+            />
+          </View>
         }
-        show={showPopoverContent}
-        align="flex-end"
+        isVisible={showPopoverContent}
+        backgroundStyle={{
+          opacity: 0,
+        }}
+        animationConfig={{
+          duration: 0,
+        }}
+        onRequestClose={() => setShowPopoverContent(false)}
       >
-        <Pressable onPress={() => setShowPopoverContent(!showPopoverContent)}>
-          <Avatar
-            name={userInfo?.name}
-            source={userInfo?.avatar}
-          />
-        </Pressable>
+        <Menu
+          onShowAbout={onShowAbout}
+          onLogout={onLogout}
+          onTouchEnd={() => setShowPopoverContent(false)}
+        />
       </Popover>
     </View>
   )

@@ -5,7 +5,6 @@ import { Color, ColorDark } from '../../constants/Colors'
 import { ThemeContext } from '../../feature/theme/themeContext'
 import { useUserSearch } from '../../services/user'
 import Input from '../General/Input'
-import Popover from '../General/Popover'
 import ThemedText from '../General/Text'
 import ThemedView from '../General/View'
 
@@ -68,17 +67,7 @@ const UserSearch: React.FC = props => {
     mutateSearchUser().then()
   }, [text])
 
-  return (
-    <Popover
-      content={<Users data={searchedUser?.data} />}
-      show={showContent}
-    >
-      <Input
-        value={text}
-        onChangeText={setText}
-      />
-    </Popover>
-  )
+  return <></>
 }
 
 export default UserSearch
