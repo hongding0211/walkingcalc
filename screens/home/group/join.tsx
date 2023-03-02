@@ -6,7 +6,11 @@ import FormItem from '../../../components/FormItem'
 import Button from '../../../components/General/Button'
 import Input from '../../../components/General/Input'
 
-const JoinGroup: React.FC = () => {
+interface IJoinGroup {
+  onConfirm?: (groupId: string) => void
+}
+
+const JoinGroup: React.FC<IJoinGroup> = ({ onConfirm }) => {
   const [groupId, setGroupId] = useState('')
 
   const { t } = useTranslation('home')
@@ -20,7 +24,10 @@ const JoinGroup: React.FC = () => {
         />
       </FormItem>
       <View style={styles.btn}>
-        <Button title={t('confirm') + ''} />
+        <Button
+          title={t('confirm') + ''}
+          onPress={() => onConfirm && onConfirm(groupId)}
+        />
       </View>
     </View>
   )

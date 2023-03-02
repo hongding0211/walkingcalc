@@ -16,6 +16,7 @@ const Avatar: React.FC<IAvatar> = props => {
     return (
       <Image
         source={{ uri: source }}
+        defaultSource={require('./fallbackAvatar.png')}
         style={{ width: size, height: size, borderRadius: 99999 }}
       />
     )

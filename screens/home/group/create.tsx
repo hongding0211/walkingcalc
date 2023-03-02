@@ -1,6 +1,4 @@
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import React from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
@@ -9,22 +7,28 @@ import Button from '../../../components/General/Button'
 import Input from '../../../components/General/Input'
 import { Color } from '../../../constants/Colors'
 
-const CreateGroup: React.FC = () => {
+interface ICreateGroup {
+  onConfirm?: (groupId: string) => void
+}
+
+const CreateGroup: React.FC<ICreateGroup> = ({ onConfirm }) => {
+  const [groupId, setGroupId] = useState('')
+
   const { t } = useTranslation('home')
 
   return (
     <View style={styles.container}>
       <FormItem title={t('groupName') + ''}>
-        <Input />
-      </FormItem>
-      <FormItem title={t('groupMembers') + ''}>
-        <FontAwesomeIcon
-          icon={faCirclePlus}
-          style={styles.icon}
+        <Input
+          value={groupId}
+          onChangeText={setGroupId}
         />
       </FormItem>
       <View style={styles.btn}>
-        <Button title={t('confirm') + ''} />
+        <Button
+          title={t('confirm') + ''}
+          onPress={() => onConfirm && onConfirm(groupId)}
+        />
       </View>
     </View>
   )

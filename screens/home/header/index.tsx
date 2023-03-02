@@ -61,6 +61,15 @@ const Header: React.FC<IHeader> = ({ onAdd, onShowAbout, onLogout }) => {
           duration: 0,
         }}
         onRequestClose={() => setShowPopoverContent(false)}
+        popoverStyle={{
+          borderRadius: 5,
+          backgroundColor: theme.scheme === 'LIGHT' ? Color.Background : ColorDark.Background,
+        }}
+        arrowSize={{
+          width: 0,
+          height: 0,
+        }}
+        offset={8}
       >
         <Menu
           onShowAbout={onShowAbout}
