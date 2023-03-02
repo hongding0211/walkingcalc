@@ -10,7 +10,7 @@ const ThemedView: React.FC<View['props']> = props => {
 
   return (
     <SafeAreaView
-      style={[style, theme.scheme === 'LIGHT' ? styles.light : styles.dark, styles.container]}
+      style={[theme.scheme === 'LIGHT' ? styles.light : styles.dark, styles.container, style]}
       {...restProps}
     />
   )

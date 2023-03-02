@@ -3,35 +3,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import React, { useCallback, useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
-import { useDispatch } from 'react-redux'
 
-import { useAppSelector } from '../../app/store'
-import Avatar from '../../components/General/Avatar'
-import ThemedText from '../../components/General/Text'
-import { Color, ColorDark } from '../../constants/Colors'
-import { ThemeContext } from '../../feature/theme/themeContext'
-import { setToken } from '../../feature/user/userSlice'
+import Menu from './menu'
+import { useAppSelector } from '../../../app/store'
+import Avatar from '../../../components/General/Avatar'
+import Popover from '../../../components/General/Popover'
+import ThemedText from '../../../components/General/Text'
+import { Color, ColorDark } from '../../../constants/Colors'
+import { ThemeContext } from '../../../feature/theme/themeContext'
 
 interface IHeader {
   onAdd?: () => void
+  onShowAbout?: () => void
+  onLogout?: () => void
 }
 
-const Header: React.FC<IHeader> = ({ onAdd }) => {
+const Index: React.FC<IHeader> = ({ onAdd, onShowAbout, onLogout }) => {
   const userInfo = useAppSelector(state => state.user.data)
   const { t } = useTranslation('home')
-  const dispatch = useDispatch()
   const theme = useContext(ThemeContext)
 
   const handleAddGroup = useCallback(() => {
     onAdd && onAdd()
-  }, [])
-
-  const handlePressAvatar = useCallback(() => {
-    dispatch(
-      setToken({
-        token: undefined,
-      })
-    )
   }, [])
 
   return (
@@ -49,17 +42,25 @@ const Header: React.FC<IHeader> = ({ onAdd }) => {
           style={styles.addBtn}
         />
       </Pressable>
-      <Pressable onPress={handlePressAvatar}>
+      <Popover
+        content={
+          <Menu
+            onShowAbout={onShowAbout}
+            onLogout={onLogout}
+          />
+        }
+        align="flex-end"
+      >
         <Avatar
           name={userInfo?.name}
           source={userInfo?.avatar}
         />
-      </Pressable>
+      </Popover>
     </View>
   )
 }
 
-export default Header
+export default Index
 
 const styles = StyleSheet.create({
   header: {
