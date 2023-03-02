@@ -1,12 +1,11 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import React from 'react'
 
 import { useAppSelector } from '../app/store'
 import useUser from '../feature/user/useUser'
-import Home from '../screens/Home'
 import Splash from '../screens/Splash'
+import Home from '../screens/home'
 import Login from '../screens/login/Login'
 import SSO from '../screens/modal/login/SSO'
 
@@ -39,15 +38,18 @@ const LoginScreen: React.FC = () => {
 }
 
 const RootScreen: React.FC = () => {
-  const Tab = createBottomTabNavigator()
+  const Stack = createNativeStackNavigator()
 
   return (
-    <Tab.Navigator>
-      <Tab.Screen
+    <Stack.Navigator>
+      <Stack.Screen
         name="Home"
         component={Home}
+        options={{
+          headerShown: false,
+        }}
       />
-    </Tab.Navigator>
+    </Stack.Navigator>
   )
 }
 
