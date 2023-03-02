@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { SafeAreaView, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 import { Color, ColorDark } from '../../constants/Colors'
 import { ThemeContext } from '../../feature/theme/themeContext'
@@ -9,7 +9,7 @@ const ThemedView: React.FC<View['props']> = props => {
   const { style, ...restProps } = props
 
   return (
-    <SafeAreaView
+    <View
       style={[theme.scheme === 'LIGHT' ? styles.light : styles.dark, styles.container, style]}
       {...restProps}
     />

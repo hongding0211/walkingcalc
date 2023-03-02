@@ -26,8 +26,8 @@ const Button: React.FC<IButton> = ({ type = 'PRIMARY', title = '', icon, block =
 
 const styles = StyleSheet.create({
   btn: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
     borderRadius: 8,
     alignItems: 'center',
   },

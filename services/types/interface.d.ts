@@ -49,7 +49,7 @@ export interface IGetUserLogin extends IApi {
 export interface IGetUserInfo extends IApi {
   request: IRequest<undefined, undefined>
   response: IResponse<{
-    uuid: number
+    uuid: string
     name: string
     avatar: string
   }>
@@ -64,7 +64,23 @@ export interface IPostUserInfos extends IApi {
   >
   response: IResponse<
     {
-      uuid: number
+      uuid: string
+      name: string
+      avatar: string
+    }[]
+  >
+}
+
+export interface IGetUserSearch extends IApi {
+  request: IRequest<
+    {
+      name: string
+    },
+    undefined
+  >
+  response: IResponse<
+    {
+      uuid: string
       name: string
       avatar: string
     }[]

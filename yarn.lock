@@ -31,7 +31,7 @@
 
 "@babel/core@^7.1.0", "@babel/core@^7.12.3", "@babel/core@^7.12.9", "@babel/core@^7.13.16", "@babel/core@^7.14.0", "@babel/core@^7.20.0", "@babel/core@^7.7.5":
   version "7.21.0"
-  resolved "https://registry.npmmirror.com/@babel/core/-/core-7.21.0.tgz#1341aefdcc14ccc7553fcc688dd8986a2daffc13"
+  resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.21.0.tgz#1341aefdcc14ccc7553fcc688dd8986a2daffc13"
   integrity sha512-PuxUbxcW6ZYe656yL3EAhpy7qXKq0DmYsrJLpbB8XrsCP9Nm+XCg9XFMb5vIDliPD7+U/+M+QJlH17XOcB7eXA==
   dependencies:
     "@ampproject/remapping" "^2.2.0"
@@ -910,7 +910,7 @@
 
 "@babel/preset-env@^7.12.9":
   version "7.20.2"
-  resolved "https://registry.npmmirror.com/@babel/preset-env/-/preset-env-7.20.2.tgz#9b1642aa47bb9f43a86f9630011780dab7f86506"
+  resolved "https://registry.yarnpkg.com/@babel/preset-env/-/preset-env-7.20.2.tgz#9b1642aa47bb9f43a86f9630011780dab7f86506"
   integrity sha512-1G0efQEWR1EHkKvKHqbG+IN/QdgwfByUpM5V5QroDzGV2t3S/WXNQd693cHiHTlCFMpr9B6FkPFXDA2lQcKoDg==
   dependencies:
     "@babel/compat-data" "^7.20.1"
@@ -1120,7 +1120,7 @@
 
 "@expo/cli@0.4.11":
   version "0.4.11"
-  resolved "https://registry.npmmirror.com/@expo/cli/-/cli-0.4.11.tgz#b5284b6c8c74eea2b8c410c681f2eddb33b2dda3"
+  resolved "https://registry.yarnpkg.com/@expo/cli/-/cli-0.4.11.tgz#b5284b6c8c74eea2b8c410c681f2eddb33b2dda3"
   integrity sha512-L9Ci9RBh0aPFEDF1AjDYPk54OgeUJIKzxF3lRgITm+lQpI3IEKjAc9LaYeQeO1mlZMUQmPkHArF8iyz1eOeVoQ==
   dependencies:
     "@babel/runtime" "^7.14.0"
@@ -1252,7 +1252,7 @@
 
 "@expo/dev-server@0.1.124":
   version "0.1.124"
-  resolved "https://registry.npmmirror.com/@expo/dev-server/-/dev-server-0.1.124.tgz#81fca9eff42893a7cb9d51315f2c0dcf860c5eec"
+  resolved "https://registry.yarnpkg.com/@expo/dev-server/-/dev-server-0.1.124.tgz#81fca9eff42893a7cb9d51315f2c0dcf860c5eec"
   integrity sha512-iHczVcf+rgWupCY/3b3ePIizNtzsy1O/w8jdKv3bKvoOfXiVIVOo4KGiVDpAJOahKiMOsRlbKeemB8OLNKzdSA==
   dependencies:
     "@expo/bunyan" "4.0.0"
@@ -1319,7 +1319,7 @@
 
 "@expo/json-file@^8.2.35", "@expo/json-file@^8.2.37":
   version "8.2.37"
-  resolved "https://registry.npmmirror.com/@expo/json-file/-/json-file-8.2.37.tgz#9c02d3b42134907c69cc0a027b18671b69344049"
+  resolved "https://registry.yarnpkg.com/@expo/json-file/-/json-file-8.2.37.tgz#9c02d3b42134907c69cc0a027b18671b69344049"
   integrity sha512-YaH6rVg11JoTS2P6LsW7ybS2CULjf40AbnAHw2F1eDPuheprNjARZMnyHFPkKv7GuxCy+B9GPcbOKgc4cgA80Q==
   dependencies:
     "@babel/code-frame" "~7.10.4"
@@ -1328,7 +1328,7 @@
 
 "@expo/metro-config@~0.5.0", "@expo/metro-config@~0.5.1":
   version "0.5.2"
-  resolved "https://registry.npmmirror.com/@expo/metro-config/-/metro-config-0.5.2.tgz#9474454dcf8c2e3d66231f36f8bbbae5e9e0c3dc"
+  resolved "https://registry.yarnpkg.com/@expo/metro-config/-/metro-config-0.5.2.tgz#9474454dcf8c2e3d66231f36f8bbbae5e9e0c3dc"
   integrity sha512-W1qsZPA5BXuRBkNLydKBYQ1+ubObhOK0gk2Fpc+XnhW+UUIHC9sDR5pZRYGNSnDDc3rG8y7c32UzSW9nlK+mog==
   dependencies:
     "@expo/config" "~7.0.2"
@@ -1350,7 +1350,7 @@
 
 "@expo/package-manager@~0.0.53":
   version "0.0.60"
-  resolved "https://registry.npmmirror.com/@expo/package-manager/-/package-manager-0.0.60.tgz#d346202892e79ddf4cd6a1b5c40e2d73ae6be2fb"
+  resolved "https://registry.yarnpkg.com/@expo/package-manager/-/package-manager-0.0.60.tgz#d346202892e79ddf4cd6a1b5c40e2d73ae6be2fb"
   integrity sha512-MdV7dpFA4aI8HIW0xsW2DBUem5aFKL8+/v5LXKPZuXmYW02/EXPSp7DBJAwow8ULpa3Q2VlYfb46hWPre3hw4A==
   dependencies:
     "@expo/json-file" "^8.2.37"
@@ -2481,7 +2481,7 @@
 
 "@xmldom/xmldom@~0.7.0":
   version "0.7.9"
-  resolved "https://registry.npmmirror.com/@xmldom/xmldom/-/xmldom-0.7.9.tgz#7f9278a50e737920e21b297b8a35286e9942c056"
+  resolved "https://registry.yarnpkg.com/@xmldom/xmldom/-/xmldom-0.7.9.tgz#7f9278a50e737920e21b297b8a35286e9942c056"
   integrity sha512-yceMpm/xd4W2a85iqZyO09gTnHvXF6pyiWjD2jcOJs7hRoZtNNOO1eJlhHj1ixA+xip2hOyGn+LgcvLCMo5zXA==
 
 abab@^2.0.3, abab@^2.0.5:
@@ -2861,7 +2861,7 @@ babel-plugin-polyfill-regenerator@^0.4.1:
 
 babel-plugin-react-native-web@~0.18.2:
   version "0.18.12"
-  resolved "https://registry.npmmirror.com/babel-plugin-react-native-web/-/babel-plugin-react-native-web-0.18.12.tgz#3e9764484492ea612a16b40135b07c2d05b7969d"
+  resolved "https://registry.yarnpkg.com/babel-plugin-react-native-web/-/babel-plugin-react-native-web-0.18.12.tgz#3e9764484492ea612a16b40135b07c2d05b7969d"
   integrity sha512-4djr9G6fMdwQoD6LQ7hOKAm39+y12flWgovAqS1k5O8f42YQ3A1FFMyV5kKfetZuGhZO5BmNmOdRRZQ1TixtDw==
 
 babel-plugin-syntax-trailing-function-commas@^7.0.0-beta.0:
@@ -2889,7 +2889,7 @@ babel-preset-current-node-syntax@^1.0.0:
 
 babel-preset-expo@~9.2.2:
   version "9.2.2"
-  resolved "https://registry.npmmirror.com/babel-preset-expo/-/babel-preset-expo-9.2.2.tgz#3f3819a224bbc32cefebb5d97a40c950a2f7ae2e"
+  resolved "https://registry.yarnpkg.com/babel-preset-expo/-/babel-preset-expo-9.2.2.tgz#3f3819a224bbc32cefebb5d97a40c950a2f7ae2e"
   integrity sha512-69cSPObZWFz0AaUT6IhCu2VzPVTICUtXzhX5ecoDttFe+9wb9yMV8m7rBNZptJQ3wtiKB5iEL7/wvtKygPz/mQ==
   dependencies:
     "@babel/plugin-proposal-decorators" "^7.12.9"
@@ -4393,7 +4393,7 @@ expect@^26.6.2:
 
 expo-application@~5.0.1:
   version "5.0.1"
-  resolved "https://registry.npmmirror.com/expo-application/-/expo-application-5.0.1.tgz#628aeee74697d7aa39d0c0173dbf9383e06e53e9"
+  resolved "https://registry.yarnpkg.com/expo-application/-/expo-application-5.0.1.tgz#628aeee74697d7aa39d0c0173dbf9383e06e53e9"
   integrity sha512-bThxK5zH/Lc2tkCvEXGjfM7ayvOVmPWYcWzXsMIU1RtG73TyXo4cq+73FvfDNIWn6gKS0WyMcmoPB3WXEV/jsw==
 
 expo-asset@~8.7.0:
@@ -4424,7 +4424,7 @@ expo-constants@~14.0.0, expo-constants@~14.0.2:
 
 expo-error-recovery@~4.0.1:
   version "4.0.1"
-  resolved "https://registry.npmmirror.com/expo-error-recovery/-/expo-error-recovery-4.0.1.tgz#3e3333e134c992c234539d3773fe78915c883755"
+  resolved "https://registry.yarnpkg.com/expo-error-recovery/-/expo-error-recovery-4.0.1.tgz#3e3333e134c992c234539d3773fe78915c883755"
   integrity sha512-wceptnRX+N3qCSVTNbIchUFu3GmY30onRH5L66OF8HMLpAIQfrZMLxJfz7SAMJTcr3jxsJ11vSa2l2RaPKgHsQ==
 
 expo-file-system@~15.1.0, expo-file-system@~15.1.1:
@@ -4443,7 +4443,7 @@ expo-font@~11.0.1:
 
 expo-keep-awake@~11.0.1:
   version "11.0.1"
-  resolved "https://registry.npmmirror.com/expo-keep-awake/-/expo-keep-awake-11.0.1.tgz#ee354465892a94040ffe09901b85b469e7d54fb3"
+  resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-11.0.1.tgz#ee354465892a94040ffe09901b85b469e7d54fb3"
   integrity sha512-44ZjgLE4lnce2d40Pv8xsjMVc6R5GvgHOwZfkLYtGmgYG9TYrEJeEj5UfSeweXPL3pBFhXKfFU8xpGYMaHdP0A==
 
 expo-linking@~3.3.0:
@@ -4459,7 +4459,7 @@ expo-linking@~3.3.0:
 
 expo-modules-autolinking@1.0.2:
   version "1.0.2"
-  resolved "https://registry.npmmirror.com/expo-modules-autolinking/-/expo-modules-autolinking-1.0.2.tgz#f072f342ab797e43b16ddcdef251fcd4db851e1a"
+  resolved "https://registry.yarnpkg.com/expo-modules-autolinking/-/expo-modules-autolinking-1.0.2.tgz#f072f342ab797e43b16ddcdef251fcd4db851e1a"
   integrity sha512-skAUXERKw1gtSw8xsvft9DE0KVhBvw4dujAtgCZoG2l513fN7ds+B5+30ZVgZATMC+EjtlmjKXzhp5QS44DCFA==
   dependencies:
     chalk "^4.1.0"
@@ -4470,7 +4470,7 @@ expo-modules-autolinking@1.0.2:
 
 expo-modules-core@1.1.1:
   version "1.1.1"
-  resolved "https://registry.npmmirror.com/expo-modules-core/-/expo-modules-core-1.1.1.tgz#06502379274bdcb356fcbe225c3c6bc4926e462c"
+  resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-1.1.1.tgz#06502379274bdcb356fcbe225c3c6bc4926e462c"
   integrity sha512-+AcaYmaWphIfkBcccu65dyOhWnpOJ3+SQpoI4lI/Plg1nNjOLuBjmrdVvpiJOvkN+CqbNGsJ5Yll8LLk+C107Q==
   dependencies:
     compare-versions "^3.4.0"
@@ -4506,7 +4506,7 @@ expo-web-browser@~12.0.0:
 
 expo@~47.0.12:
   version "47.0.13"
-  resolved "https://registry.npmmirror.com/expo/-/expo-47.0.13.tgz#f53f82e7f9e209f8a8b25f2493f58439958368cb"
+  resolved "https://registry.yarnpkg.com/expo/-/expo-47.0.13.tgz#f53f82e7f9e209f8a8b25f2493f58439958368cb"
   integrity sha512-9VjjGdViCJ9NfWbUE7brkwFBDvKuA35V345vMtHFYNKoGJjXib36yitmawreMDQFv0kMTqTnzc7T2191Pod7Ng==
   dependencies:
     "@babel/runtime" "^7.14.0"
@@ -6833,7 +6833,7 @@ metro-minify-uglify@0.73.8:
 
 metro-react-native-babel-preset@0.72.3:
   version "0.72.3"
-  resolved "https://registry.npmmirror.com/metro-react-native-babel-preset/-/metro-react-native-babel-preset-0.72.3.tgz#e549199fa310fef34364fdf19bd210afd0c89432"
+  resolved "https://registry.yarnpkg.com/metro-react-native-babel-preset/-/metro-react-native-babel-preset-0.72.3.tgz#e549199fa310fef34364fdf19bd210afd0c89432"
   integrity sha512-uJx9y/1NIqoYTp6ZW1osJ7U5ZrXGAJbOQ/Qzl05BdGYvN1S7Qmbzid6xOirgK0EIT0pJKEEh1s8qbassYZe4cw==
   dependencies:
     "@babel/core" "^7.14.0"
