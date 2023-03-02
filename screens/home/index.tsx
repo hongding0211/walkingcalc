@@ -1,13 +1,20 @@
 import React, { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
+import { useDispatch } from 'react-redux'
 
 import Header from './header'
 import styles from './style'
 import Modal from '../../components/General/Modal'
 import ThemedView from '../../components/General/View'
+import { setToken } from '../../feature/user/userSlice'
 
 const Home: React.FC = () => {
   const [showAddGroupModal, setShowAddGroupModal] = useState(false)
+  const [showAboutModal, setShowAboutModal] = useState(false)
+
+  const { t } = useTranslation('home')
+  const dispatch = useDispatch()
 
   const handleShowAddGroupModal = useCallback(() => {
     setShowAddGroupModal(true)
@@ -17,19 +24,43 @@ const Home: React.FC = () => {
     setShowAddGroupModal(false)
   }, [])
 
+  const handleShowAbout = useCallback((v: boolean) => {
+    setShowAboutModal(v)
+  }, [])
+
+  const handleLogout = useCallback(() => {
+    dispatch(
+      setToken({
+        token: undefined,
+      })
+    )
+  }, [])
+
   return (
-    <ThemedView>
-      <View style={styles.container}>
-        <Header onAdd={handleShowAddGroupModal} />
-      </View>
+    <>
+      <ThemedView>
+        <View style={styles.container}>
+          <Header
+            onAdd={handleShowAddGroupModal}
+            onShowAbout={() => handleShowAbout(true)}
+            onLogout={handleLogout}
+          />
+        </View>
+      </ThemedView>
 
       {showAddGroupModal && (
         <Modal
-          title="Title"
+          hideTitle
           onClose={handleCloseAddGroupModal}
         />
       )}
-    </ThemedView>
+      {showAboutModal && (
+        <Modal
+          title={t('about') + ''}
+          onClose={() => handleShowAbout(false)}
+        />
+      )}
+    </>
   )
 }
 
