@@ -1,5 +1,8 @@
 {
   "group": "群组",
   "logout": "登出",
-  "about": "关于"
+  "about": "关于",
+  "confirmLogout": "确认登出?",
+  "confirm": "确认",
+  "cancel": "取消"
 }
