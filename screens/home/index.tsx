@@ -1,8 +1,9 @@
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View } from 'react-native'
+import { Alert, View } from 'react-native'
 import { useDispatch } from 'react-redux'
 
+import About from './about'
 import Header from './header'
 import styles from './style'
 import Modal from '../../components/General/Modal'
@@ -29,11 +30,22 @@ const Home: React.FC = () => {
   }, [])
 
   const handleLogout = useCallback(() => {
-    dispatch(
-      setToken({
-        token: undefined,
-      })
-    )
+    Alert.alert(t('confirmLogout'), '', [
+      {
+        text: t('cancel') + '',
+        style: 'cancel',
+      },
+      {
+        text: t('confirm') + '',
+        onPress: () => {
+          dispatch(
+            setToken({
+              token: undefined,
+            })
+          )
+        },
+      },
+    ])
   }, [])
 
   return (
@@ -58,7 +70,9 @@ const Home: React.FC = () => {
         <Modal
           title={t('about') + ''}
           onClose={() => handleShowAbout(false)}
-        />
+        >
+          <About />
+        </Modal>
       )}
     </>
   )

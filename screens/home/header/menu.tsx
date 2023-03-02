@@ -64,9 +64,9 @@ export default Menu
 
 const styles = StyleSheet.create({
   menu: {
-    padding: 8,
+    padding: 4,
     borderRadius: 4,
-    width: 120,
+    width: 110,
   },
   item: {
     padding: 16,

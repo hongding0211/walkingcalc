@@ -1,5 +1,8 @@
 {
   "group": "Group",
   "logout": "Logout",
-  "about": "About"
+  "about": "About",
+  "confirmLogout": "Confirm logout?",
+  "confirm": "Confirm",
+  "cancel": "Cancel"
 }
