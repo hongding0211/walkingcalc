@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Pressable, StyleSheet, View } from 'react-native'
+import { Pressable, StyleSheet } from 'react-native'
 
 import { useAppSelector } from '../../../app/store'
 import ThemedText from '../../../components/General/Text'
@@ -38,7 +38,6 @@ const Item: React.FC<IItem> = ({ title, onPress }) => {
 }
 
 const Menu: React.FC<IMenu> = ({ onLogout, onShowAbout, onTouchEnd }) => {
-  const theme = useContext(ThemeContext)
   const userInfo = useAppSelector(state => state.user.data)
   const { t } = useTranslation('home')
 
