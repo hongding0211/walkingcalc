@@ -1,5 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { NativeBaseProvider } from 'native-base'
 import React from 'react'
 
 import { useAppSelector } from '../app/store'
@@ -41,15 +42,17 @@ const RootScreen: React.FC = () => {
   const Stack = createNativeStackNavigator()
 
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{
-          headerShown: false,
-        }}
-      />
-    </Stack.Navigator>
+    <NativeBaseProvider>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{
+            headerShown: false,
+          }}
+        />
+      </Stack.Navigator>
+    </NativeBaseProvider>
   )
 }
 

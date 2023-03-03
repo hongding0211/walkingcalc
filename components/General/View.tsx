@@ -10,16 +10,13 @@ const ThemedView: React.FC<View['props']> = props => {
 
   return (
     <View
-      style={[theme.scheme === 'LIGHT' ? styles.light : styles.dark, styles.container, style]}
+      style={[theme.scheme === 'LIGHT' ? styles.light : styles.dark, style]}
       {...restProps}
     />
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   light: {
     backgroundColor: Color.Background,
   },

@@ -2,7 +2,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { BlurView } from 'expo-blur'
 import React, { useCallback, useContext, useRef } from 'react'
-import { Pressable, ScrollView, View } from 'react-native'
+import { Keyboard, Pressable, TouchableWithoutFeedback, View } from 'react-native'
 
 import styles from './style'
 import { Color, ColorDark } from '../../../constants/Colors'
@@ -40,6 +40,10 @@ const Modal: React.FC<IModal> = props => {
     onClose && onClose()
   }, [])
 
+  const handleCloseKeyboard = useCallback(() => {
+    Keyboard.dismiss()
+  }, [])
+
   return (
     <>
       <BlurView
@@ -50,23 +54,28 @@ const Modal: React.FC<IModal> = props => {
         onTouchEnd={handleEndTouchMask}
         style={styles.container}
       >
-        <ThemedView
-          style={styles.card}
-          onTouchStart={handleStartTouchContent}
+        <TouchableWithoutFeedback
+          onPress={handleCloseKeyboard}
+          accessible={false}
         >
-          {!hideTitle && (
-            <View style={styles.title}>
-              <ThemedText style={styles.titleText}>{title}</ThemedText>
-              <Pressable onPress={handlePressClose}>
-                <FontAwesomeIcon
-                  icon={faXmark}
-                  style={{ color: theme.scheme === 'LIGHT' ? Color.Second : ColorDark.Second }}
-                />
-              </Pressable>
-            </View>
-          )}
-          <ScrollView style={styles.content}>{children}</ScrollView>
-        </ThemedView>
+          <ThemedView
+            style={styles.card}
+            onTouchStart={handleStartTouchContent}
+          >
+            {!hideTitle && (
+              <View style={styles.title}>
+                <ThemedText style={styles.titleText}>{title}</ThemedText>
+                <Pressable onPress={handlePressClose}>
+                  <FontAwesomeIcon
+                    icon={faXmark}
+                    style={{ color: theme.scheme === 'LIGHT' ? Color.Second : ColorDark.Second }}
+                  />
+                </Pressable>
+              </View>
+            )}
+            <View style={styles.content}>{children}</View>
+          </ThemedView>
+        </TouchableWithoutFeedback>
       </Pressable>
     </>
   )

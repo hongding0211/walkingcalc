@@ -3,6 +3,7 @@ export enum Color {
   Second = '#ADADAD',
   Third = '#E4E4E4',
   Danger = '#F7524A',
+  Success = '#33A81C',
   Background = '#FFFFFF',
   BackgroundSecond = '#F6F6F8',
   Highlight = '#E0E0E0',

@@ -1,5 +1,5 @@
 const BASE_URL_PROD = 'http://127.0.0.1:7001'
-const BASE_URL_DEV = 'http://127.0.0.1:7001'
+const BASE_URL_DEV = 'http://192.168.50.142:7001'
 
 const env = process.env['NODE_ENV']
 
@@ -9,3 +9,4 @@ export const GET_USER_LOGIN = BASE_URL + '/user/login'
 export const GET_USER_INFO = BASE_URL + '/user/info'
 export const GET_USER_SEARCH = BASE_URL + '/user/search'
 export const POST_GROUP_CREATE = BASE_URL + '/group/create'
+export const POST_GROUP_JOIN = BASE_URL + '/group/join'

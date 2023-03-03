@@ -91,7 +91,19 @@ export interface IPostGroupCreate extends IApi {
   request: IRequest<
     undefined,
     {
-      members?: string[]
+      name: string
+    }
+  >
+  response: IResponse<{
+    groupId: string
+  }>
+}
+
+export interface IPostGroupJoin extends IApi {
+  request: IRequest<
+    undefined,
+    {
+      id: string
     }
   >
   response: IResponse<{

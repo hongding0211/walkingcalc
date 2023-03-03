@@ -32,7 +32,6 @@ export function useMutator<T extends IApi>(
     if (arg?.body && method === 'POST') {
       fetchConfig.body = JSON.stringify(arg.body)
     }
-    console.log('!!👉 useFetch.ts: 75', fetchConfig)
     const r = await fetch(requestUrl, fetchConfig)
     if (r.status === 401 || r.status === 403) {
       dispatch(
