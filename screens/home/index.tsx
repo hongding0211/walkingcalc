@@ -8,12 +8,14 @@ import AddGroup from './group/add'
 import CreateGroup from './group/create'
 import JoinGroup from './group/join'
 import Header from './header'
+import Main from './main'
 import styles from './style'
 import Modal from '../../components/General/Modal'
+import useToast from '../../components/Toast/useToast'
 import { Color, ColorDark } from '../../constants/Colors'
 import { ThemeContext } from '../../feature/theme/themeContext'
 import { setToken } from '../../feature/user/userSlice'
-import { useGroupCreate } from '../../services/group'
+import { useGroupCreate, useGroupJoin } from '../../services/group'
 
 const Home: React.FC = () => {
   const [showAddGroupModal, setShowAddGroupModal] = useState(false)
@@ -24,8 +26,10 @@ const Home: React.FC = () => {
   const { t } = useTranslation('home')
   const dispatch = useDispatch()
   const theme = useContext(ThemeContext)
+  const toast = useToast()
 
   const { trigger: triggerGroupCreate } = useGroupCreate()
+  const { trigger: triggerGroupJoin } = useGroupJoin()
 
   const handleShowAddGroupModal = useCallback(() => {
     setShowAddGroupModal(true)
@@ -50,12 +54,31 @@ const Home: React.FC = () => {
   }, [])
 
   const handleCreateGroup = useCallback((groupName: string) => {
-    // TODO
-    triggerGroupCreate({}).then()
+    triggerGroupCreate({
+      body: {
+        name: groupName,
+      },
+    }).then(v => {
+      if (v?.success) {
+        setShowCreateGroup(false)
+      } else {
+        toast(t('createFail') + '')
+      }
+    })
   }, [])
 
   const handleJoinGroup = useCallback((groupId: string) => {
-    // TODO
+    triggerGroupJoin({
+      body: {
+        id: groupId,
+      },
+    }).then(v => {
+      if (v?.success) {
+        setShowJoinGroup(false)
+      } else {
+        toast(t('joinFail') + '')
+      }
+    })
   }, [])
 
   const handleLogout = useCallback(() => {
@@ -91,6 +114,8 @@ const Home: React.FC = () => {
             onShowAbout={() => handleShowAbout(true)}
             onLogout={handleLogout}
           />
+
+          <Main />
         </View>
       </SafeAreaView>
 

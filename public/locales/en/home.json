@@ -8,5 +8,8 @@
   "createGroup": "New group",
   "joinGroup": "Join group",
   "groupName":"Group name",
-  "groupId": "Group ID"
+  "groupId": "Group ID",
+  "createFail": "Create failed",
+  "joinFail": "Join failed",
+  "totalDebt": "Total Debt"
 }

@@ -1,5 +1,6 @@
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import * as Haptics from 'expo-haptics'
 import React, { useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
@@ -46,12 +47,17 @@ const Header: React.FC<IHeader> = ({ onAdd, onShowAbout, onLogout }) => {
       </Pressable>
       <Popover
         from={
-          <View onTouchEnd={() => setShowPopoverContent(!showPopoverContent)}>
+          <Pressable
+            onPress={() => {
+              Haptics.selectionAsync().then()
+              setShowPopoverContent(!showPopoverContent)
+            }}
+          >
             <Avatar
               name={userInfo?.name}
               source={userInfo?.avatar}
             />
-          </View>
+          </Pressable>
         }
         isVisible={showPopoverContent}
         backgroundStyle={{

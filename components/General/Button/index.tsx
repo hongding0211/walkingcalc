@@ -9,14 +9,23 @@ interface IButton {
   title?: any
   icon?: any
   block?: boolean
+  disabled?: boolean
   onPress?: () => void
 }
 
-const Button: React.FC<IButton> = ({ type = 'PRIMARY', title = '', icon, block = false, onPress }) => {
+const Button: React.FC<IButton> = ({
+  type = 'PRIMARY',
+  title = '',
+  icon,
+  block = false,
+  disabled = false,
+  onPress,
+}) => {
   return (
     <Pressable
       onPress={onPress}
       style={[styles.btn, type === 'PRIMARY' ? styles.color : styles.colorDanger, block ? styles.block : {}]}
+      disabled={disabled}
     >
       {icon && <FontAwesomeIcon icon={icon} />}
       <Text style={styles.title}>{title}</Text>

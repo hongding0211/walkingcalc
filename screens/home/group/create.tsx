@@ -28,6 +28,7 @@ const CreateGroup: React.FC<ICreateGroup> = ({ onConfirm }) => {
         <Button
           title={t('confirm') + ''}
           onPress={() => onConfirm && onConfirm(groupName)}
+          disabled={groupName.length === 0}
         />
       </View>
     </View>
