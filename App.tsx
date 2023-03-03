@@ -7,8 +7,8 @@ import store from './app/store'
 import { ThemeContext } from './feature/theme/themeContext'
 import useCachedResources from './hooks/useCachedResources'
 import Navigation from './navigation'
-
 import './i18n'
+import { LangContext } from './feature/lang/langContext'
 
 export default function App() {
   const isLoadingComplete = useCachedResources()
@@ -20,10 +20,12 @@ export default function App() {
     return (
       <SafeAreaProvider>
         <ThemeContext.Provider value={{ scheme: colorScheme === 'light' ? 'LIGHT' : 'DARK' }}>
-          <Provider store={store}>
-            <StatusBar />
-            <Navigation />
-          </Provider>
+          <LangContext.Provider value="cn">
+            <Provider store={store}>
+              <StatusBar />
+              <Navigation />
+            </Provider>
+          </LangContext.Provider>
         </ThemeContext.Provider>
       </SafeAreaProvider>
     )

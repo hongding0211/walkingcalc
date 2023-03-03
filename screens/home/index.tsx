@@ -1,4 +1,5 @@
-import React, { useCallback, useContext, useState } from 'react'
+import { useNavigation } from '@react-navigation/native'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, SafeAreaView, View } from 'react-native'
 import { useDispatch } from 'react-redux'
@@ -15,21 +16,39 @@ import useToast from '../../components/Toast/useToast'
 import { Color, ColorDark } from '../../constants/Colors'
 import { ThemeContext } from '../../feature/theme/themeContext'
 import { setToken } from '../../feature/user/userSlice'
-import { useGroupCreate, useGroupJoin } from '../../services/group'
+import { useGroupCreate, useGroupJoin, useGroupMy } from '../../services/group'
+import { useUserDebt } from '../../services/user'
 
 const Home: React.FC = () => {
   const [showAddGroupModal, setShowAddGroupModal] = useState(false)
   const [showCreateGroup, setShowCreateGroup] = useState(false)
   const [showJoinGroup, setShowJoinGroup] = useState(false)
   const [showAboutModal, setShowAboutModal] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const { t } = useTranslation('home')
   const dispatch = useDispatch()
   const theme = useContext(ThemeContext)
   const toast = useToast()
+  const navigation = useNavigation()
 
   const { trigger: triggerGroupCreate } = useGroupCreate()
   const { trigger: triggerGroupJoin } = useGroupJoin()
+
+  const { data: userDebt, mutate: mutateUserDebt, isLoading: userDebtLoading } = useUserDebt()
+  const { data: groupData, mutate: mutateGroup, isLoading: groupLoading } = useGroupMy()
+
+  useEffect(() => {
+    setIsLoading(userDebtLoading && groupLoading)
+  }, [userDebtLoading, groupLoading])
+
+  useEffect(() => {
+    return navigation.addListener('focus', () => {
+      console.log('!!👉 index.tsx: 47')
+      mutateUserDebt().then()
+      mutateGroup().then()
+    })
+  }, [navigation])
 
   const handleShowAddGroupModal = useCallback(() => {
     setShowAddGroupModal(true)
@@ -58,13 +77,18 @@ const Home: React.FC = () => {
       body: {
         name: groupName,
       },
-    }).then(v => {
-      if (v?.success) {
-        setShowCreateGroup(false)
-      } else {
-        toast(t('createFail') + '')
-      }
     })
+      .then(v => {
+        if (v?.success) {
+          setShowCreateGroup(false)
+        } else {
+          toast(t('createFail') + '')
+        }
+      })
+      .finally(() => {
+        mutateUserDebt().then()
+        mutateGroup().then()
+      })
   }, [])
 
   const handleJoinGroup = useCallback((groupId: string) => {
@@ -72,13 +96,18 @@ const Home: React.FC = () => {
       body: {
         id: groupId,
       },
-    }).then(v => {
-      if (v?.success) {
-        setShowJoinGroup(false)
-      } else {
-        toast(t('joinFail') + '')
-      }
     })
+      .then(v => {
+        if (v?.success) {
+          setShowJoinGroup(false)
+        } else {
+          toast(t('joinFail') + '')
+        }
+      })
+      .finally(() => {
+        mutateUserDebt().then()
+        mutateGroup().then()
+      })
   }, [])
 
   const handleLogout = useCallback(() => {
@@ -100,6 +129,11 @@ const Home: React.FC = () => {
     ])
   }, [])
 
+  const handleRefresh = useCallback(() => {
+    mutateUserDebt().then()
+    mutateGroup().then()
+  }, [])
+
   return (
     <>
       <SafeAreaView
@@ -115,7 +149,12 @@ const Home: React.FC = () => {
             onLogout={handleLogout}
           />
 
-          <Main />
+          <Main
+            userDebt={userDebt}
+            groupData={groupData}
+            loading={isLoading}
+            onRefresh={handleRefresh}
+          />
         </View>
       </SafeAreaView>
 

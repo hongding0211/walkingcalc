@@ -11,5 +11,8 @@
   "groupId": "群组 ID",
   "createFail": "创建失败",
   "joinFail": "加入失败",
-  "totalDebt": "债务统计"
+  "totalDebt": "债务统计",
+  "lastEdit": "上次编辑",
+  "ownMe": "别人欠我",
+  "myOwn": "我欠别人"
 }

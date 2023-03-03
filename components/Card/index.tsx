@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 
-import ThemedView from '../General/View'
+import ThemedView from '../General/Themed/View'
 
 interface ICard {
   children?: React.ReactNode

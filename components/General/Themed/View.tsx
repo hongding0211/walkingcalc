@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import { StyleSheet, View } from 'react-native'
 
-import { Color, ColorDark } from '../../constants/Colors'
-import { ThemeContext } from '../../feature/theme/themeContext'
+import { Color, ColorDark } from '../../../constants/Colors'
+import { ThemeContext } from '../../../feature/theme/themeContext'
 
 const ThemedView: React.FC<View['props']> = props => {
   const theme = useContext(ThemeContext)

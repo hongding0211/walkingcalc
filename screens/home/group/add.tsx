@@ -72,7 +72,6 @@ const styles = StyleSheet.create({
     color: Color.Primary,
   },
   title: {
-    fontSize: 14,
     fontWeight: '600',
     color: Color.Primary,
     marginTop: 16,

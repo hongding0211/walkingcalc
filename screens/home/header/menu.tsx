@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet } from 'react-native'
 
 import { useAppSelector } from '../../../app/store'
-import ThemedText from '../../../components/General/Text'
-import ThemedView from '../../../components/General/View'
+import ThemedText from '../../../components/General/Themed/Text'
+import ThemedView from '../../../components/General/Themed/View'
 import { Color, ColorDark } from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
 

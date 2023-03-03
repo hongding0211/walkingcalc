@@ -6,7 +6,7 @@ type UserState = {
   isLoginComplete: boolean
   token?: string
   data?: {
-    uuid?: number
+    uuid?: string
     name?: string
     avatar?: string
   }
@@ -25,13 +25,14 @@ export const userSlice = createSlice({
         AsyncStorage.setItem('token', action.payload.token).then()
       } else {
         state.isLogin = false
+        state.data = undefined
         AsyncStorage.removeItem('token').then()
       }
     },
     setUserData: (
       state,
       action: PayloadAction<{
-        data?: { uuid: number; name: string; avatar: string }
+        data?: { uuid: string; name: string; avatar: string }
       }>
     ) => {
       state.data = action.payload.data

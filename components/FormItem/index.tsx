@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 
-import ThemedText from '../General/Text'
+import ThemedText from '../General/Themed/Text'
 
 interface IFormItem {
   title?: string
