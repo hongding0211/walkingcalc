@@ -9,7 +9,7 @@ import Popover from 'react-native-popover-view'
 import Menu from './menu'
 import { useAppSelector } from '../../../app/store'
 import Avatar from '../../../components/General/Avatar'
-import ThemedText from '../../../components/General/Text'
+import ThemedText from '../../../components/General/Themed/Text'
 import { Color, ColorDark } from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
 
@@ -27,6 +27,7 @@ const Header: React.FC<IHeader> = ({ onAdd, onShowAbout, onLogout }) => {
   const theme = useContext(ThemeContext)
 
   const handleAddGroup = useCallback(() => {
+    Haptics.selectionAsync().then()
     onAdd && onAdd()
   }, [])
 

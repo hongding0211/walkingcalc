@@ -1,0 +1,18 @@
+{
+  "group": "群组",
+  "addRecord": "添加记录",
+  "who": "谁支付的",
+  "for": "为谁支付",
+  "category": "类别",
+  "remark": "备注",
+  "add": "添加",
+  "members": "成员",
+  "debtDetail": "债务详情",
+  "ownMe": "别人欠我",
+  "myOwn": "我欠别人",
+  "myPart": "我的那份",
+  "share": "分享",
+  "recordDetail": "记录详情",
+  "setting": "设置",
+  "addFail": "添加失败"
+}

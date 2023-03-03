@@ -11,5 +11,8 @@
   "groupId": "Group ID",
   "createFail": "Create failed",
   "joinFail": "Join failed",
-  "totalDebt": "Total Debt"
+  "totalDebt": "Total Debt",
+  "lastEdit": "Latest edited",
+  "ownMe": "Owned to me",
+  "myOwn": "I owned"
 }

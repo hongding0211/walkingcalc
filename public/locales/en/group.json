@@ -1,0 +1,18 @@
+{
+  "group": "Group",
+  "addRecord": "Add record",
+  "who": "Who paid",
+  "for": "For whom",
+  "category": "Category",
+  "remark": "Remark",
+  "add": "Add",
+  "members": "Members",
+  "debtDetail": "Debt detail",
+  "ownMe": "Owned to me",
+  "myOwn": "I owned",
+  "myPart": "My part",
+  "share": "Share",
+  "recordDetail": "Record detail",
+  "setting": "Setting",
+  "addFail": "Add fail"
+}

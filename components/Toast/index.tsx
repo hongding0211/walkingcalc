@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { StyleSheet, View } from 'react-native'
 
 import { ThemeContext } from '../../feature/theme/themeContext'
-import ThemedText from '../General/Text'
+import ThemedText from '../General/Themed/Text'
 
 const Toast: React.FC<{ title: string }> = ({ title = '' }) => {
   const theme = useContext(ThemeContext)

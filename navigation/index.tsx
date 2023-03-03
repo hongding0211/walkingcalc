@@ -2,10 +2,14 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NativeBaseProvider } from 'native-base'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { useAppSelector } from '../app/store'
+import BackButton from '../components/Header/left'
+import SettingButton from '../components/Header/right'
 import useUser from '../feature/user/useUser'
 import Splash from '../screens/Splash'
+import Group from '../screens/group'
 import Home from '../screens/home'
 import Login from '../screens/login/Login'
 import SSO from '../screens/modal/login/SSO'
@@ -40,6 +44,7 @@ const LoginScreen: React.FC = () => {
 
 const RootScreen: React.FC = () => {
   const Stack = createNativeStackNavigator()
+  const { t } = useTranslation('group')
 
   return (
     <NativeBaseProvider>
@@ -49,6 +54,17 @@ const RootScreen: React.FC = () => {
           component={Home}
           options={{
             headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Group"
+          component={Group}
+          options={{
+            headerTransparent: true,
+            headerTitle: '',
+            headerLeft: () => <BackButton title={t('group') + ''} />,
+            headerRight: () => <SettingButton />,
+            headerBlurEffect: 'regular',
           }}
         />
       </Stack.Navigator>

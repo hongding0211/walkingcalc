@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 
 import Card from '../../../components/Card'
+import ThemedText from '../../../components/General/Themed/Text'
 import { Color } from '../../../constants/Colors'
 import { numberToString } from '../../../utlis/moeny'
 
@@ -37,7 +38,7 @@ const TopCard: React.FC<ITopCard> = props => {
           {t('totalDebt')}
         </Text>
       </View>
-      <Text style={styles.amount}>{`${total < 0 ? '' : '+'}` + numberToString(total)}</Text>
+      <ThemedText style={styles.amount}>{`${total < 0 ? '' : '+'}` + numberToString(total)}</ThemedText>
     </Card>
   )
 }

@@ -5,8 +5,8 @@ import { Image, View } from 'react-native'
 
 import styles from './style'
 import Button from '../../components/General/Button'
-import ThemedText from '../../components/General/Text'
-import ThemedView from '../../components/General/View'
+import ThemedText from '../../components/General/Themed/Text'
+import ThemedView from '../../components/General/Themed/View'
 
 const Login: React.FC = () => {
   const navigation = useNavigation<any>()
@@ -17,7 +17,7 @@ const Login: React.FC = () => {
   }, [])
 
   return (
-    <ThemedView>
+    <ThemedView style={{ flex: 1 }}>
       <View style={styles.container}>
         <View style={styles.center}>
           <Image

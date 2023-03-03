@@ -71,6 +71,13 @@ export interface IPostUserInfos extends IApi {
   >
 }
 
+export interface IGetUserMyDebt extends IApi {
+  request: IRequest<undefined, undefined>
+  response: IResponse<{
+    debt: number
+  }>
+}
+
 export interface IGetUserSearch extends IApi {
   request: IRequest<
     {
@@ -108,5 +115,104 @@ export interface IPostGroupJoin extends IApi {
   >
   response: IResponse<{
     groupId: string
+  }>
+}
+
+export interface IGetGroupMy extends IApi {
+  request: IRequest<undefined, undefined>
+  response: IResponse<
+    {
+      tempUsers: {
+        uuid: string
+        name: string
+        debt: number
+      }[]
+      id: string
+      name: string
+      createdAt: number
+      modifiedAt: number
+      membersInfo: {
+        uuid: string
+        name: string
+        avatar: string
+        debt: number
+      }[]
+    }[]
+  >
+}
+
+export interface IGetGroup extends IApi {
+  request: IRequest<
+    {
+      id: string
+    },
+    undefined
+  >
+  response: IResponse<{
+    tempUsers: {
+      uuid: string
+      name: string
+      debt: number
+    }[]
+    id: string
+    name: string
+    createdAt: number
+    modifiedAt: number
+    membersInfo: {
+      uuid: string
+      name: string
+      avatar: string
+      debt: number
+    }[]
+  }>
+}
+
+export interface IGetRecordGroup extends IApi {
+  request: IRequest<
+    {
+      id: string
+    },
+    undefined
+  >
+  response: IResponse<
+    {
+      who: string
+      paid: number
+      forWhom: string[]
+      type: string
+      text: string
+      long: string
+      lat: string
+      recordId: string
+      createdAt: number
+      modifiedAt: number
+    }[]
+  >
+}
+
+export interface IPostRecord extends IApi {
+  request: IRequest<
+    undefined,
+    {
+      groupId: string
+      paid: number
+      forWhom: string[]
+      type: string
+      text: string
+      long: string
+      lat: string
+    }
+  >
+  response: IResponse<{
+    groupId: string
+    paid: number
+    forWhom: string[]
+    type: string
+    text: string
+    long: string
+    lat: string
+    recordId: string
+    createdAt: number
+    modifiedAt: number
   }>
 }
