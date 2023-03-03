@@ -8,11 +8,11 @@ import Input from '../../../components/General/Input'
 import { Color } from '../../../constants/Colors'
 
 interface ICreateGroup {
-  onConfirm?: (groupId: string) => void
+  onConfirm?: (groupName: string) => void
 }
 
 const CreateGroup: React.FC<ICreateGroup> = ({ onConfirm }) => {
-  const [groupId, setGroupId] = useState('')
+  const [groupName, setGroupName] = useState('')
 
   const { t } = useTranslation('home')
 
@@ -20,14 +20,14 @@ const CreateGroup: React.FC<ICreateGroup> = ({ onConfirm }) => {
     <View style={styles.container}>
       <FormItem title={t('groupName') + ''}>
         <Input
-          value={groupId}
-          onChangeText={setGroupId}
+          value={groupName}
+          onChangeText={setGroupName}
         />
       </FormItem>
       <View style={styles.btn}>
         <Button
           title={t('confirm') + ''}
-          onPress={() => onConfirm && onConfirm(groupId)}
+          onPress={() => onConfirm && onConfirm(groupName)}
         />
       </View>
     </View>
