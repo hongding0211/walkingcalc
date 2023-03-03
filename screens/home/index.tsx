@@ -13,6 +13,7 @@ import Modal from '../../components/General/Modal'
 import { Color, ColorDark } from '../../constants/Colors'
 import { ThemeContext } from '../../feature/theme/themeContext'
 import { setToken } from '../../feature/user/userSlice'
+import { useGroupCreate } from '../../services/group'
 
 const Home: React.FC = () => {
   const [showAddGroupModal, setShowAddGroupModal] = useState(false)
@@ -23,6 +24,8 @@ const Home: React.FC = () => {
   const { t } = useTranslation('home')
   const dispatch = useDispatch()
   const theme = useContext(ThemeContext)
+
+  const { trigger: triggerGroupCreate } = useGroupCreate()
 
   const handleShowAddGroupModal = useCallback(() => {
     setShowAddGroupModal(true)
@@ -46,8 +49,9 @@ const Home: React.FC = () => {
     setShowJoinGroup(v)
   }, [])
 
-  const handleCreateGroup = useCallback((groupId: string) => {
+  const handleCreateGroup = useCallback((groupName: string) => {
     // TODO
+    triggerGroupCreate({}).then()
   }, [])
 
   const handleJoinGroup = useCallback((groupId: string) => {
