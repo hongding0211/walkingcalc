@@ -10,7 +10,9 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import AddRecord from './add'
 import ItemCard from './itemCard'
+import ItemCardSkeleton from './itemCard/itemCardSkeleton'
 import TopCard from './topCard'
+import TopCardSkeleton from './topCardSkeleton'
 import Modal from '../../components/General/Modal'
 import { Color, ColorDark } from '../../constants/Colors'
 import { ThemeContext } from '../../feature/theme/themeContext'
@@ -116,30 +118,37 @@ const GroupHome: React.FC = () => {
         ]}
       >
         <AddButton onPress={handlePressAdd} />
-
-        <FlashList
-          data={recordData?.data}
-          renderItem={({ item }) => (
-            <Pressable
-              style={styles.item}
-              onPress={() => handlePressItemCard(item)}
-            >
-              <ItemCard data={item} />
-            </Pressable>
-          )}
-          estimatedItemSize={85}
-          ListHeaderComponent={
-            <View style={{ paddingTop: insets.top + 64 }}>
-              <TopCard
-                data={groupData?.data}
-                onPressQrcode={handlePressQrcode}
-                onPressDebtDetail={handlePressDebtDetail}
-              />
-            </View>
-          }
-          refreshing={isLoading}
-          onRefresh={handleRefresh}
-        />
+        {!recordData?.data && (
+          <View style={{ rowGap: 10 }}>
+            <TopCardSkeleton />
+            <ItemCardSkeleton />
+          </View>
+        )}
+        {recordData?.data && (
+          <FlashList
+            data={recordData?.data}
+            renderItem={({ item }) => (
+              <Pressable
+                style={styles.item}
+                onPress={() => handlePressItemCard(item)}
+              >
+                <ItemCard data={item} />
+              </Pressable>
+            )}
+            estimatedItemSize={80}
+            ListHeaderComponent={
+              <View style={{ paddingTop: insets.top + 64 }}>
+                <TopCard
+                  data={groupData?.data}
+                  onPressQrcode={handlePressQrcode}
+                  onPressDebtDetail={handlePressDebtDetail}
+                />
+              </View>
+            }
+            refreshing={isLoading}
+            onRefresh={handleRefresh}
+          />
+        )}
       </View>
 
       {showAddRecord && (
