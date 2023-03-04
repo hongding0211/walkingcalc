@@ -40,9 +40,18 @@ const AddRecord: React.FC<IAddGroup> = props => {
 
   const handleAdd = useCallback(() => {
     Haptics.selectionAsync().then()
+    if (!groupId || !who) {
+      toast(t('addFail') + '')
+      return
+    }
+    if (forWhom.length < 1) {
+      toast(t('atLeastOnePeople') + '')
+      return
+    }
     triggerAddRecord({
       body: {
         groupId,
+        who,
         paid: stringToNumber(paid),
         forWhom,
         type,

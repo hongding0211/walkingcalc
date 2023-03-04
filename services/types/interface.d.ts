@@ -195,6 +195,7 @@ export interface IPostRecord extends IApi {
     undefined,
     {
       groupId: string
+      who: string
       paid: number
       forWhom: string[]
       type: string

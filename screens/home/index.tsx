@@ -44,7 +44,6 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     return navigation.addListener('focus', () => {
-      console.log('!!👉 index.tsx: 47')
       mutateUserDebt().then()
       mutateGroup().then()
     })

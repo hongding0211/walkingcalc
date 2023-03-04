@@ -5,6 +5,7 @@ import React, { useCallback } from 'react'
 import { Dimensions, Pressable, StyleSheet, View } from 'react-native'
 
 import GroupCard from './groupCard'
+import GroupCardSkeleton from './groupCardSkeleton'
 import TopCard from './topCard'
 
 interface IMain {
@@ -36,21 +37,24 @@ const Main: React.FC<IMain> = props => {
   return (
     <View style={styles.container}>
       <TopCard total={userDebt?.data?.debt || 0} />
-      <FlashList
-        data={groupData?.data}
-        renderItem={({ item, index }) => (
-          <Pressable
-            style={styles.listItem}
-            onPress={() => handlePressGroupCard(index)}
-          >
-            <GroupCard data={item} />
-          </Pressable>
-        )}
-        keyExtractor={item => item.id}
-        estimatedItemSize={140}
-        onRefresh={handleRefresh}
-        refreshing={loading}
-      />
+      {!groupData?.data && <GroupCardSkeleton />}
+      {groupData?.data && (
+        <FlashList
+          data={groupData?.data}
+          renderItem={({ item, index }) => (
+            <Pressable
+              style={styles.listItem}
+              onPress={() => handlePressGroupCard(index)}
+            >
+              <GroupCard data={item} />
+            </Pressable>
+          )}
+          keyExtractor={item => item.id}
+          estimatedItemSize={140}
+          onRefresh={handleRefresh}
+          refreshing={loading}
+        />
+      )}
     </View>
   )
 }
