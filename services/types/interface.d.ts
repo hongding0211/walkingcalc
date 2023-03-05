@@ -217,3 +217,56 @@ export interface IPostRecord extends IApi {
     modifiedAt: number
   }>
 }
+
+export interface IPostRecordDrop extends IApi {
+  request: IRequest<
+    undefined,
+    {
+      groupId: string
+      recordId: string
+    }
+  >
+  response: IResponse<{
+    groupId: string
+    recordId: string
+  }>
+}
+
+export interface IDeleteGroup extends IApi {
+  request: IRequest<
+    {
+      id: string
+    },
+    undefined
+  >
+  response: IResponse<{
+    groupId: string
+  }>
+}
+
+export interface IPostGroupInvite extends IApi {
+  request: IRequest<
+    undefined,
+    {
+      id: string
+      members: string[]
+    }
+  >
+  response: IResponse<{
+    id: string
+    members: string[]
+  }>
+}
+export interface IPostGroupAddTempUser extends IApi {
+  request: IRequest<
+    undefined,
+    {
+      id: string
+      name: string
+    }
+  >
+  response: IResponse<{
+    id: string
+    name: string
+  }>
+}

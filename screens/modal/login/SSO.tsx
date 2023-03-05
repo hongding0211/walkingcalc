@@ -9,19 +9,10 @@ import { useLogin } from '../../../services/user'
 
 const SSO: React.FC = () => {
   const [showWebview, setShowWebView] = useState(true)
-  const [shouldUseLogin, setShouldUseLogin] = useState(false)
 
   const ticketRef = useRef('')
 
-  const { data: userLoginData } = useLogin(
-    {
-      params: {
-        type: 'sso',
-        ticket: ticketRef.current,
-      },
-    },
-    shouldUseLogin
-  )
+  const { trigger: triggerLogin } = useLogin()
   const dispatch = useDispatch()
   const navigation = useNavigation()
 
@@ -34,21 +25,30 @@ const SSO: React.FC = () => {
     }
     setShowWebView(false)
     ticketRef.current = match[1]
-    setShouldUseLogin(true)
   }, [])
 
   useEffect(() => {
-    const token = userLoginData?.data?.token
-    if (!token) {
-      return
-    }
-    dispatch(
-      setToken({
-        token,
+    if (!showWebview) {
+      triggerLogin({
+        params: {
+          type: 'sso',
+          ticket: ticketRef.current,
+        },
       })
-    )
-    navigation.goBack()
-  }, [userLoginData])
+        .then(res => {
+          if (res?.success && res?.data?.token) {
+            dispatch(
+              setToken({
+                token: res.data.token,
+              })
+            )
+          }
+        })
+        .finally(() => {
+          navigation.goBack()
+        })
+    }
+  }, [showWebview])
 
   return (
     <>

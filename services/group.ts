@@ -1,7 +1,23 @@
 import useFetch from './hooks/useFetch'
 import useMutation from './hooks/useMutation'
-import { GET_GROUP, GET_GROUP_MY, POST_GROUP_CREATE, POST_GROUP_JOIN } from './types/API'
-import { IGetGroup, IGetGroupMy, IPostGroupCreate, IPostGroupJoin } from './types/interface'
+import {
+  DELETE_GROUP,
+  GET_GROUP,
+  GET_GROUP_MY,
+  POST_GROUP_ADD_TEMP_USER,
+  POST_GROUP_CREATE,
+  POST_GROUP_INVITE,
+  POST_GROUP_JOIN,
+} from './types/API'
+import {
+  IDeleteGroup,
+  IGetGroup,
+  IGetGroupMy,
+  IPostGroupAddTempUser,
+  IPostGroupCreate,
+  IPostGroupInvite,
+  IPostGroupJoin,
+} from './types/interface'
 
 export function useGroupCreate() {
   return useMutation<IPostGroupCreate>('POST', POST_GROUP_CREATE)
@@ -21,4 +37,16 @@ export function useGroup(id: string) {
       id,
     },
   })
+}
+
+export function useDeleteGroup() {
+  return useMutation<IDeleteGroup>('DELETE', DELETE_GROUP)
+}
+
+export function useGroupInvite() {
+  return useMutation<IPostGroupInvite>('POST', POST_GROUP_INVITE)
+}
+
+export function useAddTempUser() {
+  return useMutation<IPostGroupAddTempUser>('POST', POST_GROUP_ADD_TEMP_USER)
 }

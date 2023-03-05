@@ -1,24 +1,28 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { useRoute } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { FlashList } from '@shopify/flash-list'
 import * as Haptics from 'expo-haptics'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, Pressable, StyleSheet, View } from 'react-native'
+import { Alert, Dimensions, Pressable, StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import AddRecord from './add'
+import AddMember from './addMember'
 import ItemCard from './itemCard'
 import ItemCardSkeleton from './itemCard/itemCardSkeleton'
+import ItemDetail from './itemDetail'
+import GroupSetting from './setting'
 import TopCard from './topCard'
 import TopCardSkeleton from './topCardSkeleton'
 import Modal from '../../components/General/Modal'
+import useToast from '../../components/Toast/useToast'
 import { Color, ColorDark } from '../../constants/Colors'
 import { ThemeContext } from '../../feature/theme/themeContext'
 import { MembersContext, useMembersContext } from '../../feature/user/membersContext'
-import { useGroup } from '../../services/group'
-import { useRecordGroup } from '../../services/record'
+import { useAddTempUser, useDeleteGroup, useGroup, useGroupInvite } from '../../services/group'
+import { useDropRecord, useRecordGroup } from '../../services/record'
 
 const AddButton: React.FC<{ onPress?: () => void }> = ({ onPress }) => (
   <Pressable
@@ -38,21 +42,28 @@ const GroupHome: React.FC = () => {
   const [showShareModal, setShowShareModal] = useState(false)
   const [showDebtDetail, setShowDebtDetail] = useState(false)
   const [showItemDetail, setShowItemDetail] = useState(false)
-  const [showSetting, setShowSetting] = useState(false)
-
+  const [showAddMember, setShowAddMember] = useState(false)
+  const [selectedItem, setSelectedItem] = useState<any>(undefined)
   const [isLoading, setIsLoading] = useState(false)
 
   const theme = useContext(ThemeContext)
   const insets = useSafeAreaInsets()
   const { t } = useTranslation('group')
   const route = useRoute()
+  const navigation = useNavigation<any>()
+  const toast = useToast()
 
-  const { groupId } = route.params
+  const { groupId, showSetting } = route.params
 
   const { data: groupData, mutate: mutateGroup, isLoading: groupLoading } = useGroup(groupId)
   const { data: recordData, mutate: mutateRecord, isLoading: recordLoading } = useRecordGroup(groupId)
 
-  const membersContextValue = useMembersContext(groupData?.data?.membersInfo || [])
+  const { trigger: triggerDropRecord } = useDropRecord()
+  const { trigger: triggerDismissGroup } = useDeleteGroup()
+  const { trigger: triggerInvite } = useGroupInvite()
+  const { trigger: triggerAddTempUser } = useAddTempUser()
+
+  const membersContextValue = useMembersContext(groupData?.data)
 
   useEffect(() => {
     setIsLoading(groupLoading && recordLoading)
@@ -65,9 +76,106 @@ const GroupHome: React.FC = () => {
     }
   }, [])
 
-  const handleRefresh = useCallback(() => {
+  const refreshData = useCallback(() => {
     mutateGroup().then()
     mutateRecord().then()
+  }, [])
+
+  const handleRefresh = useCallback(() => {
+    refreshData()
+  }, [])
+
+  const deleteRecord = useCallback(() => {
+    if (!selectedItem || !groupId || !selectedItem.recordId) {
+      toast(t('delFail') + '')
+      return
+    }
+    triggerDropRecord({
+      body: {
+        groupId,
+        recordId: selectedItem.recordId,
+      },
+    })
+      .then(() => {
+        refreshData()
+        setShowItemDetail(false)
+      })
+      .catch(() => {
+        toast(t('delFail') + '')
+      })
+  }, [groupId, selectedItem])
+
+  const dismissGroup = useCallback(() => {
+    if (!groupId) {
+      toast(t('dismissFail') + '')
+      return
+    }
+    triggerDismissGroup({
+      params: {
+        id: groupId,
+      },
+    })
+      .then(() => {
+        navigation.goBack()
+      })
+      .catch(() => {
+        toast(t('dismissFail') + '')
+      })
+  }, [groupId])
+
+  const handleDeleteRecord = useCallback(() => {
+    Alert.alert(t('confirmDelete'), '', [
+      {
+        text: t('cancel') + '',
+        style: 'cancel',
+      },
+      {
+        text: t('confirm') + '',
+        onPress: deleteRecord,
+      },
+    ])
+  }, [groupId, selectedItem])
+
+  const handleDismissGroup = useCallback(() => {
+    Alert.alert(t('confirmDismiss'), '', [
+      {
+        text: t('cancel') + '',
+        style: 'cancel',
+      },
+      {
+        text: t('confirm') + '',
+        onPress: dismissGroup,
+      },
+    ])
+  }, [groupId])
+
+  const handleConfirmAddUser = useCallback((data?: { user?: any; tempUser?: any }) => {
+    if (!groupId || !data || !data.user || !data.tempUser) {
+      return
+    }
+    Promise.all([
+      triggerInvite({
+        body: {
+          id: groupId,
+          members: data.user?.map(u => u.uuid) || [],
+        },
+      }),
+      ...data.tempUser.map((t: string) =>
+        triggerAddTempUser({
+          body: {
+            id: groupId,
+            name: t,
+          },
+        })
+      ),
+    ])
+      .catch(() => {
+        toast(t('generalError') + '')
+      })
+      .finally(() => {
+        setShowAddMember(false)
+        refreshData()
+      })
   }, [])
 
   const handlePressAdd = useCallback(() => {
@@ -76,28 +184,31 @@ const GroupHome: React.FC = () => {
   }, [])
 
   const handleCloseAddRecord = useCallback(() => {
-    mutateGroup().then()
-    mutateRecord().then()
+    refreshData()
     setShowAddRecord(false)
   }, [])
   const handleCloseShare = useCallback(() => {
     setShowShareModal(false)
   }, [])
   const handleCloseDebtDetail = useCallback(() => {
-    mutateGroup().then()
-    mutateRecord().then()
+    refreshData()
     setShowDebtDetail(false)
   }, [])
   const handleCloseItemDetail = useCallback(() => {
-    mutateGroup().then()
-    mutateRecord().then()
+    refreshData()
     setShowItemDetail(false)
   }, [])
   const handleCloseSetting = useCallback(() => {
-    setShowSetting(false)
+    navigation.setParams({
+      showSetting: undefined,
+    })
+  }, [])
+  const handleCloseAddMember = useCallback(() => {
+    setShowAddMember(false)
   }, [])
 
   const handlePressItemCard = useCallback((item: any) => {
+    setSelectedItem(item)
     setShowItemDetail(true)
   }, [])
   const handlePressQrcode = useCallback(() => {
@@ -105,6 +216,9 @@ const GroupHome: React.FC = () => {
   }, [])
   const handlePressDebtDetail = useCallback(() => {
     setShowDebtDetail(true)
+  }, [])
+  const handleAddMember = useCallback(() => {
+    setShowAddMember(true)
   }, [])
 
   return (
@@ -142,6 +256,7 @@ const GroupHome: React.FC = () => {
                   data={groupData?.data}
                   onPressQrcode={handlePressQrcode}
                   onPressDebtDetail={handlePressDebtDetail}
+                  onAddMember={handleAddMember}
                 />
               </View>
             }
@@ -178,13 +293,35 @@ const GroupHome: React.FC = () => {
         <Modal
           title={t('recordDetail') + ''}
           onClose={handleCloseItemDetail}
-        />
+        >
+          <ItemDetail
+            data={selectedItem}
+            onDelete={handleDeleteRecord}
+          />
+        </Modal>
       )}
       {showSetting && (
         <Modal
           title={t('setting') + ''}
           onClose={handleCloseSetting}
-        />
+        >
+          <GroupSetting
+            data={groupData?.data}
+            recordCnt={recordData?.data?.length}
+            onDismiss={handleDismissGroup}
+          />
+        </Modal>
+      )}
+      {showAddMember && (
+        <Modal
+          title={t('addMember') + ''}
+          onClose={handleCloseAddMember}
+        >
+          <AddMember
+            groupData={groupData?.data}
+            onConfirm={handleConfirmAddUser}
+          />
+        </Modal>
       )}
     </MembersContext.Provider>
   )

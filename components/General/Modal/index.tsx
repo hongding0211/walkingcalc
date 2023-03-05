@@ -2,7 +2,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { BlurView } from 'expo-blur'
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
-import { Keyboard, Pressable, TouchableWithoutFeedback, View } from 'react-native'
+import { Animated, Keyboard, Pressable, TouchableWithoutFeedback, View } from 'react-native'
 
 import styles from './style'
 import { Color, ColorDark } from '../../../constants/Colors'
@@ -17,15 +17,26 @@ interface IModal {
   children?: React.ReactNode
 }
 
+const AnimatedBlurView = Animated.createAnimatedComponent(BlurView)
+
 const Modal: React.FC<IModal> = props => {
   const { title = '', hideTitle = false, onClose, children } = props
 
   const layoutRef = useRef<any>(undefined)
 
+  const blurAnim = useRef(new Animated.Value(0))
+
   const [bottomOffset, setBottomOffset] = useState(0)
   const [maxHeight, setMaxHeight] = useState<number | undefined>(undefined)
 
   const theme = useContext(ThemeContext)
+
+  useEffect(() => {
+    Animated.spring(blurAnim.current, {
+      toValue: 50,
+      useNativeDriver: false,
+    }).start()
+  }, [])
 
   const handlePressClose = useCallback(() => {
     onClose && onClose()
@@ -59,7 +70,7 @@ const Modal: React.FC<IModal> = props => {
 
   return (
     <TouchableWithoutFeedback onPress={handlePressClose}>
-      <BlurView
+      <AnimatedBlurView
         style={[
           styles.mask,
           {
@@ -67,6 +78,7 @@ const Modal: React.FC<IModal> = props => {
             maxHeight,
           },
         ]}
+        intensity={blurAnim.current}
       >
         <TouchableWithoutFeedback onPress={handleCloseKeyboard}>
           <ThemedView
@@ -87,7 +99,7 @@ const Modal: React.FC<IModal> = props => {
             <View style={styles.content}>{children}</View>
           </ThemedView>
         </TouchableWithoutFeedback>
-      </BlurView>
+      </AnimatedBlurView>
     </TouchableWithoutFeedback>
   )
 }

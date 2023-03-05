@@ -48,15 +48,14 @@ const useUser = () => {
       return
     }
     if (token) {
-      if (!readyGetUserInfo) {
-        setReadyGetUserInfo(true)
-      } else {
-        // 先变成 undefined 再进行 revalidation
-        // 使得能够正确触发 useEffect()
-        mutateUserInfoData(undefined).then(() => {
+      // 先设置成 undefined 清楚缓存
+      mutateUserInfoData(undefined).then(() => {
+        if (!readyGetUserInfo) {
+          setReadyGetUserInfo(true)
+        } else {
           mutateUserInfoData().then()
-        })
-      }
+        }
+      })
     }
   }, [token, hasReadToken])
 

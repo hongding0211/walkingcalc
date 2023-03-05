@@ -4,11 +4,11 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { Provider } from 'react-redux'
 
 import store from './app/store'
+import { LangContext } from './feature/lang/langContext'
 import { ThemeContext } from './feature/theme/themeContext'
 import useCachedResources from './hooks/useCachedResources'
 import Navigation from './navigation'
 import './i18n'
-import { LangContext } from './feature/lang/langContext'
 
 export default function App() {
   const isLoadingComplete = useCachedResources()
