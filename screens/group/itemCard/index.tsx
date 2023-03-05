@@ -5,6 +5,7 @@ import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
+import { useAppSelector } from '../../../app/store'
 import Card from '../../../components/Card'
 import Tag from '../../../components/General/Tag'
 import ThemedText from '../../../components/General/Themed/Text'
@@ -24,6 +25,7 @@ const ItemCard: React.FC<IItemCard> = props => {
 
   const theme = useContext(ThemeContext)
   const member = useContext(MembersContext)
+  const userInfo = useAppSelector(state => state.user.data)
   const { time } = useDate()
   const { t } = useTranslation('group')
 
@@ -73,7 +75,8 @@ const ItemCard: React.FC<IItemCard> = props => {
             type="SECOND"
             style={styles.myPart}
           >
-            {t('myPart')}: {numberToString(data?.paid / data?.forWhom.length)}
+            {t('myPart')}:{' '}
+            {data?.forWhom.indexOf(userInfo?.uuid) === -1 ? 0 : numberToString(data?.paid / data?.forWhom.length)}
           </ThemedText>
         </View>
       </View>

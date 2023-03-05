@@ -9,6 +9,9 @@ const Input: React.FC<TextInput['props']> = props => {
 
   return (
     <TextInput
+      autoCapitalize="none"
+      autoComplete="off"
+      autoCorrect={false}
       {...props}
       style={[
         styles.input,

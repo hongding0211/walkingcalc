@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
@@ -15,12 +15,16 @@ const JoinGroup: React.FC<IJoinGroup> = ({ onConfirm }) => {
 
   const { t } = useTranslation('home')
 
+  const handleTextChange = useCallback((text: string) => {
+    setGroupId(text.toUpperCase())
+  }, [])
+
   return (
     <View style={styles.container}>
       <FormItem title={t('groupId') + ''}>
         <Input
           value={groupId}
-          onChangeText={setGroupId}
+          onChangeText={handleTextChange}
         />
       </FormItem>
       <View style={styles.btn}>

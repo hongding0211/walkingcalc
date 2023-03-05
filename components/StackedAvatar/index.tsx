@@ -10,12 +10,16 @@ interface IStackedAvatar {
     name?: string
   }[]
   size?: number
+  tail?: React.ReactNode
 }
 
 const StackedAvatar: React.FC<IStackedAvatar> = props => {
-  const { data, size = 22 } = props
+  const { data, size = 22, tail } = props
   return (
-    <ScrollView horizontal>
+    <ScrollView
+      horizontal
+      contentContainerStyle={{ alignItems: 'center' }}
+    >
       {data?.map((e, idx) => (
         <View
           style={{ marginRight: 4 }}
@@ -28,6 +32,7 @@ const StackedAvatar: React.FC<IStackedAvatar> = props => {
           />
         </View>
       ))}
+      {tail}
     </ScrollView>
   )
 }
