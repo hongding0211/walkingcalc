@@ -24,7 +24,7 @@ const ThemedPressable: React.FC<IThemedPressable & PressableProps> = props => {
         },
         highLight && pressed
           ? {
-              backgroundColor: theme.scheme === 'LIGHT' ? Color.BackgroundSecond : ColorDark.BackgroundSecond,
+              backgroundColor: theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third,
             }
           : {},
         style,

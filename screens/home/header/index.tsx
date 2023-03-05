@@ -1,6 +1,5 @@
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import * as Haptics from 'expo-haptics'
 import React, { useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
@@ -27,7 +26,6 @@ const Header: React.FC<IHeader> = ({ onAdd, onShowAbout, onLogout }) => {
   const theme = useContext(ThemeContext)
 
   const handleAddGroup = useCallback(() => {
-    Haptics.selectionAsync().then()
     onAdd && onAdd()
   }, [])
 
@@ -50,7 +48,6 @@ const Header: React.FC<IHeader> = ({ onAdd, onShowAbout, onLogout }) => {
         from={
           <Pressable
             onPress={() => {
-              Haptics.selectionAsync().then()
               setShowPopoverContent(!showPopoverContent)
             }}
           >

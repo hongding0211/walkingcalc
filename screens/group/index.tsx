@@ -26,7 +26,8 @@ import { ThemeContext } from '../../feature/theme/themeContext'
 import { MembersContext, useMembersContext } from '../../feature/user/membersContext'
 import { GroupProps } from '../../navigation/types'
 import { useAddTempUser, useDeleteGroup, useGroup, useGroupInvite } from '../../services/group'
-import { useDropRecord, useRecordGroup } from '../../services/record'
+import { useAddRecord, useDropRecord, useRecordGroup } from '../../services/record'
+import { IResolvedDebt } from '../../utlis/debt'
 
 const Loading = () => {
   return (
@@ -77,7 +78,7 @@ const GroupHome: React.FC = () => {
 
   const { data: groupData, mutate: mutateGroup, isLoading: groupLoading } = useGroup(groupId)
   const { trigger: triggerRecord } = useRecordGroup()
-
+  const { trigger: triggerAddRecord } = useAddRecord()
   const { trigger: triggerDropRecord } = useDropRecord()
   const { trigger: triggerDismissGroup } = useDeleteGroup()
   const { trigger: triggerInvite } = useGroupInvite()
@@ -275,6 +276,52 @@ const GroupHome: React.FC = () => {
       })
   }, [])
 
+  const resolveDebt = useCallback((debtToBeResolved: IResolvedDebt[]) => {
+    if (debtToBeResolved.length < 1) {
+      toast(t('zeroDebt') + '')
+      return
+    }
+    Promise.all(
+      debtToBeResolved.map(d => {
+        return triggerAddRecord({
+          body: {
+            groupId,
+            who: d.from?.uuid || '',
+            paid: d.amount,
+            forWhom: [d.to?.uuid || ''],
+            type: 'transfer',
+            text: '',
+            long: '',
+            lat: '',
+          },
+        })
+      })
+    )
+      .then(() => {
+        setShowDebtDetail(false)
+      })
+      .catch(() => {
+        toast(t('generalError') + '')
+      })
+      .finally(() => {
+        refreshData()
+        scrollToTop()
+      })
+  }, [])
+
+  const handleResolveDebt = useCallback((debt: IResolvedDebt[]) => {
+    Alert.alert(t('confirmResolve'), '', [
+      {
+        text: t('cancel') + '',
+        style: 'cancel',
+      },
+      {
+        text: t('confirm') + '',
+        onPress: () => resolveDebt(debt),
+      },
+    ])
+  }, [])
+
   const handleScroll = useCallback(() => (scrollRef.current = true), [])
 
   const handlePressAdd = useCallback(() => {
@@ -415,7 +462,10 @@ const GroupHome: React.FC = () => {
           title={t('debtDetail') + ''}
           onClose={handleCloseDebtDetail}
         >
-          <DebtDetail />
+          <DebtDetail
+            data={groupData?.data}
+            onResolveDebt={handleResolveDebt}
+          />
         </Modal>
       )}
       {showItemDetail && (

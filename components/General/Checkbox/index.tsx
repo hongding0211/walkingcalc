@@ -1,8 +1,7 @@
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import * as Haptics from 'expo-haptics'
 import React, { useCallback, useContext, useRef } from 'react'
-import { View, StyleSheet, Pressable } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 
 import { Color, ColorDark } from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
@@ -63,7 +62,6 @@ const Checkbox: React.FC<ICheckBox> = props => {
   const set = useRef(new Set())
 
   const handlePress = useCallback((v: any) => {
-    Haptics.selectionAsync().then()
     if (!set.current.has(v)) {
       set.current.add(v)
     } else {

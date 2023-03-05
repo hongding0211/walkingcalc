@@ -21,10 +21,9 @@ import { useUserDebt } from '../../services/user'
 
 const Home: React.FC = () => {
   const [showAddGroupModal, setShowAddGroupModal] = useState(false)
-  const [showCreateGroup, setShowCreateGroup] = useState(false)
-  const [showJoinGroup, setShowJoinGroup] = useState(false)
   const [showAboutModal, setShowAboutModal] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [addGroupComponent, setAddGroupComponent] = useState<'DEFAULT' | 'CREATE' | 'JOIN'>('DEFAULT')
 
   const { t } = useTranslation('home')
   const dispatch = useDispatch()
@@ -49,26 +48,13 @@ const Home: React.FC = () => {
     })
   }, [navigation])
 
-  const handleShowAddGroupModal = useCallback(() => {
-    setShowAddGroupModal(true)
-  }, [])
-
   const handleCloseAddGroupModal = useCallback(() => {
+    setAddGroupComponent('DEFAULT')
     setShowAddGroupModal(false)
   }, [])
 
   const handleShowAbout = useCallback((v: boolean) => {
     setShowAboutModal(v)
-  }, [])
-
-  const handleShowCreateGroup = useCallback((v: boolean) => {
-    setShowAddGroupModal(false)
-    setShowCreateGroup(v)
-  }, [])
-
-  const handleShowJoinGroup = useCallback((v: boolean) => {
-    setShowAddGroupModal(false)
-    setShowJoinGroup(v)
   }, [])
 
   const handleCreateGroup = useCallback((groupName: string) => {
@@ -79,7 +65,7 @@ const Home: React.FC = () => {
     })
       .then(v => {
         if (v?.success) {
-          setShowCreateGroup(false)
+          handleCloseAddGroupModal()
         } else {
           toast(t('createFail') + '')
         }
@@ -98,7 +84,7 @@ const Home: React.FC = () => {
     })
       .then(v => {
         if (v?.success) {
-          setShowJoinGroup(false)
+          handleCloseAddGroupModal()
         } else {
           toast(t('joinFail') + '')
         }
@@ -143,7 +129,7 @@ const Home: React.FC = () => {
       >
         <View style={styles.container}>
           <Header
-            onAdd={handleShowAddGroupModal}
+            onAdd={() => setShowAddGroupModal(true)}
             onShowAbout={() => handleShowAbout(true)}
             onLogout={handleLogout}
           />
@@ -159,31 +145,21 @@ const Home: React.FC = () => {
 
       {showAddGroupModal && (
         <Modal
-          hideTitle
+          hideTitle={addGroupComponent === 'DEFAULT'}
+          title={addGroupComponent === 'CREATE' ? t('createGroup') + '' : t('joinGroup') + ''}
           onClose={handleCloseAddGroupModal}
         >
-          <AddGroup
-            onCreateGroup={() => handleShowCreateGroup(true)}
-            onJoinGroup={() => handleShowJoinGroup(true)}
-          />
+          {addGroupComponent === 'DEFAULT' && (
+            <AddGroup
+              onCreateGroup={() => setAddGroupComponent('CREATE')}
+              onJoinGroup={() => setAddGroupComponent('JOIN')}
+            />
+          )}
+          {addGroupComponent === 'CREATE' && <CreateGroup onConfirm={handleCreateGroup} />}
+          {addGroupComponent === 'JOIN' && <JoinGroup onConfirm={handleJoinGroup} />}
         </Modal>
       )}
-      {showCreateGroup && (
-        <Modal
-          title={t('createGroup') + ''}
-          onClose={() => handleShowCreateGroup(false)}
-        >
-          <CreateGroup onConfirm={handleCreateGroup} />
-        </Modal>
-      )}
-      {showJoinGroup && (
-        <Modal
-          title={t('joinGroup') + ''}
-          onClose={() => handleShowJoinGroup(false)}
-        >
-          <JoinGroup onConfirm={handleJoinGroup} />
-        </Modal>
-      )}
+
       {showAboutModal && (
         <Modal
           title={t('about') + ''}

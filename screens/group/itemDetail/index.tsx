@@ -1,10 +1,11 @@
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import dayjs from 'dayjs'
-import { ScrollView } from 'native-base'
-import React, { useContext } from 'react'
+import { ScrollView, Skeleton } from 'native-base'
+import React, { useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Text } from 'react-native'
+import MapView, { Marker } from 'react-native-maps'
 
 import FormItem from '../../../components/FormItem'
 import Avatar from '../../../components/General/Avatar'
@@ -52,10 +53,19 @@ const UserBar: React.FC<IUserBar> = props => {
 const ItemDetail: React.FC<IItemDetail> = props => {
   const { data, onDelete } = props
 
+  const [mapLoading, setMapLoading] = useState(true)
+
   const theme = useContext(ThemeContext)
   const member = useContext(MembersContext)
   const { t } = useTranslation('group')
   const { fullDate } = useDate()
+
+  const { long: longitude, lat: latitude } = data || {}
+
+  const handleMapReady = useCallback(() => {
+    console.log('!!👉 index.tsx: 66')
+    setMapLoading(false)
+  }, [])
 
   return (
     <View style={styles.container}>
@@ -97,7 +107,7 @@ const ItemDetail: React.FC<IItemDetail> = props => {
       </FormItem>
       <Divider />
       <FormItem title={t('for') + `(${data?.forWhom?.length})`}>
-        <ScrollView style={{ maxHeight: 100 }}>
+        <ScrollView style={{ maxHeight: 135 }}>
           <View
             style={{ gap: 8 }}
             onStartShouldSetResponder={() => true}
@@ -118,6 +128,49 @@ const ItemDetail: React.FC<IItemDetail> = props => {
           </View>
         </ScrollView>
       </FormItem>
+      {longitude && latitude && (
+        <View>
+          <View style={{ opacity: mapLoading ? 0 : 1 }}>
+            <MapView
+              initialCamera={{
+                center: {
+                  longitude: +longitude,
+                  latitude: +latitude,
+                },
+                heading: 0,
+                pitch: 0,
+                altitude: 500,
+              }}
+              style={styles.map}
+              zoomEnabled={false}
+              scrollEnabled={false}
+              rotateEnabled={false}
+              toolbarEnabled={false}
+              onMapReady={handleMapReady}
+            >
+              <Marker
+                coordinate={{
+                  longitude: +longitude,
+                  latitude: +latitude,
+                }}
+              >
+                <Avatar
+                  size={30}
+                  source={member.get(data?.who)?.avatar}
+                  name={member.get(data?.who)?.name}
+                />
+              </Marker>
+            </MapView>
+          </View>
+          {mapLoading && (
+            <Skeleton
+              startColor={theme.scheme === 'LIGHT' ? 'muted.200' : 'muted.800'}
+              rounded="md"
+              style={{ height: 100, position: 'absolute' }}
+            />
+          )}
+        </View>
+      )}
       <Button
         type="DANGER"
         title={t('delete')}
@@ -145,5 +198,9 @@ const styles = StyleSheet.create({
     width: 2,
     height: 32,
     marginHorizontal: 10,
+  },
+  map: {
+    borderRadius: 8,
+    height: 100,
   },
 })
