@@ -41,12 +41,10 @@
       "expo-barcode-scanner",
       "expo-localization"
     ],
-    "jsEngine": "jsc",
     "extra": {
       "eas": {
         "projectId": "eaf5abb6-948a-4a47-90e1-d471d8c16916"
       }
-    },
-    "owner": "hong1997"
+    }
   }
 }
