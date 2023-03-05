@@ -1,5 +1,6 @@
 import * as Haptics from 'expo-haptics'
-import React, { useCallback, useContext, useState } from 'react'
+import * as Location from 'expo-location'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
@@ -31,6 +32,7 @@ const AddRecord: React.FC<IAddGroup> = props => {
   const [forWhom, setForWhom] = useState<any>([])
   const [type, setType] = useState('food')
   const [text, setText] = useState('')
+  const [location, setLocation] = useState<any>(undefined)
 
   const { t } = useTranslation('group')
   const members = useContext(MembersContext)
@@ -48,6 +50,7 @@ const AddRecord: React.FC<IAddGroup> = props => {
       toast(t('atLeastOnePeople') + '')
       return
     }
+    const { latitude, longitude } = location?.coords
     triggerAddRecord({
       body: {
         groupId,
@@ -56,8 +59,8 @@ const AddRecord: React.FC<IAddGroup> = props => {
         forWhom,
         type,
         text,
-        long: '',
-        lat: '',
+        long: longitude ? longitude + '' : '',
+        lat: latitude ? latitude + '' : '',
       },
     }).then(res => {
       if (res?.success) {
@@ -66,7 +69,19 @@ const AddRecord: React.FC<IAddGroup> = props => {
         toast(t('addFail') + '')
       }
     })
-  }, [groupId, paid, forWhom, type, text])
+  }, [groupId, paid, forWhom, type, text, location])
+
+  useEffect(() => {
+    ;(async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync()
+      if (status !== 'granted') {
+        return
+      }
+
+      const location = await Location.getCurrentPositionAsync({})
+      setLocation(location)
+    })()
+  }, [])
 
   return (
     <View style={styles.container}>

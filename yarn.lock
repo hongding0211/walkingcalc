@@ -5337,6 +5337,11 @@ expo-linking@~4.0.1:
     qs "^6.11.0"
     url-parse "^1.5.9"
 
+expo-location@~15.1.1:
+  version "15.1.1"
+  resolved "https://registry.npmmirror.com/expo-location/-/expo-location-15.1.1.tgz#9289ca687afbdb73d847cc8c821ab66746eb9d47"
+  integrity sha512-hoKRlmi6Ya+NeZ72Zt385SDcSsIDpJI60TCBVO+Hc9xfKA9Hyminyyo5WiwI8J03igmPTCl8Y37MxBNKY9AWkg==
+
 expo-modules-autolinking@1.1.2:
   version "1.1.2"
   resolved "https://registry.npmmirror.com/expo-modules-autolinking/-/expo-modules-autolinking-1.1.2.tgz#a81c65c63bd281922410c6d8c3ad6255b6305246"
