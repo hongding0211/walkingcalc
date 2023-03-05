@@ -9,7 +9,6 @@
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "eslint --fix .",
-    "postinstall": "git config core.hooksPath .hooks",
     "prepare": "husky install"
   },
   "jest": {
