@@ -1,4 +1,4 @@
-const BASE_URL_PROD = 'http://127.0.0.1:7001'
+const BASE_URL_PROD = 'https://hong97.ltd/walkcalc/api'
 const BASE_URL_DEV = 'http://192.168.50.142:7001'
 
 const env = process.env['NODE_ENV']
