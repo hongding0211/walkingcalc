@@ -41,5 +41,7 @@
   "noPaidSelf": "Cannot pay for yourself",
   "enterAmount": "Enter amount",
   "end": "The End",
-  "debtResolve": "Resolve debt"
+  "debtResolve": "Resolve debt",
+  "zeroDebt": "All debts are resolved",
+  "confirmResolve": "Confirm resolve all debts?"
 }

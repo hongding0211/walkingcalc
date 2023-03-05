@@ -41,5 +41,7 @@
   "noPaidSelf": "不能为自己付款",
   "enterAmount": "填写金额",
   "end": "已经到底啦",
-  "debtResolve": "债务和解"
+  "debtResolve": "债务和解",
+  "zeroDebt": "所有债务已和解",
+  "confirmResolve": "确认和解所有债务吗?"
 }

@@ -1,13 +1,23 @@
-import React from 'react'
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View } from 'react-native'
+import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native'
 
 import FormItem from '../../../components/FormItem'
 import Avatar from '../../../components/General/Avatar'
+import Button from '../../../components/General/Button'
+import Divider from '../../../components/General/Divider'
 import ThemedText from '../../../components/General/Themed/Text'
+import { Color, ColorDark } from '../../../constants/Colors'
+import { ThemeContext } from '../../../feature/theme/themeContext'
+import { IResolvedDebt, resolveDebt } from '../../../utlis/debt'
 import { numberToString } from '../../../utlis/moeny'
 
-interface IDebtDetail {}
+interface IDebtDetail {
+  data?: Record<string, any>
+  onResolveDebt?: (debt: IResolvedDebt[]) => void
+}
 
 interface IUserBar {
   name?: string
@@ -23,23 +33,156 @@ const UserBar: React.FC<IUserBar> = props => {
       <View style={styles.bar}>
         <Avatar
           size={24}
+          name={name}
           source={avatar}
         />
         <ThemedText style={{ marginLeft: 10, fontWeight: '500' }}>
           {name && name?.length > 10 ? name?.slice(0, 10) + '...' : name}
         </ThemedText>
       </View>
-      <ThemedText style={{ fontWeight: '500', fontSize: 16 }}>{numberToString(debt || 0)}</ThemedText>
+      <ThemedText
+        style={[
+          { fontWeight: '500', fontSize: 16 },
+          {
+            color: debt !== undefined && debt < -1e-6 ? Color.Danger : Color.Success,
+          },
+        ]}
+      >
+        {debt && debt < -1e-6 ? '' : '+'}
+        {numberToString(debt || 0)}
+      </ThemedText>
     </View>
+  )
+}
+
+const Transfer: React.FC<{ debt: IResolvedDebt }> = ({ debt }) => {
+  const { from, to, amount } = debt
+
+  const theme = useContext(ThemeContext)
+
+  return (
+    <>
+      <View style={styles.bar}>
+        <View style={[styles.bar, { columnGap: 8 }]}>
+          <Avatar
+            size={24}
+            name={from.name}
+            source={from.avatar}
+          />
+          <ThemedText>{from.name}</ThemedText>
+        </View>
+        <View style={[styles.bar, { columnGap: 8 }]}>
+          <ThemedText>{to.name}</ThemedText>
+          <Avatar
+            size={24}
+            name={to.name}
+            source={to.avatar}
+          />
+        </View>
+      </View>
+
+      <View
+        style={{
+          position: 'absolute',
+          alignItems: 'center',
+          justifyContent: 'center',
+          rowGap: 16,
+          width: Dimensions.get('window').width - 80,
+          height: 24,
+        }}
+      >
+        <FontAwesomeIcon
+          style={{
+            color: theme.scheme === 'LIGHT' ? Color.Second : ColorDark.Second,
+          }}
+          size={14}
+          icon={faArrowRight}
+        />
+      </View>
+
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: Dimensions.get('window').width - 80,
+          backgroundColor: theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third,
+          padding: 4,
+          borderRadius: 4,
+        }}
+      >
+        <Text style={{ fontSize: 10 }}>💸</Text>
+        <ThemedText style={{ fontWeight: '500' }}>{numberToString(amount)}</ThemedText>
+      </View>
+    </>
   )
 }
 const DebtDetail: React.FC<IDebtDetail> = props => {
   const { t } = useTranslation('group')
 
+  const { data, onResolveDebt } = props
+
+  const resolvedDebt = resolveDebt([...(data?.membersInfo || []), ...(data?.tempUsers || [])])
+
   return (
     <View style={styles.container}>
-      <FormItem title={t('debtDetail') + ''} />
-      <FormItem title={t('debtResolve') + ''} />
+      <FormItem title={t('debtDetail') + `(${data?.membersInfo?.length + data?.tempUsers?.length})`}>
+        <ScrollView style={styles.scroll}>
+          <View
+            style={styles.list}
+            onStartShouldSetResponder={() => true}
+          >
+            {data?.membersInfo?.map(m => (
+              <View
+                key={m.uuid}
+                style={{ rowGap: 8 }}
+              >
+                <UserBar
+                  name={m.name}
+                  debt={m.debt}
+                  avatar={m.avatar}
+                />
+                <Divider />
+              </View>
+            ))}
+            {data?.tempUsers?.map(m => (
+              <View
+                key={m.uuid}
+                style={{ rowGap: 8 }}
+              >
+                <UserBar
+                  name={m.name}
+                  debt={m.debt}
+                />
+                <Divider />
+              </View>
+            ))}
+          </View>
+        </ScrollView>
+      </FormItem>
+      <FormItem title={t('debtResolve') + `(${resolvedDebt.length})`}>
+        <ScrollView style={{ maxHeight: 200 }}>
+          <View
+            style={styles.list}
+            onStartShouldSetResponder={() => true}
+          >
+            {resolvedDebt.map((d, idx) => (
+              <View
+                key={idx}
+                style={{ rowGap: 8 }}
+              >
+                <Transfer debt={d} />
+                <Divider />
+              </View>
+            ))}
+          </View>
+        </ScrollView>
+      </FormItem>
+      <Button
+        title={t('debtResolve')}
+        type="DANGER"
+        onPress={() => onResolveDebt && onResolveDebt(resolvedDebt)}
+      />
     </View>
   )
 }
@@ -54,5 +197,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  scroll: {
+    maxHeight: 135,
+  },
+  list: {
+    rowGap: 16,
   },
 })

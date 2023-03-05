@@ -24,21 +24,21 @@ const TopCard: React.FC<ITopCard> = props => {
         <FontAwesomeIcon
           icon={faWallet}
           style={{
-            color: total < 0 ? Color.Danger : Color.Success,
+            color: total < -1e-6 ? Color.Danger : Color.Success,
           }}
         />
         <Text
           style={[
             styles.title,
             {
-              color: total < 0 ? Color.Danger : Color.Success,
+              color: total < -1e-6 ? Color.Danger : Color.Success,
             },
           ]}
         >
           {t('totalDebt')}
         </Text>
       </View>
-      <ThemedText style={styles.amount}>{`${total < 0 ? '' : '+'}` + numberToString(total)}</ThemedText>
+      <ThemedText style={styles.amount}>{`${total < -1e-6 ? '' : '+'}` + numberToString(total)}</ThemedText>
     </Card>
   )
 }

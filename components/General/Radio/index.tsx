@@ -1,6 +1,5 @@
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import * as Haptics from 'expo-haptics'
 import React, { useCallback, useContext } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 
@@ -61,7 +60,6 @@ const Radio: React.FC<IRadio> = props => {
   const { value, onChange, options } = props
 
   const handlePress = useCallback((value: any) => {
-    Haptics.selectionAsync().then()
     onChange && onChange(value)
   }, [])
 
