@@ -2,7 +2,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { BlurView } from 'expo-blur'
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
-import { Animated, Keyboard, Pressable, TouchableWithoutFeedback, View } from 'react-native'
+import { Animated, Keyboard, KeyboardAvoidingView, Pressable, TouchableWithoutFeedback, View } from 'react-native'
 
 import styles from './style'
 import { Color, ColorDark } from '../../../constants/Colors'
@@ -22,13 +22,7 @@ const AnimatedBlurView = Animated.createAnimatedComponent(BlurView)
 const Modal: React.FC<IModal> = props => {
   const { title = '', hideTitle = false, onClose, children } = props
 
-  const layoutRef = useRef<any>(undefined)
-
   const blurAnim = useRef(new Animated.Value(0))
-
-  const [bottomOffset, setBottomOffset] = useState(0)
-  const [maxHeight, setMaxHeight] = useState<number | undefined>(undefined)
-
   const theme = useContext(ThemeContext)
 
   useEffect(() => {
@@ -46,61 +40,39 @@ const Modal: React.FC<IModal> = props => {
     Keyboard.dismiss()
   }, [])
 
-  const handleLayout = useCallback((e: any) => {
-    layoutRef.current = e.nativeEvent.layout
-  }, [])
-
-  useEffect(() => {
-    Keyboard.addListener('keyboardDidShow', () => {
-      const keyboardY = Keyboard.metrics()?.screenY
-      if (keyboardY === undefined) {
-        return
-      }
-      const { y, height } = layoutRef.current
-      const overlap = y + height - keyboardY
-      if (overlap > 50) {
-        setBottomOffset(overlap + 100)
-      }
-    })
-    Keyboard.addListener('keyboardWillHide', () => {
-      setBottomOffset(0)
-      setMaxHeight(undefined)
-    })
-  }, [])
-
   return (
-    <TouchableWithoutFeedback onPress={handlePressClose}>
+    <>
       <AnimatedBlurView
-        style={[
-          styles.mask,
-          {
-            bottom: bottomOffset,
-            maxHeight,
-          },
-        ]}
+        style={[styles.mask]}
         intensity={blurAnim.current}
-      >
-        <TouchableWithoutFeedback onPress={handleCloseKeyboard}>
-          <ThemedView
-            style={styles.card}
-            onLayout={handleLayout}
+      />
+
+      <TouchableWithoutFeedback onPress={handlePressClose}>
+        <View style={styles.container}>
+          <KeyboardAvoidingView
+            behavior="position"
+            keyboardVerticalOffset={-60}
           >
-            {!hideTitle && (
-              <View style={styles.title}>
-                <ThemedText style={styles.titleText}>{title}</ThemedText>
-                <Pressable onPress={handlePressClose}>
-                  <FontAwesomeIcon
-                    icon={faXmark}
-                    style={{ color: theme.scheme === 'LIGHT' ? Color.Second : ColorDark.Second }}
-                  />
-                </Pressable>
-              </View>
-            )}
-            <View style={styles.content}>{children}</View>
-          </ThemedView>
-        </TouchableWithoutFeedback>
-      </AnimatedBlurView>
-    </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={handleCloseKeyboard}>
+              <ThemedView style={styles.card}>
+                {!hideTitle && (
+                  <View style={styles.title}>
+                    <ThemedText style={styles.titleText}>{title}</ThemedText>
+                    <Pressable onPress={handlePressClose}>
+                      <FontAwesomeIcon
+                        icon={faXmark}
+                        style={{ color: theme.scheme === 'LIGHT' ? Color.Second : ColorDark.Second }}
+                      />
+                    </Pressable>
+                  </View>
+                )}
+                <View style={styles.content}>{children}</View>
+              </ThemedView>
+            </TouchableWithoutFeedback>
+          </KeyboardAvoidingView>
+        </View>
+      </TouchableWithoutFeedback>
+    </>
   )
 }
 

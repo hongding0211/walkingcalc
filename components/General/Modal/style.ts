@@ -11,10 +11,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  card: {
+  container: {
     position: 'absolute',
-    left: 20,
-    right: 20,
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  card: {
+    width: Dimensions.get('window').width - 40,
     borderRadius: 16,
     shadowColor: '#000',
     shadowOffset: {
