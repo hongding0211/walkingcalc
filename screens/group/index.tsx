@@ -23,6 +23,7 @@ import useToast from '../../components/Toast/useToast'
 import { Color, ColorDark } from '../../constants/Colors'
 import { ThemeContext } from '../../feature/theme/themeContext'
 import { MembersContext, useMembersContext } from '../../feature/user/membersContext'
+import { GroupProps } from '../../navigation/types'
 import { useAddTempUser, useDeleteGroup, useGroup, useGroupInvite } from '../../services/group'
 import { useDropRecord, useRecordGroup } from '../../services/record'
 
@@ -67,8 +68,8 @@ const GroupHome: React.FC = () => {
   const theme = useContext(ThemeContext)
   const insets = useSafeAreaInsets()
   const { t } = useTranslation('group')
-  const route = useRoute()
-  const navigation = useNavigation<any>()
+  const route = useRoute<GroupProps['route']>()
+  const navigation = useNavigation<GroupProps['navigation']>()
   const toast = useToast()
 
   const { groupId, showSetting } = route.params
@@ -252,7 +253,7 @@ const GroupHome: React.FC = () => {
       triggerInvite({
         body: {
           id: groupId,
-          members: data.user?.map(u => u.uuid) || [],
+          members: data.user?.map((u: any) => u.uuid) || [],
         },
       }),
       ...data.tempUser.map((t: string) =>
@@ -330,21 +331,21 @@ const GroupHome: React.FC = () => {
         ]}
       >
         <AddButton onPress={handlePressAdd} />
-        {(listData == undefined || !groupData?.data) && (
+        {(listData === undefined || !groupData?.data) && (
           <View style={{ rowGap: 10 }}>
             <TopCardSkeleton />
             <ItemCardSkeleton />
           </View>
         )}
-        {listData != undefined && groupData?.data && (
+        {listData !== undefined && groupData?.data && (
           <FlashList
             data={listData}
-            renderItem={({ item }) => (
+            renderItem={(e: any) => (
               <Pressable
                 style={styles.item}
-                onPress={() => handlePressItemCard(item)}
+                onPress={() => handlePressItemCard(e.item)}
               >
-                <ItemCard data={item} />
+                <ItemCard data={e.item} />
               </Pressable>
             )}
             estimatedItemSize={80}

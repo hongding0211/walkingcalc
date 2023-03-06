@@ -6,10 +6,11 @@ import { Pressable } from 'react-native'
 
 import { Typography, TypographyDark } from '../../constants/Colors'
 import { ThemeContext } from '../../feature/theme/themeContext'
+import { GroupProps } from '../../navigation/types'
 
 const SettingButton: React.FC = () => {
   const theme = useContext(ThemeContext)
-  const navigation = useNavigation<any>()
+  const navigation = useNavigation<GroupProps['navigation']>()
 
   const handlePress = useCallback(() => {
     navigation.setParams({

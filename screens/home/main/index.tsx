@@ -7,6 +7,7 @@ import { Dimensions, Pressable, StyleSheet, View } from 'react-native'
 import GroupCard from './groupCard'
 import GroupCardSkeleton from './groupCardSkeleton'
 import TopCard from './topCard'
+import { GroupProps } from '../../../navigation/types'
 
 interface IMain {
   userDebt?: any
@@ -18,7 +19,7 @@ interface IMain {
 const Main: React.FC<IMain> = props => {
   const { userDebt, groupData, onRefresh, loading } = props
 
-  const navigation = useNavigation<any>()
+  const navigation = useNavigation<GroupProps['navigation']>()
 
   const handlePressGroupCard = useCallback(
     (index: number) => {
@@ -41,7 +42,7 @@ const Main: React.FC<IMain> = props => {
       {groupData?.data && (
         <FlashList
           data={groupData?.data}
-          renderItem={({ item, index }) => (
+          renderItem={({ item, index }: { item: any; index: number }) => (
             <Pressable
               style={styles.listItem}
               onPress={() => handlePressGroupCard(index)}
