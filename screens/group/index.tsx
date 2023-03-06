@@ -18,6 +18,7 @@ import GroupSetting from './setting'
 import TopCard from './topCard'
 import TopCardSkeleton from './topCardSkeleton'
 import Modal from '../../components/General/Modal'
+import ThemedText from '../../components/General/Themed/Text'
 import useToast from '../../components/Toast/useToast'
 import { Color, ColorDark } from '../../constants/Colors'
 import { ThemeContext } from '../../feature/theme/themeContext'
@@ -58,8 +59,8 @@ const GroupHome: React.FC = () => {
   const [listData, setListData] = useState<any>(undefined)
   const [recordLoading, setRecordLoading] = useState(false)
   const [total, setTotal] = useState(0)
+  const [page, setPage] = useState(1)
 
-  const page = useRef(1)
   const scrollRef = useRef(false)
   const flashListRef = useRef<any>(undefined)
 
@@ -101,7 +102,7 @@ const GroupHome: React.FC = () => {
     triggerRecord({
       params: {
         id: groupId,
-        page: page.current + '',
+        page: page + '',
       },
     })
       .then(v => {
@@ -130,7 +131,7 @@ const GroupHome: React.FC = () => {
         setListData(v.data)
       }
     })
-    page.current = 1
+    setPage(1)
   }, [])
 
   const handleRefresh = useCallback(() => {
@@ -146,7 +147,7 @@ const GroupHome: React.FC = () => {
 
   const handleReachEnd = useCallback(() => {
     const totalPage = Math.ceil(total / 10)
-    if (page.current >= totalPage) {
+    if (page >= totalPage) {
       return
     }
     if (isLoading) {
@@ -156,13 +157,12 @@ const GroupHome: React.FC = () => {
       return
     }
     scrollRef.current = false
-    Haptics.selectionAsync().then()
-    page.current = page.current + 1
+    setPage(page + 1)
     setRecordLoading(true)
     triggerRecord({
       params: {
         id: groupId,
-        page: page.current + '',
+        page: page + 1 + '',
       },
     })
       .then(v => {
@@ -177,7 +177,7 @@ const GroupHome: React.FC = () => {
       .finally(() => {
         setRecordLoading(false)
       })
-  }, [isLoading, listData, total])
+  }, [isLoading, listData, total, page])
 
   const deleteRecord = useCallback(() => {
     if (!selectedItem || !groupId || !selectedItem.recordId) {
@@ -273,6 +273,8 @@ const GroupHome: React.FC = () => {
       })
   }, [])
 
+  const handleScroll = useCallback(() => (scrollRef.current = true), [])
+
   const handlePressAdd = useCallback(() => {
     setShowAddRecord(true)
     Haptics.selectionAsync().then()
@@ -346,17 +348,30 @@ const GroupHome: React.FC = () => {
               </Pressable>
             )}
             estimatedItemSize={80}
+            ListHeaderComponentStyle={{
+              paddingTop: insets.top + 64,
+            }}
             ListHeaderComponent={
-              <View style={{ paddingTop: insets.top + 64 }}>
-                <TopCard
-                  data={groupData?.data}
-                  onPressQrcode={handlePressQrcode}
-                  onPressDebtDetail={handlePressDebtDetail}
-                  onAddMember={handleAddMember}
-                />
-              </View>
+              <TopCard
+                data={groupData?.data}
+                onPressQrcode={handlePressQrcode}
+                onPressDebtDetail={handlePressDebtDetail}
+                onAddMember={handleAddMember}
+              />
             }
-            ListFooterComponent={<>{isLoading && <Loading />}</>}
+            ListFooterComponent={
+              <>
+                {isLoading && <Loading />}
+                {!isLoading && page === Math.ceil(total / 10) && (
+                  <ThemedText
+                    style={{ fontSize: 12 }}
+                    type="SECOND"
+                  >
+                    - {t('end')} -
+                  </ThemedText>
+                )}
+              </>
+            }
             ListFooterComponentStyle={{
               alignSelf: 'center',
               paddingTop: 12,
@@ -365,7 +380,7 @@ const GroupHome: React.FC = () => {
             refreshing={isLoading}
             onRefresh={handleRefresh}
             onEndReached={handleReachEnd}
-            onMomentumScrollBegin={() => (scrollRef.current = true)}
+            onScrollBeginDrag={handleScroll}
             showsVerticalScrollIndicator={false}
             ref={flashListRef}
           />
