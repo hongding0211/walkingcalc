@@ -37,5 +37,7 @@
   "generalError": "网络开小差",
   "enterName": "输入名字",
   "emptyName": "名字不能为空",
-  "duplicateName": "名字不能重复"
+  "duplicateName": "名字不能重复",
+  "noPaidSelf": "不能为自己付款",
+  "enterAmount": "填写金额"
 }

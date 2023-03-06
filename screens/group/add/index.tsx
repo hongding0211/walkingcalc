@@ -42,12 +42,21 @@ const AddRecord: React.FC<IAddGroup> = props => {
 
   const handleAdd = useCallback(() => {
     Haptics.selectionAsync().then()
+    if (paid.length === 0) {
+      toast(t('enterAmount') + '')
+      return
+    }
     if (!groupId || !who) {
       toast(t('addFail') + '')
       return
     }
     if (forWhom.length < 1) {
       toast(t('atLeastOnePeople') + '')
+      return
+    }
+    if (forWhom.length === 1 && forWhom[0] === who) {
+      console.log('!!👉 index.tsx: 58', forWhom, who)
+      toast(t('noPaidSelf') + '')
       return
     }
     const { latitude, longitude } = location?.coords

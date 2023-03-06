@@ -82,7 +82,7 @@ const ItemCard: React.FC<IItemCard> = props => {
             style={styles.myPart}
           >
             {t('myPart')}:{' '}
-            {data?.forWhom.indexOf(userInfo?.uuid) === -1 ? 0 : numberToString(data?.paid / data?.forWhom.length)}
+            {data?.forWhom?.indexOf(userInfo?.uuid) === -1 ? 0 : numberToString(data?.paid / data?.forWhom?.length)}
           </ThemedText>
         </View>
       </View>
