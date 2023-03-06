@@ -55,11 +55,10 @@ const AddRecord: React.FC<IAddGroup> = props => {
       return
     }
     if (forWhom.length === 1 && forWhom[0] === who) {
-      console.log('!!👉 index.tsx: 58', forWhom, who)
       toast(t('noPaidSelf') + '')
       return
     }
-    const { latitude, longitude } = location?.coords
+    const { latitude, longitude } = location?.coords || {}
     triggerAddRecord({
       body: {
         groupId,

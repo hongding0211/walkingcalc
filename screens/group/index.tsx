@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { FlashList } from '@shopify/flash-list'
 import * as Haptics from 'expo-haptics'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { Spinner } from 'native-base'
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Dimensions, Pressable, StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -23,6 +24,15 @@ import { ThemeContext } from '../../feature/theme/themeContext'
 import { MembersContext, useMembersContext } from '../../feature/user/membersContext'
 import { useAddTempUser, useDeleteGroup, useGroup, useGroupInvite } from '../../services/group'
 import { useDropRecord, useRecordGroup } from '../../services/record'
+
+const Loading = () => {
+  return (
+    <Spinner
+      size="sm"
+      color="muted.300"
+    />
+  )
+}
 
 const AddButton: React.FC<{ onPress?: () => void }> = ({ onPress }) => (
   <Pressable
@@ -45,6 +55,13 @@ const GroupHome: React.FC = () => {
   const [showAddMember, setShowAddMember] = useState(false)
   const [selectedItem, setSelectedItem] = useState<any>(undefined)
   const [isLoading, setIsLoading] = useState(false)
+  const [listData, setListData] = useState<any>(undefined)
+  const [recordLoading, setRecordLoading] = useState(false)
+  const [total, setTotal] = useState(0)
+
+  const page = useRef(1)
+  const scrollRef = useRef(false)
+  const flashListRef = useRef<any>(undefined)
 
   const theme = useContext(ThemeContext)
   const insets = useSafeAreaInsets()
@@ -56,7 +73,7 @@ const GroupHome: React.FC = () => {
   const { groupId, showSetting } = route.params
 
   const { data: groupData, mutate: mutateGroup, isLoading: groupLoading } = useGroup(groupId)
-  const { data: recordData, mutate: mutateRecord, isLoading: recordLoading } = useRecordGroup(groupId)
+  const { trigger: triggerRecord } = useRecordGroup()
 
   const { trigger: triggerDropRecord } = useDropRecord()
   const { trigger: triggerDismissGroup } = useDeleteGroup()
@@ -66,24 +83,101 @@ const GroupHome: React.FC = () => {
   const membersContextValue = useMembersContext(groupData?.data)
 
   useEffect(() => {
-    setIsLoading(groupLoading && recordLoading)
+    setIsLoading(groupLoading || recordLoading)
   }, [groupLoading, recordLoading])
 
   useEffect(() => {
     return () => {
       mutateGroup(undefined).then()
-      mutateRecord(undefined).then()
+      setListData([])
     }
   }, [])
 
+  useEffect(() => {
+    if (!groupId) {
+      return
+    }
+    setRecordLoading(true)
+    triggerRecord({
+      params: {
+        id: groupId,
+        page: page.current + '',
+      },
+    })
+      .then(v => {
+        if (v?.success && v?.data && v?.pagination?.total != null) {
+          setListData(v.data)
+          setTotal(v.pagination.total)
+        }
+      })
+      .catch(() => {
+        toast(t('generalError') + '')
+      })
+      .finally(() => {
+        setRecordLoading(false)
+      })
+  }, [groupId])
+
   const refreshData = useCallback(() => {
     mutateGroup().then()
-    mutateRecord().then()
+    triggerRecord({
+      params: {
+        id: groupId,
+        page: 1 + '',
+      },
+    }).then(v => {
+      if (v?.data) {
+        setListData(v.data)
+      }
+    })
+    page.current = 1
   }, [])
 
   const handleRefresh = useCallback(() => {
     refreshData()
   }, [])
+
+  const scrollToTop = useCallback(() => {
+    flashListRef.current.scrollToOffset({
+      animated: true,
+      offset: 0,
+    })
+  }, [])
+
+  const handleReachEnd = useCallback(() => {
+    const totalPage = Math.ceil(total / 10)
+    if (page.current >= totalPage) {
+      return
+    }
+    if (isLoading) {
+      return
+    }
+    if (!scrollRef.current) {
+      return
+    }
+    scrollRef.current = false
+    Haptics.selectionAsync().then()
+    page.current = page.current + 1
+    setRecordLoading(true)
+    triggerRecord({
+      params: {
+        id: groupId,
+        page: page.current + '',
+      },
+    })
+      .then(v => {
+        if (v?.success && v?.data && v?.pagination?.total != null) {
+          setListData([...(listData || []), ...v.data])
+          setTotal(v.pagination.total)
+        }
+      })
+      .catch(() => {
+        toast(t('generalError') + '')
+      })
+      .finally(() => {
+        setRecordLoading(false)
+      })
+  }, [isLoading, listData, total])
 
   const deleteRecord = useCallback(() => {
     if (!selectedItem || !groupId || !selectedItem.recordId) {
@@ -98,6 +192,7 @@ const GroupHome: React.FC = () => {
     })
       .then(() => {
         refreshData()
+        scrollToTop()
         setShowItemDetail(false)
       })
       .catch(() => {
@@ -185,6 +280,7 @@ const GroupHome: React.FC = () => {
 
   const handleCloseAddRecord = useCallback(() => {
     refreshData()
+    scrollToTop()
     setShowAddRecord(false)
   }, [])
   const handleCloseShare = useCallback(() => {
@@ -192,10 +288,10 @@ const GroupHome: React.FC = () => {
   }, [])
   const handleCloseDebtDetail = useCallback(() => {
     refreshData()
+    scrollToTop()
     setShowDebtDetail(false)
   }, [])
   const handleCloseItemDetail = useCallback(() => {
-    refreshData()
     setShowItemDetail(false)
   }, [])
   const handleCloseSetting = useCallback(() => {
@@ -232,15 +328,15 @@ const GroupHome: React.FC = () => {
         ]}
       >
         <AddButton onPress={handlePressAdd} />
-        {!recordData?.data && (
+        {(listData == undefined || !groupData?.data) && (
           <View style={{ rowGap: 10 }}>
             <TopCardSkeleton />
             <ItemCardSkeleton />
           </View>
         )}
-        {recordData?.data && (
+        {listData != undefined && groupData?.data && (
           <FlashList
-            data={recordData?.data}
+            data={listData}
             renderItem={({ item }) => (
               <Pressable
                 style={styles.item}
@@ -260,8 +356,18 @@ const GroupHome: React.FC = () => {
                 />
               </View>
             }
+            ListFooterComponent={<>{isLoading && <Loading />}</>}
+            ListFooterComponentStyle={{
+              alignSelf: 'center',
+              paddingTop: 12,
+              paddingBottom: 32,
+            }}
             refreshing={isLoading}
             onRefresh={handleRefresh}
+            onEndReached={handleReachEnd}
+            onMomentumScrollBegin={() => (scrollRef.current = true)}
+            showsVerticalScrollIndicator={false}
+            ref={flashListRef}
           />
         )}
       </View>
@@ -307,7 +413,7 @@ const GroupHome: React.FC = () => {
         >
           <GroupSetting
             data={groupData?.data}
-            recordCnt={recordData?.data?.length}
+            recordCnt={total}
             onDismiss={handleDismissGroup}
           />
         </Modal>

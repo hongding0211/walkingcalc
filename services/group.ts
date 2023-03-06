@@ -28,7 +28,12 @@ export function useGroupJoin() {
 }
 
 export function useGroupMy() {
-  return useFetch<IGetGroupMy>('GET', GET_GROUP_MY)
+  return useFetch<IGetGroupMy>('GET', GET_GROUP_MY, {
+    // TODO 未来扩展成动态拉取
+    params: {
+      size: 1000 + '',
+    },
+  })
 }
 
 export function useGroup(id: string) {
