@@ -32,7 +32,7 @@ const ItemCard: React.FC<IItemCard> = props => {
   return (
     <Card>
       <View style={styles.container}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
           <View style={{ alignItems: 'center' }}>
             <ThemedText style={styles.emoji}>{categoryMap[data?.type] || '🍎'}</ThemedText>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -52,11 +52,17 @@ const ItemCard: React.FC<IItemCard> = props => {
           <View
             style={[styles.divider, { backgroundColor: theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third }]}
           />
-          <View>
+          <View style={{ flexShrink: 1, paddingRight: 8 }}>
             <ScrollView horizontal>
-              <View style={{ flexDirection: 'row', columnGap: 4 }}>
+              <View
+                onStartShouldSetResponder={() => true}
+                style={{ flexDirection: 'row', columnGap: 4 }}
+              >
                 {data?.forWhom?.map((e: any) => (
-                  <Tag key={e}>{member.get(e)?.name}</Tag>
+                  <Tag
+                    key={e}
+                    text={member.get(e)?.name}
+                  />
                 ))}
               </View>
             </ScrollView>
@@ -69,7 +75,7 @@ const ItemCard: React.FC<IItemCard> = props => {
           </View>
         </View>
 
-        <View style={{ alignItems: 'flex-end' }}>
+        <View style={{ alignItems: 'flex-end', flexShrink: 0 }}>
           <ThemedText style={styles.amount}>{numberToString(data?.paid)}</ThemedText>
           <ThemedText
             type="SECOND"
@@ -91,6 +97,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    flex: 1,
   },
   emoji: {
     fontSize: 20,

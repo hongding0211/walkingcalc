@@ -1,16 +1,22 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 
 import { Color } from '../../../constants/Colors'
 
 interface ITag {
-  children?: React.ReactNode
+  text: string
 }
 
 const Tag: React.FC<ITag> = props => {
+  const text = useMemo(() => {
+    if (props.text.length < 10) {
+      return props.text
+    }
+    return props.text.slice(0, 10) + '...'
+  }, [props.text])
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{props.children}</Text>
+      <Text style={styles.text}>{text}</Text>
     </View>
   )
 }
