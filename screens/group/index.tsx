@@ -281,9 +281,13 @@ const GroupHome: React.FC = () => {
     Haptics.selectionAsync().then()
   }, [])
 
-  const handleCloseAddRecord = useCallback(() => {
+  const handleAddRecord = useCallback(() => {
     refreshData()
     scrollToTop()
+    handleCloseAddRecord()
+  }, [])
+
+  const handleCloseAddRecord = useCallback(() => {
     setShowAddRecord(false)
   }, [])
   const handleCloseShare = useCallback(() => {
@@ -395,7 +399,7 @@ const GroupHome: React.FC = () => {
         >
           <AddRecord
             groupId={groupId}
-            onAdd={handleCloseAddRecord}
+            onAdd={handleAddRecord}
           />
         </Modal>
       )}
