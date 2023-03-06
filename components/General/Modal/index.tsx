@@ -1,7 +1,7 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { BlurView } from 'expo-blur'
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useRef } from 'react'
 import { Animated, Keyboard, KeyboardAvoidingView, Pressable, TouchableWithoutFeedback, View } from 'react-native'
 
 import styles from './style'

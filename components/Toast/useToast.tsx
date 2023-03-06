@@ -1,16 +1,25 @@
 import { useToast as useNBToast } from 'native-base'
+import { useRef } from 'react'
 
 import Toast from './index'
 
 const useToast = () => {
   const toast = useNBToast()
 
+  const show = useRef(false)
+
   return (title = '') => {
-    toast.closeAll()
+    if (show.current) {
+      return
+    }
     toast.show({
       render: () => <Toast title={title} />,
-      duration: 3000,
     })
+    show.current = true
+    setTimeout(() => {
+      toast.closeAll()
+      show.current = false
+    }, 2000)
   }
 }
 

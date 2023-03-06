@@ -30,7 +30,7 @@ const Main: React.FC<IMain> = props => {
   )
 
   const handleRefresh = useCallback(() => {
-    Haptics.notificationAsync().then()
+    Haptics.selectionAsync().then()
     onRefresh && onRefresh()
   }, [])
 
