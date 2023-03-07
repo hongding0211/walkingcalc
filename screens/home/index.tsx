@@ -16,6 +16,7 @@ import useToast from '../../components/Toast/useToast'
 import { Color, ColorDark } from '../../constants/Colors'
 import { ThemeContext } from '../../feature/theme/themeContext'
 import { setToken } from '../../feature/user/userSlice'
+import { HomeProps } from '../../navigation/types'
 import { useGroupCreate, useGroupJoin, useGroupMy } from '../../services/group'
 import { useUserDebt } from '../../services/user'
 
@@ -29,7 +30,7 @@ const Home: React.FC = () => {
   const dispatch = useDispatch()
   const theme = useContext(ThemeContext)
   const toast = useToast()
-  const navigation = useNavigation()
+  const navigation = useNavigation<HomeProps['navigation']>()
 
   const { trigger: triggerGroupCreate } = useGroupCreate()
   const { trigger: triggerGroupJoin } = useGroupJoin()

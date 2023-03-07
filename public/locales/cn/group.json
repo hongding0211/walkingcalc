@@ -43,5 +43,6 @@
   "end": "已经到底啦",
   "debtResolve": "债务和解",
   "zeroDebt": "所有债务已和解",
-  "confirmResolve": "确认和解所有债务吗?"
+  "confirmResolve": "确认和解所有债务吗?",
+  "invite": "邀请朋友加入群组 🥳"
 }

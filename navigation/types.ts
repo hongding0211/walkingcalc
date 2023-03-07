@@ -13,4 +13,5 @@ export type LoginStackParamList = {
   SSO: undefined
 }
 
+export type HomeProps = NativeStackScreenProps<RootStackParamList, 'Home'>
 export type GroupProps = NativeStackScreenProps<RootStackParamList, 'Group'>
