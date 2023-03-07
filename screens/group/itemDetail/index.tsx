@@ -63,7 +63,6 @@ const ItemDetail: React.FC<IItemDetail> = props => {
   const { long: longitude, lat: latitude } = data || {}
 
   const handleMapReady = useCallback(() => {
-    console.log('!!👉 index.tsx: 66')
     setMapLoading(false)
   }, [])
 

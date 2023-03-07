@@ -43,5 +43,6 @@
   "end": "The End",
   "debtResolve": "Resolve debt",
   "zeroDebt": "All debts are resolved",
-  "confirmResolve": "Confirm resolve all debts?"
+  "confirmResolve": "Confirm resolve all debts?",
+  "invite": "Invite friends to join the group 🥳"
 }

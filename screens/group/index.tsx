@@ -16,6 +16,7 @@ import ItemCard from './itemCard'
 import ItemCardSkeleton from './itemCard/itemCardSkeleton'
 import ItemDetail from './itemDetail'
 import GroupSetting from './setting'
+import Share from './share'
 import TopCard from './topCard'
 import TopCardSkeleton from './topCardSkeleton'
 import Modal from '../../components/General/Modal'
@@ -74,7 +75,7 @@ const GroupHome: React.FC = () => {
   const navigation = useNavigation<GroupProps['navigation']>()
   const toast = useToast()
 
-  const { groupId, showSetting } = route.params
+  const { groupId, showSetting } = route.params || {}
 
   const { data: groupData, mutate: mutateGroup, isLoading: groupLoading } = useGroup(groupId)
   const { trigger: triggerRecord } = useRecordGroup()
@@ -372,6 +373,15 @@ const GroupHome: React.FC = () => {
     setShowAddMember(true)
   }, [])
 
+  if (groupId === undefined) {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Home' }],
+    })
+    navigation.popToTop()
+    return null
+  }
+
   return (
     <MembersContext.Provider value={membersContextValue}>
       <View
@@ -455,7 +465,9 @@ const GroupHome: React.FC = () => {
         <Modal
           title={t('share') + ''}
           onClose={handleCloseShare}
-        />
+        >
+          <Share groupId={groupId} />
+        </Modal>
       )}
       {showDebtDetail && (
         <Modal

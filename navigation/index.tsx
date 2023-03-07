@@ -4,6 +4,7 @@ import { NativeBaseProvider } from 'native-base'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
+import linking from './linking'
 import { LoginStackParamList, RootStackParamList } from './types'
 import { useAppSelector } from '../app/store'
 import BackButton from '../components/Header/left'
@@ -81,7 +82,7 @@ const Navigation: React.FC = () => {
     return <Splash />
   }
 
-  return <NavigationContainer>{!isLogin ? <LoginScreen /> : <RootScreen />}</NavigationContainer>
+  return <NavigationContainer linking={linking}>{!isLogin ? <LoginScreen /> : <RootScreen />}</NavigationContainer>
 }
 
 export default Navigation
