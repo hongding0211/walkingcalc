@@ -7,6 +7,7 @@ import { Pressable, StyleSheet, View } from 'react-native'
 import { useAppSelector } from '../../../app/store'
 import Card from '../../../components/Card'
 import ThemedText from '../../../components/General/Themed/Text'
+import ThemedPressable from '../../../components/General/ThemedPressable'
 import StackedAvatar from '../../../components/StackedAvatar'
 import { Color, ColorDark, Typography, TypographyDark } from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
@@ -79,12 +80,15 @@ const TopCard: React.FC<ITopCard> = props => {
                 }}
               />
             )}
-            <Pressable onPress={onPressQrcode}>
+            <ThemedPressable
+              highLight
+              onPress={onPressQrcode}
+            >
               <FontAwesomeIcon
                 icon={faQrcode}
                 style={styles.topRight}
               />
-            </Pressable>
+            </ThemedPressable>
           </View>
         </View>
         <Pressable onPress={onAddMember}>
@@ -107,9 +111,10 @@ const TopCard: React.FC<ITopCard> = props => {
           </StackComponent>
         </Pressable>
         <View style={styles.bar}>
-          <Pressable
+          <ThemedPressable
             style={styles.bar}
             onPress={onPressDebtDetail}
+            highLight
           >
             <ThemedText style={styles.bottomText}>{t('debtDetail')}</ThemedText>
             <FontAwesomeIcon
@@ -117,7 +122,7 @@ const TopCard: React.FC<ITopCard> = props => {
               size={12}
               style={{ color: theme.scheme === 'LIGHT' ? Typography.Primary : TypographyDark.Primary }}
             />
-          </Pressable>
+          </ThemedPressable>
           <StackText
             top={debt < 0 ? t('myOwn') : t('ownMe')}
             bottom={(debt < 0 ? '' : '+') + numberToString(debt)}

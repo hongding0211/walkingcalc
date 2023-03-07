@@ -4,7 +4,7 @@ import { NativeBaseProvider } from 'native-base'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { RootStackParamList } from './types'
+import { LoginStackParamList, RootStackParamList } from './types'
 import { useAppSelector } from '../app/store'
 import BackButton from '../components/Header/left'
 import SettingButton from '../components/Header/right'
@@ -16,7 +16,7 @@ import Login from '../screens/login/Login'
 import SSO from '../screens/modal/login/SSO'
 
 const LoginScreen: React.FC = () => {
-  const Stack = createNativeStackNavigator()
+  const Stack = createNativeStackNavigator<LoginStackParamList>()
 
   return (
     <Stack.Navigator>

@@ -2,13 +2,14 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { BlurView } from 'expo-blur'
 import React, { useCallback, useContext, useEffect, useRef } from 'react'
-import { Animated, Keyboard, KeyboardAvoidingView, Pressable, TouchableWithoutFeedback, View } from 'react-native'
+import { Animated, Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, View } from 'react-native'
 
 import styles from './style'
 import { Color, ColorDark } from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
 import ThemedText from '../Themed/Text'
 import ThemedView from '../Themed/View'
+import ThemedPressable from '../ThemedPressable'
 
 interface IModal {
   title?: string
@@ -58,12 +59,15 @@ const Modal: React.FC<IModal> = props => {
                 {!hideTitle && (
                   <View style={styles.title}>
                     <ThemedText style={styles.titleText}>{title}</ThemedText>
-                    <Pressable onPress={handlePressClose}>
+                    <ThemedPressable
+                      highLight
+                      onPress={handlePressClose}
+                    >
                       <FontAwesomeIcon
                         icon={faXmark}
                         style={{ color: theme.scheme === 'LIGHT' ? Color.Second : ColorDark.Second }}
                       />
-                    </Pressable>
+                    </ThemedPressable>
                   </View>
                 )}
                 <View style={styles.content}>{children}</View>

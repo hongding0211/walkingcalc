@@ -8,4 +8,9 @@ export type RootStackParamList = {
   }
 }
 
+export type LoginStackParamList = {
+  Login: undefined
+  SSO: undefined
+}
+
 export type GroupProps = NativeStackScreenProps<RootStackParamList, 'Group'>

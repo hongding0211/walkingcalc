@@ -38,9 +38,10 @@ const UserBar: React.FC<IUserBar> = props => {
         <Avatar
           size={24}
           source={avatar}
+          name={name}
         />
         <ThemedText style={{ marginLeft: 10, fontWeight: '500' }}>
-          {name?.length > 10 ? name?.slice(0, 10) + '...' : name}
+          {name && name?.length > 10 ? name?.slice(0, 10) + '...' : name}
         </ThemedText>
       </View>
       <ThemedText style={{ fontWeight: '500', fontSize: 16 }}>{numberToString(debt || 0)}</ThemedText>
