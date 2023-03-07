@@ -61,7 +61,7 @@ const ItemCard: React.FC<IItemCard> = props => {
                 {data?.forWhom?.map((e: any) => (
                   <Tag
                     key={e}
-                    text={member.get(e)?.name}
+                    text={member.get(e)?.name || ''}
                   />
                 ))}
               </View>

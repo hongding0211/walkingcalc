@@ -11,6 +11,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import AddRecord from './add'
 import AddMember from './addMember'
+import DebtDetail from './debtDetail'
 import ItemCard from './itemCard'
 import ItemCardSkeleton from './itemCard/itemCardSkeleton'
 import ItemDetail from './itemDetail'
@@ -413,7 +414,9 @@ const GroupHome: React.FC = () => {
         <Modal
           title={t('debtDetail') + ''}
           onClose={handleCloseDebtDetail}
-        />
+        >
+          <DebtDetail />
+        </Modal>
       )}
       {showItemDetail && (
         <Modal
