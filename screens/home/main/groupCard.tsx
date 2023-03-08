@@ -60,7 +60,7 @@ const GroupCard: React.FC<IGroupCard> = props => {
           />
           <StackText
             top={debt < 0 ? t('myOwn') : t('ownMe')}
-            bottom={(debt < -1e-6 ? '' : '+') + numberToString(debt)}
+            bottom={(debt < -1e-10 ? '' : '+') + numberToString(debt)}
             align="flex-end"
           />
         </View>

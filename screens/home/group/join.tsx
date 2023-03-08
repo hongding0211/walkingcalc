@@ -35,16 +35,16 @@ const JoinGroup: React.FC<IJoinGroup> = ({ onConfirm }) => {
           onChangeText={handleTextChange}
         />
       </FormItem>
-      {/*<Pressable*/}
-      {/*  onPress={handleScan}*/}
-      {/*  style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}*/}
-      {/*>*/}
-      {/*  <FontAwesomeIcon*/}
-      {/*    style={{ color: theme.scheme === 'LIGHT' ? Color.Second : ColorDark.Second }}*/}
-      {/*    icon={faExpand}*/}
-      {/*  />*/}
-      {/*  <ThemedText type="SECOND">{t('scanQrcode')}</ThemedText>*/}
-      {/*</Pressable>*/}
+      <Pressable
+        onPress={handleScan}
+        style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}
+      >
+        <FontAwesomeIcon
+          style={{ color: theme.scheme === 'LIGHT' ? Color.Second : ColorDark.Second }}
+          icon={faExpand}
+        />
+        <ThemedText type="SECOND">{t('scanQrcode')}</ThemedText>
+      </Pressable>
       <View style={styles.btn}>
         <Button
           title={t('confirm') + ''}
