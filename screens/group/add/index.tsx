@@ -1,6 +1,6 @@
 import * as Haptics from 'expo-haptics'
 import * as Location from 'expo-location'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { useDispatch } from 'react-redux'
@@ -36,10 +36,13 @@ const AddRecord: React.FC<IAddGroup> = props => {
   const [text, setText] = useState('')
   const [location, setLocation] = useState<any>(undefined)
 
+  const locationAsked = useRef(false)
+
   const { t } = useTranslation('group')
   const members = useContext(MembersContext)
   const toast = useToast()
   const dispatch = useDispatch()
+  const [status, requestPermission] = Location.useForegroundPermissions()
 
   const { trigger: triggerAddRecord } = useAddRecord()
 
@@ -109,6 +112,13 @@ const AddRecord: React.FC<IAddGroup> = props => {
       setLocation(location)
     })()
   }, [])
+
+  useEffect(() => {
+    if (!status?.granted && status?.canAskAgain && !locationAsked.current) {
+      locationAsked.current = true
+      requestPermission().then()
+    }
+  }, [status])
 
   return (
     <View style={styles.container}>

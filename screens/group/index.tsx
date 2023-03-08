@@ -133,11 +133,16 @@ const GroupHome: React.FC = () => {
         id: groupId,
         page: 1 + '',
       },
-    }).then(v => {
-      if (v?.data) {
-        setListData(v.data)
-      }
     })
+      .then(v => {
+        if (v?.data && v?.pagination) {
+          setListData(v.data)
+          setTotal(v.pagination.total)
+        }
+      })
+      .catch(() => {
+        toast(t('generalError') + '')
+      })
     setPage(1)
   }, [])
 

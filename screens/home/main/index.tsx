@@ -3,6 +3,7 @@ import { FlashList } from '@shopify/flash-list'
 import * as Haptics from 'expo-haptics'
 import React, { useCallback } from 'react'
 import { Dimensions, Pressable, StyleSheet, View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import GroupCard from './groupCard'
 import GroupCardSkeleton from './groupCardSkeleton'
@@ -20,6 +21,7 @@ const Main: React.FC<IMain> = props => {
   const { userDebt, groupData, onRefresh, loading } = props
 
   const navigation = useNavigation<GroupProps['navigation']>()
+  const insets = useSafeAreaInsets()
 
   const handlePressGroupCard = useCallback(
     (index: number) => {
@@ -36,7 +38,14 @@ const Main: React.FC<IMain> = props => {
   }, [])
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          height: Dimensions.get('window').height - insets.top - 80,
+        },
+      ]}
+    >
       <TopCard total={userDebt?.data?.debt || 0} />
       {!groupData?.data && <GroupCardSkeleton />}
       {groupData?.data && (
@@ -54,6 +63,8 @@ const Main: React.FC<IMain> = props => {
           estimatedItemSize={140}
           onRefresh={handleRefresh}
           refreshing={loading}
+          ListFooterComponent={<View style={{ height: 60 }} />}
+          showsVerticalScrollIndicator={false}
         />
       )}
     </View>
@@ -64,7 +75,6 @@ export default Main
 
 const styles = StyleSheet.create({
   container: {
-    height: Dimensions.get('window').height,
     paddingTop: 40,
   },
   listItem: {
