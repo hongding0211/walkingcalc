@@ -1,4 +1,3 @@
-import { useURL } from 'expo-linking'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
@@ -12,8 +11,7 @@ interface IShare {
 
 const Share: React.FC<IShare> = props => {
   const { groupId } = props
-  const url = useURL()
-  const value = `${url}/${groupId}`
+  const value = `walkingcalc://group/${groupId}`
 
   const { t } = useTranslation('group')
 
