@@ -86,11 +86,13 @@ const GroupSetting: React.FC<IGroupSetting> = props => {
         <ThemedText style={styles.text}>{recordCnt}</ThemedText>
       </FormItem>
       <Divider />
-      <Button
-        type="DANGER"
-        title={t('dismiss')}
-        onPress={onDismiss}
-      />
+      {data?.isOwner && (
+        <Button
+          type="DANGER"
+          title={t('dismiss')}
+          onPress={onDismiss}
+        />
+      )}
     </View>
   )
 }

@@ -22,11 +22,11 @@ export const userSlice = createSlice({
     setToken: (state, action: PayloadAction<{ token?: string }>) => {
       state.token = action.payload.token
       if (action.payload?.token) {
-        AsyncStorage.setItem('token', action.payload.token).then()
+        AsyncStorage.setItem('token', action.payload.token).catch()
       } else {
         state.isLogin = false
         state.data = undefined
-        AsyncStorage.removeItem('token').then()
+        AsyncStorage.removeItem('token').catch()
       }
     },
     setUserData: (

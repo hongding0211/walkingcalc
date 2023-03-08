@@ -7,8 +7,8 @@ export function useLogin(params?: IGetUserLogin['request'], shouldFetch = true) 
   return useMutation<IGetUserLogin>('GET', GET_USER_LOGIN)
 }
 
-export function useUserInfo(params?: IGetUserInfo['request'], shouldFetch = true) {
-  return useFetch<IGetUserInfo>('GET', GET_USER_INFO, params, shouldFetch)
+export function useUserInfo() {
+  return useMutation<IGetUserInfo>('GET', GET_USER_INFO)
 }
 
 export function useUserSearch(params?: IGetUserSearch['request']) {

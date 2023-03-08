@@ -1,19 +1,24 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 
 import { setIsLogin, setIsLoginComplete, setToken, setUserData } from './userSlice'
 import { useAppSelector } from '../../app/store'
+import useToast from '../../components/Toast/useToast'
+import { IGetUserInfo } from '../../services/types/interface'
 import { useUserInfo } from '../../services/user'
+import { setLoading } from '../general/generalSlice'
 
 const useUser = () => {
-  const [readyGetUserInfo, setReadyGetUserInfo] = useState(false)
-
+  const [userInfoData, setUserInfoData] = useState<IGetUserInfo['response']['data'] | undefined>(undefined)
   const [hasReadToken, setHasReadToken] = useState(false)
 
   const dispatch = useDispatch()
-  const { data: userInfoData, mutate: mutateUserInfoData } = useUserInfo(undefined, readyGetUserInfo)
+  const { trigger: triggerGetUserInfo } = useUserInfo()
   const token = useAppSelector(state => state.user.token)
+  const { t } = useTranslation('login')
+  const toast = useToast()
 
   useEffect(() => {
     AsyncStorage.getItem('token')
@@ -48,22 +53,27 @@ const useUser = () => {
       return
     }
     if (token) {
-      // 先设置成 undefined 清楚缓存
-      mutateUserInfoData(undefined).then(() => {
-        if (!readyGetUserInfo) {
-          setReadyGetUserInfo(true)
-        } else {
-          mutateUserInfoData().then()
-        }
-      })
+      dispatch(setLoading({ status: true }))
+      triggerGetUserInfo({})
+        .then(res => {
+          if (res?.success && res?.data) {
+            setUserInfoData(res.data)
+          }
+        })
+        .catch(() => {
+          toast(t('loginFail') + '')
+        })
+        .finally(() => {
+          dispatch(setLoading({ status: false }))
+        })
     }
   }, [token, hasReadToken])
 
   useEffect(() => {
-    if (userInfoData && userInfoData.success && userInfoData.data) {
+    if (userInfoData) {
       dispatch(
         setUserData({
-          data: userInfoData.data,
+          data: userInfoData,
         })
       )
       dispatch(
@@ -76,8 +86,7 @@ const useUser = () => {
           isLogin: true,
         })
       )
-    }
-    if (userInfoData && !userInfoData.success) {
+    } else {
       dispatch(
         setToken({
           token: undefined,
