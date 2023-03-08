@@ -14,5 +14,6 @@
   "totalDebt": "Total Debt",
   "lastEdit": "Latest edited",
   "ownMe": "Owned to me",
-  "myOwn": "I owned"
+  "myOwn": "I owned",
+  "scanQrcode": "Scan to join"
 }

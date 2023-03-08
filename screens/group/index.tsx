@@ -78,7 +78,7 @@ const GroupHome: React.FC = () => {
   const toast = useToast()
   const dispatch = useDispatch()
 
-  const { groupId, showSetting } = route.params || {}
+  const { groupId, showSetting, join } = route.params || {}
 
   const { data: groupData, mutate: mutateGroup, isLoading: groupLoading } = useGroup(groupId)
   const { trigger: triggerRecord } = useRecordGroup()

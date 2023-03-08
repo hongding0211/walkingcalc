@@ -46,6 +46,6 @@ const styles = StyleSheet.create({
     color: Color.Primary,
   },
   btn: {
-    marginTop: 20,
+    marginTop: 12,
   },
 })
