@@ -29,15 +29,15 @@ export function resolveDebt(u: IUser[]): IResolvedDebt[] {
     Math.abs(
       receivers.map(e => e.debt).reduce((pre, cur) => pre + cur, 0) -
         payers.map(e => e.debt).reduce((pre, cur) => pre + cur, 0)
-    ) > 1e-6
+    ) > 1e-10
   ) {
     return []
   }
 
   for (const receiver of receivers) {
-    while (Math.abs(receiver.debt) > 1e-6) {
+    while (Math.abs(receiver.debt) > 1e-10) {
       for (const payer of payers) {
-        if (Math.abs(payer.debt) < 1e-6) {
+        if (Math.abs(payer.debt) < 1e-10) {
           continue
         }
         if (receiver.debt >= payer.debt) {

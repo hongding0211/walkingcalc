@@ -1,5 +1,5 @@
 export function numberToString(n: number) {
-  if (Math.abs(n) < 1e-6) {
+  if (Math.abs(n) < 1e-10) {
     return '0'
   }
   const negative = n < 0

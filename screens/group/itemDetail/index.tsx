@@ -170,6 +170,14 @@ const ItemDetail: React.FC<IItemDetail> = props => {
           )}
         </View>
       )}
+      {data?.text && (
+        <ThemedText
+          style={{ fontWeight: '500', fontSize: 12 }}
+          type="SECOND"
+        >
+          {t('remark')}: {data.text}
+        </ThemedText>
+      )}
       <Button
         type="DANGER"
         title={t('delete')}

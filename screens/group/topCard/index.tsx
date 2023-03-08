@@ -124,8 +124,8 @@ const TopCard: React.FC<ITopCard> = props => {
             />
           </ThemedPressable>
           <StackText
-            top={debt < -1e-6 ? t('myOwn') : t('ownMe')}
-            bottom={(debt < -1e-6 ? '' : '+') + numberToString(debt)}
+            top={debt < -1e-10 ? t('myOwn') : t('ownMe')}
+            bottom={(debt < -1e-10 ? '' : '+') + numberToString(debt)}
             align="flex-end"
           />
         </View>

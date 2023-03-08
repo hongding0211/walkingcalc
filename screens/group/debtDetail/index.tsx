@@ -44,11 +44,11 @@ const UserBar: React.FC<IUserBar> = props => {
         style={[
           { fontWeight: '500', fontSize: 16 },
           {
-            color: debt !== undefined && debt < -1e-6 ? Color.Danger : Color.Success,
+            color: debt !== undefined && debt < -1e-10 ? Color.Danger : Color.Success,
           },
         ]}
       >
-        {debt && debt < -1e-6 ? '' : '+'}
+        {debt && debt < -1e-10 ? '' : '+'}
         {numberToString(debt || 0)}
       </ThemedText>
     </View>
