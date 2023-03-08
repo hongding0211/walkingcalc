@@ -8,6 +8,7 @@ import React, { useCallback, useContext, useEffect, useRef, useState } from 'rea
 import { useTranslation } from 'react-i18next'
 import { Alert, Dimensions, Pressable, StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useDispatch } from 'react-redux'
 
 import AddRecord from './add'
 import AddMember from './addMember'
@@ -23,6 +24,7 @@ import Modal from '../../components/General/Modal'
 import ThemedText from '../../components/General/Themed/Text'
 import useToast from '../../components/Toast/useToast'
 import { Color, ColorDark } from '../../constants/Colors'
+import { setLoading } from '../../feature/general/generalSlice'
 import { ThemeContext } from '../../feature/theme/themeContext'
 import { MembersContext, useMembersContext } from '../../feature/user/membersContext'
 import { GroupProps } from '../../navigation/types'
@@ -74,6 +76,7 @@ const GroupHome: React.FC = () => {
   const route = useRoute<GroupProps['route']>()
   const navigation = useNavigation<GroupProps['navigation']>()
   const toast = useToast()
+  const dispatch = useDispatch()
 
   const { groupId, showSetting } = route.params || {}
 
@@ -188,6 +191,11 @@ const GroupHome: React.FC = () => {
       toast(t('delFail') + '')
       return
     }
+    dispatch(
+      setLoading({
+        status: true,
+      })
+    )
     triggerDropRecord({
       body: {
         groupId,
@@ -202,6 +210,13 @@ const GroupHome: React.FC = () => {
       .catch(() => {
         toast(t('delFail') + '')
       })
+      .finally(() => {
+        dispatch(
+          setLoading({
+            status: false,
+          })
+        )
+      })
   }, [groupId, selectedItem])
 
   const dismissGroup = useCallback(() => {
@@ -209,6 +224,11 @@ const GroupHome: React.FC = () => {
       toast(t('dismissFail') + '')
       return
     }
+    dispatch(
+      setLoading({
+        status: true,
+      })
+    )
     triggerDismissGroup({
       params: {
         id: groupId,
@@ -219,6 +239,13 @@ const GroupHome: React.FC = () => {
       })
       .catch(() => {
         toast(t('dismissFail') + '')
+      })
+      .finally(() => {
+        dispatch(
+          setLoading({
+            status: false,
+          })
+        )
       })
   }, [groupId])
 
@@ -252,6 +279,11 @@ const GroupHome: React.FC = () => {
     if (!groupId || !data || !data.user || !data.tempUser) {
       return
     }
+    dispatch(
+      setLoading({
+        status: true,
+      })
+    )
     Promise.all([
       triggerInvite({
         body: {
@@ -274,6 +306,11 @@ const GroupHome: React.FC = () => {
       .finally(() => {
         setShowAddMember(false)
         refreshData()
+        dispatch(
+          setLoading({
+            status: false,
+          })
+        )
       })
   }, [])
 
@@ -282,6 +319,11 @@ const GroupHome: React.FC = () => {
       toast(t('zeroDebt') + '')
       return
     }
+    dispatch(
+      setLoading({
+        status: true,
+      })
+    )
     Promise.all(
       debtToBeResolved.map(d => {
         return triggerAddRecord({
@@ -305,6 +347,11 @@ const GroupHome: React.FC = () => {
         toast(t('generalError') + '')
       })
       .finally(() => {
+        dispatch(
+          setLoading({
+            status: false,
+          })
+        )
         refreshData()
         scrollToTop()
       })

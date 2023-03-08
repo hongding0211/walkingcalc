@@ -14,6 +14,7 @@ import styles from './style'
 import Modal from '../../components/General/Modal'
 import useToast from '../../components/Toast/useToast'
 import { Color, ColorDark } from '../../constants/Colors'
+import { setLoading } from '../../feature/general/generalSlice'
 import { ThemeContext } from '../../feature/theme/themeContext'
 import { setToken } from '../../feature/user/userSlice'
 import { HomeProps } from '../../navigation/types'
@@ -59,6 +60,7 @@ const Home: React.FC = () => {
   }, [])
 
   const handleCreateGroup = useCallback((groupName: string) => {
+    dispatch(setLoading({ status: true }))
     triggerGroupCreate({
       body: {
         name: groupName,
@@ -71,13 +73,18 @@ const Home: React.FC = () => {
           toast(t('createFail') + '')
         }
       })
+      .catch(() => {
+        toast(t('createFail') + '')
+      })
       .finally(() => {
+        dispatch(setLoading({ status: false }))
         mutateUserDebt().then()
         mutateGroup().then()
       })
   }, [])
 
   const handleJoinGroup = useCallback((groupId: string) => {
+    dispatch(setLoading({ status: true }))
     triggerGroupJoin({
       body: {
         id: groupId,
@@ -90,7 +97,11 @@ const Home: React.FC = () => {
           toast(t('joinFail') + '')
         }
       })
+      .catch(() => {
+        toast(t('joinFail') + '')
+      })
       .finally(() => {
+        dispatch(setLoading({ status: false }))
         mutateUserDebt().then()
         mutateGroup().then()
       })
