@@ -14,5 +14,6 @@
   "totalDebt": "债务统计",
   "lastEdit": "上次编辑",
   "ownMe": "别人欠我",
-  "myOwn": "我欠别人"
+  "myOwn": "我欠别人",
+  "scanQrcode": "扫码加入"
 }

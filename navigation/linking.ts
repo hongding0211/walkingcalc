@@ -5,7 +5,7 @@ const prefix = Linking.createURL('/')
 const config = {
   screens: {
     Home: '/',
-    Group: 'group/:groupId?',
+    Group: 'group/:groupId?/:join?',
     Login: 'login',
     SSO: '/login/sso',
   },

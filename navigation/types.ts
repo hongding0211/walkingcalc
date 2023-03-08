@@ -5,6 +5,7 @@ export type RootStackParamList = {
   Group: {
     groupId: string
     showSetting?: boolean
+    join?: string
   }
 }
 

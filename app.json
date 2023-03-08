@@ -37,7 +37,8 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-location"
+      "expo-location",
+      "expo-barcode-scanner"
     ],
     "jsEngine": "jsc",
     "extra": {

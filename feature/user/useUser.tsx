@@ -6,12 +6,10 @@ import { useDispatch } from 'react-redux'
 import { setIsLogin, setIsLoginComplete, setToken, setUserData } from './userSlice'
 import { useAppSelector } from '../../app/store'
 import useToast from '../../components/Toast/useToast'
-import { IGetUserInfo } from '../../services/types/interface'
 import { useUserInfo } from '../../services/user'
 import { setLoading } from '../general/generalSlice'
 
 const useUser = () => {
-  const [userInfoData, setUserInfoData] = useState<IGetUserInfo['response']['data'] | undefined>(undefined)
   const [hasReadToken, setHasReadToken] = useState(false)
 
   const dispatch = useDispatch()
@@ -57,53 +55,41 @@ const useUser = () => {
       triggerGetUserInfo({})
         .then(res => {
           if (res?.success && res?.data) {
-            setUserInfoData(res.data)
+            dispatch(
+              setUserData({
+                data: res.data,
+              })
+            )
+            dispatch(
+              setIsLogin({
+                isLogin: true,
+              })
+            )
           }
         })
         .catch(() => {
           toast(t('loginFail') + '')
+          dispatch(
+            setToken({
+              token: undefined,
+            })
+          )
+          dispatch(
+            setUserData({
+              data: undefined,
+            })
+          )
         })
         .finally(() => {
           dispatch(setLoading({ status: false }))
+          dispatch(
+            setIsLoginComplete({
+              isLoginComplete: true,
+            })
+          )
         })
     }
   }, [token, hasReadToken])
-
-  useEffect(() => {
-    if (userInfoData) {
-      dispatch(
-        setUserData({
-          data: userInfoData,
-        })
-      )
-      dispatch(
-        setIsLoginComplete({
-          isLoginComplete: true,
-        })
-      )
-      dispatch(
-        setIsLogin({
-          isLogin: true,
-        })
-      )
-    } else {
-      dispatch(
-        setToken({
-          token: undefined,
-        })
-      )
-      dispatch(
-        setUserData({
-          data: undefined,
-        })
-      )
-      dispatch(
-        setIsLoginComplete({
-          isLoginComplete: true,
-        })
-      )
-    }
-  }, [userInfoData])
 
   return null
 }
