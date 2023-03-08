@@ -10,6 +10,9 @@ import { ThemeContext } from './feature/theme/themeContext'
 import useCachedResources from './hooks/useCachedResources'
 import Navigation from './navigation'
 import './i18n'
+import getLocales from './utlis/locales'
+
+const locales = getLocales()
 
 export default function App() {
   const isLoadingComplete = useCachedResources()
@@ -21,7 +24,7 @@ export default function App() {
     return (
       <SafeAreaProvider>
         <ThemeContext.Provider value={{ scheme: colorScheme === 'light' ? 'LIGHT' : 'DARK' }}>
-          <LangContext.Provider value="cn">
+          <LangContext.Provider value={locales}>
             <Provider store={store}>
               <StatusBar />
               <Navigation />

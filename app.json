@@ -38,7 +38,8 @@
     },
     "plugins": [
       "expo-location",
-      "expo-barcode-scanner"
+      "expo-barcode-scanner",
+      "expo-localization"
     ],
     "jsEngine": "jsc",
     "extra": {

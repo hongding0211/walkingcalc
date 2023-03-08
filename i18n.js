@@ -7,6 +7,9 @@ import loginCn from './public/locales/cn/login.json'
 import groupEn from './public/locales/en/group.json'
 import homeEn from './public/locales/en/home.json'
 import loginEn from './public/locales/en/login.json'
+import getLocales from './utlis/locales'
+
+const locales = getLocales()
 
 const resources = {
   cn: {
@@ -23,8 +26,8 @@ const resources = {
 
 i18n.use(initReactI18next).init({
   resources,
-  lng: 'cn',
-  fallbackLng: 'cn',
+  lng: locales,
+  fallbackLng: 'en',
   interpolation: {
     escapeValue: false,
   },
