@@ -1,4 +1,6 @@
 {
   "subTitle": "登录以继续",
-  "login": "登录"
+  "login": "登录",
+  "loginFail": "登录失败",
+  "timeout": "网络超时"
 }

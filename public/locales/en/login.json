@@ -1,4 +1,6 @@
 {
   "subTitle": "Login to continue",
-  "login": "Login"
+  "login": "Login",
+  "loginFail": "Login fail",
+  "timeout": "Network timeout"
 }

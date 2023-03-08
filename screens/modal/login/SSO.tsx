@@ -1,20 +1,13 @@
 import { useNavigation } from '@react-navigation/native'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import WebView from 'react-native-webview'
-import { useDispatch } from 'react-redux'
 
 import { SSO_URL } from '../../../constants/Config'
-import { setToken } from '../../../feature/user/userSlice'
-import { useLogin } from '../../../services/user'
+import { LoginProps } from '../../../navigation/types'
 
 const SSO: React.FC = () => {
   const [showWebview, setShowWebView] = useState(true)
-
-  const ticketRef = useRef('')
-
-  const { trigger: triggerLogin } = useLogin()
-  const dispatch = useDispatch()
-  const navigation = useNavigation()
+  const navigation = useNavigation<LoginProps['navigation']>()
 
   const handleNavStateChange = useCallback((state: any) => {
     const { url } = state
@@ -23,32 +16,12 @@ const SSO: React.FC = () => {
     if (!match || match.length < 2) {
       return
     }
+    navigation.navigate('Login', {
+      ticket: match[1],
+      type: 'sso',
+    })
     setShowWebView(false)
-    ticketRef.current = match[1]
   }, [])
-
-  useEffect(() => {
-    if (!showWebview) {
-      triggerLogin({
-        params: {
-          type: 'sso',
-          ticket: ticketRef.current,
-        },
-      })
-        .then(res => {
-          if (res?.success && res?.data?.token) {
-            dispatch(
-              setToken({
-                token: res.data.token,
-              })
-            )
-          }
-        })
-        .finally(() => {
-          navigation.goBack()
-        })
-    }
-  }, [showWebview])
 
   return (
     <>

@@ -9,9 +9,13 @@ export type RootStackParamList = {
 }
 
 export type LoginStackParamList = {
-  Login: undefined
+  Login: {
+    ticket?: string
+    type?: 'sso'
+  }
   SSO: undefined
 }
 
 export type HomeProps = NativeStackScreenProps<RootStackParamList, 'Home'>
 export type GroupProps = NativeStackScreenProps<RootStackParamList, 'Group'>
+export type LoginProps = NativeStackScreenProps<LoginStackParamList, 'Login'>

@@ -3,7 +3,6 @@ import React, { useContext } from 'react'
 import { Dimensions, StyleSheet, View } from 'react-native'
 
 import { useAppSelector } from '../../../app/store'
-import { Color, ColorDark } from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
 
 const Loading: React.FC = () => {
@@ -20,7 +19,7 @@ const Loading: React.FC = () => {
         style={[
           styles.iconContainer,
           {
-            backgroundColor: theme.scheme === 'LIGHT' ? Color.BackgroundSecond : ColorDark.Third,
+            backgroundColor: theme.scheme === 'LIGHT' ? 'rgba(246, 246, 246, 0.8)' : 'rgba(47, 47, 47, 0.8)',
           },
         ]}
       >

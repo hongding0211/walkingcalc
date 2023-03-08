@@ -5,7 +5,7 @@ import { useAppSelector } from '../../app/store'
 import { setToken } from '../../feature/user/userSlice'
 import { IApi, Method } from '../types/interface'
 
-export function useMutator<T extends IApi>(
+function useMutator<T extends IApi>(
   method: Method
 ): (url: string, extra?: { arg?: T['request'] }) => Promise<T['response']> {
   const token = useAppSelector(state => state.user.token)

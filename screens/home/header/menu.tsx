@@ -70,7 +70,6 @@ const styles = StyleSheet.create({
   item: {
     padding: 16,
     borderBottomWidth: 1,
-    borderRadius: 8,
     flex: 1,
     alignItems: 'center',
   },
