@@ -4,6 +4,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { Provider } from 'react-redux'
 
 import store from './app/store'
+import Loading from './components/General/Loading'
 import { LangContext } from './feature/lang/langContext'
 import { ThemeContext } from './feature/theme/themeContext'
 import useCachedResources from './hooks/useCachedResources'
@@ -24,6 +25,7 @@ export default function App() {
             <Provider store={store}>
               <StatusBar />
               <Navigation />
+              <Loading />
             </Provider>
           </LangContext.Provider>
         </ThemeContext.Provider>

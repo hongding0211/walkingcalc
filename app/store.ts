@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useSelector } from 'react-redux'
 
+import generalSlice from '../feature/general/generalSlice'
 import userReducer from '../feature/user/userSlice'
 
 const store = configureStore({
   reducer: {
     user: userReducer,
+    general: generalSlice,
   },
 })
 

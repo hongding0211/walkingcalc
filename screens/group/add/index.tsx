@@ -3,6 +3,7 @@ import * as Location from 'expo-location'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
+import { useDispatch } from 'react-redux'
 
 import CategoryRadio from './categoryRadio'
 import NumberInput from './numberInput'
@@ -13,6 +14,7 @@ import Checkbox from '../../../components/General/Checkbox'
 import Input from '../../../components/General/Input'
 import Radio from '../../../components/General/Radio'
 import useToast from '../../../components/Toast/useToast'
+import { setLoading } from '../../../feature/general/generalSlice'
 import { MembersContext } from '../../../feature/user/membersContext'
 import { useAddRecord } from '../../../services/record'
 import { stringToNumber } from '../../../utlis/moeny'
@@ -37,6 +39,7 @@ const AddRecord: React.FC<IAddGroup> = props => {
   const { t } = useTranslation('group')
   const members = useContext(MembersContext)
   const toast = useToast()
+  const dispatch = useDispatch()
 
   const { trigger: triggerAddRecord } = useAddRecord()
 
@@ -58,6 +61,11 @@ const AddRecord: React.FC<IAddGroup> = props => {
       toast(t('noPaidSelf') + '')
       return
     }
+    dispatch(
+      setLoading({
+        status: true,
+      })
+    )
     const { latitude, longitude } = location?.coords || {}
     triggerAddRecord({
       body: {
@@ -70,13 +78,24 @@ const AddRecord: React.FC<IAddGroup> = props => {
         long: longitude ? longitude + '' : '',
         lat: latitude ? latitude + '' : '',
       },
-    }).then(res => {
-      if (res?.success) {
-        onAdd && onAdd()
-      } else {
-        toast(t('addFail') + '')
-      }
     })
+      .then(res => {
+        if (res?.success) {
+          onAdd && onAdd()
+        } else {
+          toast(t('addFail') + '')
+        }
+      })
+      .catch(() => {
+        toast(t('generalError') + '')
+      })
+      .finally(() => {
+        dispatch(
+          setLoading({
+            status: false,
+          })
+        )
+      })
   }, [groupId, paid, forWhom, type, text, location])
 
   useEffect(() => {
