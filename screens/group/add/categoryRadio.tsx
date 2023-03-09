@@ -1,4 +1,3 @@
-import * as Haptics from 'expo-haptics'
 import React, { useCallback } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 
@@ -28,7 +27,6 @@ const Category: React.FC<any> = props => {
   const { value, onChange } = props
 
   const handlePress = useCallback((value: any) => {
-    Haptics.selectionAsync().then()
     onChange && onChange(value)
   }, [])
 

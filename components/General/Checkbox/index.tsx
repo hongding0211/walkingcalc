@@ -1,11 +1,12 @@
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import React, { useCallback, useContext, useRef } from 'react'
-import { Pressable, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 import { Color, ColorDark } from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
 import ThemedText from '../Themed/Text'
+import ThemedPressable from '../ThemedPressable'
 
 interface ICheckBox {
   value?: any[]
@@ -26,7 +27,7 @@ const SingleCheckbox: React.FC<ISingleCheckbox> = props => {
   const theme = useContext(ThemeContext)
 
   return (
-    <Pressable
+    <ThemedPressable
       onPress={props.onPress}
       style={styles.container}
     >
@@ -52,7 +53,7 @@ const SingleCheckbox: React.FC<ISingleCheckbox> = props => {
         )}
       </View>
       <ThemedText style={{ fontWeight: '500' }}>{props.title}</ThemedText>
-    </Pressable>
+    </ThemedPressable>
   )
 }
 

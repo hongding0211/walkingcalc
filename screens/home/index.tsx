@@ -39,16 +39,29 @@ const Home: React.FC = () => {
   const { data: userDebt, mutate: mutateUserDebt, isLoading: userDebtLoading } = useUserDebt()
   const { data: groupData, mutate: mutateGroup, isLoading: groupLoading } = useGroupMy()
 
+  const refresh = useCallback(() => {
+    mutateUserDebt().then()
+    mutateGroup().then()
+  }, [])
+
   useEffect(() => {
     setIsLoading(userDebtLoading && groupLoading)
   }, [userDebtLoading, groupLoading])
 
   useEffect(() => {
     return navigation.addListener('focus', () => {
-      mutateUserDebt().then()
-      mutateGroup().then()
+      refresh()
     })
   }, [navigation])
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      refresh()
+    }, 30000)
+    return () => {
+      clearInterval(timer)
+    }
+  }, [])
 
   const handleCloseAddGroupModal = useCallback(() => {
     setAddGroupComponent('DEFAULT')
@@ -78,8 +91,7 @@ const Home: React.FC = () => {
       })
       .finally(() => {
         dispatch(setLoading({ status: false }))
-        mutateUserDebt().then()
-        mutateGroup().then()
+        refresh()
       })
   }, [])
 
@@ -102,8 +114,7 @@ const Home: React.FC = () => {
       })
       .finally(() => {
         dispatch(setLoading({ status: false }))
-        mutateUserDebt().then()
-        mutateGroup().then()
+        refresh()
       })
   }, [])
 
@@ -126,11 +137,6 @@ const Home: React.FC = () => {
     ])
   }, [])
 
-  const handleRefresh = useCallback(() => {
-    mutateUserDebt().then()
-    mutateGroup().then()
-  }, [])
-
   return (
     <>
       <SafeAreaView
@@ -150,7 +156,7 @@ const Home: React.FC = () => {
             userDebt={userDebt}
             groupData={groupData}
             loading={isLoading}
-            onRefresh={handleRefresh}
+            onRefresh={refresh}
           />
         </View>
       </SafeAreaView>
