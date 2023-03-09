@@ -15,5 +15,7 @@
   "lastEdit": "Latest edited",
   "ownMe": "Owned to me",
   "myOwn": "I owned",
-  "scanQrcode": "Scan to join"
+  "scanQrcode": "Scan to join",
+  "confirmJoin": "Confirm join",
+  "emptyGroupId": "Empty group ID"
 }

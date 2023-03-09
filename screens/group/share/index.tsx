@@ -11,7 +11,7 @@ interface IShare {
 
 const Share: React.FC<IShare> = props => {
   const { groupId } = props
-  const value = `walkingcalc://group/${groupId}/1`
+  const value = `walkingcalc://group/${groupId}`
 
   const { t } = useTranslation('group')
 

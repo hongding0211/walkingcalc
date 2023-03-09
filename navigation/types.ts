@@ -5,11 +5,8 @@ export type RootStackParamList = {
   Group: {
     groupId: string
     showSetting?: boolean
-    join?: string
   }
-  CodeScan: {
-    onScan?: (data: any) => void
-  }
+  CodeScan: undefined
 }
 
 export type LoginStackParamList = {
@@ -22,4 +19,5 @@ export type LoginStackParamList = {
 
 export type HomeProps = NativeStackScreenProps<RootStackParamList, 'Home'>
 export type GroupProps = NativeStackScreenProps<RootStackParamList, 'Group'>
+export type CodeScanProps = NativeStackScreenProps<RootStackParamList, 'CodeScan'>
 export type LoginProps = NativeStackScreenProps<LoginStackParamList, 'Login'>
