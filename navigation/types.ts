@@ -7,6 +7,9 @@ export type RootStackParamList = {
     showSetting?: boolean
     join?: string
   }
+  CodeScan: {
+    onScan?: (data: any) => void
+  }
 }
 
 export type LoginStackParamList = {
