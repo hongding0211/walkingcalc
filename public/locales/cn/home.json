@@ -15,5 +15,7 @@
   "lastEdit": "上次编辑",
   "ownMe": "别人欠我",
   "myOwn": "我欠别人",
-  "scanQrcode": "扫码加入"
+  "scanQrcode": "扫码加入",
+  "confirmJoin": "确认加入",
+  "emptyGroupId": "群组 ID 为空"
 }

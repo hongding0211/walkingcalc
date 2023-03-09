@@ -52,34 +52,36 @@ const RootScreen: React.FC = () => {
   return (
     <NativeBaseProvider>
       <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="Group"
-          component={Group}
-          options={{
-            headerTransparent: true,
-            headerTitle: '',
-            headerLeft: () => <BackButton title={t('group') + ''} />,
-            headerRight: () => <SettingButton />,
-            headerBlurEffect: 'regular',
-          }}
-        />
+        <Stack.Group>
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Group"
+            component={Group}
+            options={{
+              headerTransparent: true,
+              headerTitle: '',
+              headerLeft: () => <BackButton title={t('group') + ''} />,
+              headerRight: () => <SettingButton />,
+              headerBlurEffect: 'regular',
+            }}
+          />
+        </Stack.Group>
+        <Stack.Group screenOptions={{ presentation: 'modal' }}>
+          <Stack.Screen
+            name="CodeScan"
+            component={QRCodeScanner}
+            options={{
+              headerShown: false,
+            }}
+          />
+        </Stack.Group>
       </Stack.Navigator>
-      <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen
-          name="CodeScan"
-          component={QRCodeScanner}
-          options={{
-            headerShown: false,
-          }}
-        />
-      </Stack.Group>
     </NativeBaseProvider>
   )
 }
