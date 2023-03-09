@@ -9,6 +9,7 @@ import { LoginStackParamList, RootStackParamList } from './types'
 import { useAppSelector } from '../app/store'
 import BackButton from '../components/Header/left'
 import SettingButton from '../components/Header/right'
+import QRCodeScanner from '../components/QRCodeScaner'
 import useUser from '../feature/user/useUser'
 import Splash from '../screens/Splash'
 import Group from '../screens/group'
@@ -70,6 +71,15 @@ const RootScreen: React.FC = () => {
           }}
         />
       </Stack.Navigator>
+      <Stack.Group screenOptions={{ presentation: 'modal' }}>
+        <Stack.Screen
+          name="CodeScan"
+          component={QRCodeScanner}
+          options={{
+            headerShown: false,
+          }}
+        />
+      </Stack.Group>
     </NativeBaseProvider>
   )
 }
