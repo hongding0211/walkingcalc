@@ -10,5 +10,5 @@ export function numberToString(n: number) {
 }
 
 export function stringToNumber(str: string) {
-  return Math.floor(+str * 100)
+  return +str * 100
 }
