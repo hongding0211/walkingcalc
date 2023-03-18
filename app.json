@@ -2,7 +2,7 @@
   "expo": {
     "name": "WalkingCalc",
     "slug": "walkingcalc",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "walkingcalc",
@@ -20,7 +20,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "ltd.hong97.walkingcalc"
+      "bundleIdentifier": "ltd.hong97.walkingcalc",
+      "buildNumber": "3"
     },
     "android": {
       "adaptiveIcon": {
