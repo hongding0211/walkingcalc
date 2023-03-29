@@ -2,7 +2,7 @@
   "expo": {
     "name": "WalkingCalc",
     "slug": "walkingcalc",
-    "version": "0.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "walkingcalc",
@@ -13,7 +13,8 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/eaf5abb6-948a-4a47-90e1-d471d8c16916"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -21,7 +22,11 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "ltd.hong97.walkingcalc",
-      "buildNumber": "3"
+      "buildNumber": "3",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access your camera",
+        "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -31,7 +36,8 @@
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",
-        "android.permission.FOREGROUND_SERVICE"
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.CAMERA"
       ]
     },
     "web": {
@@ -46,6 +52,9 @@
       "eas": {
         "projectId": "eaf5abb6-948a-4a47-90e1-d471d8c16916"
       }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }

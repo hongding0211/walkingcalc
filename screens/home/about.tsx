@@ -1,6 +1,7 @@
 import React from 'react'
 import { Image, StyleSheet, View } from 'react-native'
 
+import appSetting from '../../app.json'
 import ThemedText from '../../components/General/Themed/Text'
 
 const About: React.FC = () => {
@@ -12,7 +13,8 @@ const About: React.FC = () => {
       />
       <View>
         <ThemedText style={{ fontWeight: '700', marginBottom: 6 }}>Walking Calculator</ThemedText>
-        <ThemedText style={{ fontSize: 14, fontWeight: '500', marginBottom: 16 }}>Build with React Native</ThemedText>
+        <ThemedText style={{ fontSize: 14, fontWeight: '500', marginBottom: 6 }}>Build with React Native</ThemedText>
+        <ThemedText style={{ fontSize: 12, marginBottom: 16 }}>Version: {appSetting.expo.version}</ThemedText>
         <ThemedText
           type="SECOND"
           style={{ fontSize: 12, marginBottom: 6 }}
