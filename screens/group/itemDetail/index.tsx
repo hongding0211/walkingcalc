@@ -83,7 +83,7 @@ const ItemDetail: React.FC<IItemDetail> = props => {
                 marginTop: 2,
               }}
             >
-              {dayjs(data?.modifiedAt).format('MM:hh')}
+              {dayjs(data?.modifiedAt).format('HH:mm')}
             </ThemedText>
           </View>
         </View>

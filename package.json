@@ -41,6 +41,7 @@
     "expo-splash-screen": "~0.18.1",
     "expo-status-bar": "~1.4.2",
     "expo-system-ui": "~2.2.1",
+    "expo-updates": "~0.16.3",
     "expo-web-browser": "~12.1.1",
     "i18next": "^22.4.10",
     "lodash": "^4.17.21",
