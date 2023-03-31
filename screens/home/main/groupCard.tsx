@@ -55,7 +55,7 @@ const GroupCard: React.FC<IGroupCard> = props => {
         <View style={styles.bar}>
           <StackText
             top={t('lastEdit')}
-            bottom={date(props.data?.lastModifiedAt || Date.now())}
+            bottom={date(props.data?.modifiedAt || Date.now())}
             align="flex-start"
           />
           <StackText
