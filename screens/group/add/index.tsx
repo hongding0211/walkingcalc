@@ -13,6 +13,8 @@ import Button from '../../../components/General/Button'
 import Checkbox from '../../../components/General/Checkbox'
 import Input from '../../../components/General/Input'
 import Radio from '../../../components/General/Radio'
+import ThemedText from '../../../components/General/Themed/Text'
+import ThemedPressable from '../../../components/General/ThemedPressable'
 import useToast from '../../../components/Toast/useToast'
 import { setLoading } from '../../../feature/general/generalSlice'
 import { MembersContext } from '../../../feature/user/membersContext'
@@ -101,6 +103,14 @@ const AddRecord: React.FC<IAddGroup> = props => {
       })
   }, [groupId, paid, forWhom, type, text, location])
 
+  const handlePressSelectAll = useCallback(() => {
+    if (forWhom.length !== members.size) {
+      setForWhom([...members.keys()])
+    } else {
+      setForWhom([])
+    }
+  }, [members, forWhom])
+
   useEffect(() => {
     ;(async () => {
       const { status } = await Location.requestForegroundPermissionsAsync()
@@ -133,7 +143,21 @@ const AddRecord: React.FC<IAddGroup> = props => {
           onChange={setWho}
         />
       </FormItem>
-      <FormItem title={t('for') + ''}>
+      <FormItem
+        titleComponent={
+          <View style={styles.titleContainer}>
+            <ThemedText style={styles.title}>{t('for')}</ThemedText>
+            <ThemedPressable onPress={handlePressSelectAll}>
+              <ThemedText
+                type="SECOND"
+                style={styles.textButton}
+              >
+                {t('selectAll')}
+              </ThemedText>
+            </ThemedPressable>
+          </View>
+        }
+      >
         <Checkbox
           value={forWhom}
           options={[...members.values()].map(m => ({ value: m.uuid, title: m.name }))}
@@ -164,5 +188,19 @@ export default AddRecord
 const styles = StyleSheet.create({
   container: {
     rowGap: 16,
+  },
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    columnGap: 4,
+    marginBottom: 8,
+  },
+  title: {
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  textButton: {
+    fontSize: 12,
+    fontWeight: '500',
   },
 })

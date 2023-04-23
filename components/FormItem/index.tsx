@@ -6,21 +6,26 @@ import ThemedText from '../General/Themed/Text'
 interface IFormItem {
   title?: string
   children?: React.ReactNode
+  titleComponent?: React.ReactNode
   style?: any
   type?: 'FIRST' | 'SECOND'
 }
 
 const FormItem: React.FC<IFormItem> = props => {
-  const { title = '', children, style, type = 'FIRST' } = props
+  const { title = '', titleComponent, children, style, type = 'FIRST' } = props
 
   return (
     <View>
-      <ThemedText
-        style={[styles.title, style]}
-        type={type}
-      >
-        {title}
-      </ThemedText>
+      {titleComponent ? (
+        titleComponent
+      ) : (
+        <ThemedText
+          style={[styles.title, style]}
+          type={type}
+        >
+          {title}
+        </ThemedText>
+      )}
       {children}
     </View>
   )

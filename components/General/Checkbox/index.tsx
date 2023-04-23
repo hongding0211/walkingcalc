@@ -1,6 +1,6 @@
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import React, { useCallback, useContext, useRef } from 'react'
+import React, { useCallback, useContext, useEffect, useRef } from 'react'
 import { StyleSheet, View } from 'react-native'
 
 import { Color, ColorDark } from '../../../constants/Colors'
@@ -61,6 +61,10 @@ const Checkbox: React.FC<ICheckBox> = props => {
   const { value, onChange, options } = props
 
   const set = useRef(new Set())
+
+  useEffect(() => {
+    set.current = new Set(value)
+  }, [value])
 
   const handlePress = useCallback((v: any) => {
     if (!set.current.has(v)) {
