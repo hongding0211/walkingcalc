@@ -4,7 +4,7 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 import { FlashList } from '@shopify/flash-list'
 import * as Haptics from 'expo-haptics'
 import { Spinner } from 'native-base'
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Dimensions, Pressable, StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -31,6 +31,7 @@ import { GroupProps } from '../../navigation/types'
 import { useAddTempUser, useDeleteGroup, useGroup, useGroupInvite } from '../../services/group'
 import { useAddRecord, useDropRecord, useRecordGroup } from '../../services/record'
 import { IResolvedDebt } from '../../utlis/debt'
+import { useDate } from '../../utlis/useDate'
 
 const Loading = () => {
   return (
@@ -77,6 +78,7 @@ const GroupHome: React.FC = () => {
   const navigation = useNavigation<GroupProps['navigation']>()
   const toast = useToast()
   const dispatch = useDispatch()
+  const { fullDate } = useDate()
 
   const { groupId, showSetting } = route.params || {}
 
@@ -432,6 +434,19 @@ const GroupHome: React.FC = () => {
     setShowAddMember(true)
   }, [])
 
+  const sectiondListData = useMemo(() => {
+    let lastDay: number | undefined = undefined
+    return listData?.map((i: any) => {
+      const currentDay = Math.floor(i.modifiedAt / (1000 * 60 * 60 * 24))
+      const sectionHead = lastDay !== currentDay
+      lastDay = currentDay
+      return {
+        ...i,
+        sectionHead,
+      }
+    })
+  }, [listData])
+
   if (groupId === undefined) {
     navigation.reset({
       index: 0,
@@ -460,12 +475,20 @@ const GroupHome: React.FC = () => {
         )}
         {listData !== undefined && groupData?.data && (
           <FlashList
-            data={listData}
+            data={sectiondListData}
             renderItem={(e: any) => (
               <Pressable
                 style={styles.item}
                 onPress={() => handlePressItemCard(e.item)}
               >
+                {e.item.sectionHead && (
+                  <ThemedText
+                    style={styles.sectionHeader}
+                    type="SECOND"
+                  >
+                    {fullDate(e.item.modifiedAt)}
+                  </ThemedText>
+                )}
                 <ItemCard data={e.item} />
               </Pressable>
             )}
@@ -599,5 +622,10 @@ const styles = StyleSheet.create({
   },
   item: {
     marginTop: 10,
+  },
+  sectionHeader: {
+    fontSize: 12,
+    marginLeft: 8,
+    marginBottom: 8,
   },
 })
