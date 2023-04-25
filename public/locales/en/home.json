@@ -17,5 +17,6 @@
   "myOwn": "I owned",
   "scanQrcode": "Scan to join",
   "confirmJoin": "Confirm join",
-  "emptyGroupId": "Empty group ID"
+  "emptyGroupId": "Empty group ID",
+  "settings": "Settings"
 }

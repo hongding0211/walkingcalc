@@ -1,4 +1,5 @@
-import React, { useContext } from 'react'
+import { useNavigation } from '@react-navigation/native'
+import React, { useCallback, useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet } from 'react-native'
 
@@ -7,6 +8,7 @@ import ThemedText from '../../../components/General/Themed/Text'
 import ThemedView from '../../../components/General/Themed/View'
 import { Color, ColorDark } from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
+import { SettingsProps } from '../../../navigation/types'
 
 interface IItem {
   title?: any
@@ -40,6 +42,11 @@ const Item: React.FC<IItem> = ({ title, onPress }) => {
 const Menu: React.FC<IMenu> = ({ onLogout, onShowAbout, onTouchEnd }) => {
   const userInfo = useAppSelector(state => state.user.data)
   const { t } = useTranslation('home')
+  const navigation = useNavigation<SettingsProps['navigation']>()
+
+  const handleSettings = useCallback(() => {
+    navigation.navigate('Settings')
+  }, [])
 
   return (
     <ThemedView
@@ -54,6 +61,10 @@ const Menu: React.FC<IMenu> = ({ onLogout, onShowAbout, onTouchEnd }) => {
       <Item
         title={t('about')}
         onPress={onShowAbout}
+      />
+      <Item
+        title={t('settings')}
+        onPress={handleSettings}
       />
     </ThemedView>
   )
