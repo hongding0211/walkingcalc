@@ -2,11 +2,13 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
+import { useAppSelector } from '../../../app/store'
 import FormItem from '../../../components/FormItem'
 import Avatar from '../../../components/General/Avatar'
 import Button from '../../../components/General/Button'
 import Divider from '../../../components/General/Divider'
 import ThemedText from '../../../components/General/Themed/Text'
+import { numberToString } from '../../../utlis/moeny'
 
 interface IGroupSetting {
   data?: Record<string, any>
@@ -35,6 +37,7 @@ const User: React.FC<IUser> = props => {
 
 const GroupSetting: React.FC<IGroupSetting> = props => {
   const { data, recordCnt, onDismiss } = props
+  const userData = useAppSelector(state => state.user.data)
 
   const { t } = useTranslation('group')
 
@@ -84,6 +87,16 @@ const GroupSetting: React.FC<IGroupSetting> = props => {
         type="SECOND"
       >
         <ThemedText style={styles.text}>{recordCnt}</ThemedText>
+      </FormItem>
+      <Divider />
+      <FormItem
+        title={t('myCost') + ''}
+        style={styles.title}
+        type="SECOND"
+      >
+        <ThemedText style={styles.text}>
+          {numberToString(data?.membersInfo.find((e: any) => e.uuid === userData?.uuid).cost || 0)}
+        </ThemedText>
       </FormItem>
       <Divider />
       {data?.isOwner && (

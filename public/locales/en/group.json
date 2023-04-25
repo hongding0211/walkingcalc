@@ -46,5 +46,6 @@
   "confirmResolve": "Confirm resolve all debts?",
   "invite": "Invite friends to join the group 🥳",
   "confirmJoin": "Confirm join",
-  "selectAll": "Select all"
+  "selectAll": "Select all",
+  "myCost": "My cost"
 }

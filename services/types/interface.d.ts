@@ -202,6 +202,7 @@ export interface IPostRecord extends IApi {
       text: string
       long: string
       lat: string
+      isDebtResolve?: boolean
     }
   >
   response: IResponse<{
