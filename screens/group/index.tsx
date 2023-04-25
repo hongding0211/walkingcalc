@@ -350,6 +350,7 @@ const GroupHome: React.FC = () => {
             text: '',
             long: '',
             lat: '',
+            isDebtResolve: true,
           },
         })
       })
