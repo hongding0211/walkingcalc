@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NativeBaseProvider } from 'native-base'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import linking from './linking'
@@ -10,12 +10,15 @@ import { useAppSelector } from '../app/store'
 import BackButton from '../components/Header/left'
 import SettingButton from '../components/Header/right'
 import QRCodeScanner from '../components/QRCodeScaner'
+import { Color, ColorDark, Typography, TypographyDark } from '../constants/Colors'
+import { ThemeContext } from '../feature/theme/themeContext'
 import useUser from '../feature/user/useUser'
 import Splash from '../screens/Splash'
 import Group from '../screens/group'
 import Home from '../screens/home'
 import Login from '../screens/login/Login'
 import SSO from '../screens/modal/login/SSO'
+import Settings from '../screens/settings'
 
 const LoginScreen: React.FC = () => {
   const Stack = createNativeStackNavigator<LoginStackParamList>()
@@ -48,6 +51,8 @@ const LoginScreen: React.FC = () => {
 const RootScreen: React.FC = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>()
   const { t } = useTranslation('group')
+  const { t: tCommon } = useTranslation('common')
+  const theme = useContext(ThemeContext)
 
   return (
     <NativeBaseProvider>
@@ -68,6 +73,21 @@ const RootScreen: React.FC = () => {
               headerTitle: '',
               headerLeft: () => <BackButton title={t('group') + ''} />,
               headerRight: () => <SettingButton />,
+              headerBlurEffect: 'regular',
+            }}
+          />
+          <Stack.Screen
+            name="Settings"
+            component={Settings}
+            options={{
+              headerTransparent: true,
+              headerTitle: tCommon('settings') + '',
+              headerTitleStyle: {
+                color: theme.scheme === 'LIGHT' ? Typography.Primary : TypographyDark.Primary,
+              },
+              headerStyle: {
+                backgroundColor: theme.scheme === 'LIGHT' ? Color.Background : ColorDark.Background,
+              },
               headerBlurEffect: 'regular',
             }}
           />
