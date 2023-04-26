@@ -62,10 +62,6 @@ const AddRecord: React.FC<IAddGroup> = props => {
       toast(t('atLeastOnePeople') + '')
       return
     }
-    if (forWhom.length === 1 && forWhom[0] === who) {
-      toast(t('noPaidSelf') + '')
-      return
-    }
     dispatch(
       setLoading({
         status: true,
