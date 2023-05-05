@@ -55,6 +55,7 @@
     },
     "runtimeVersion": {
       "policy": "sdkVersion"
-    }
+    },
+    "jsEngine": "jsc"
   }
 }

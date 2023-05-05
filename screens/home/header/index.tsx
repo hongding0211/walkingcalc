@@ -15,10 +15,9 @@ import { ThemeContext } from '../../../feature/theme/themeContext'
 interface IHeader {
   onAdd?: () => void
   onShowAbout?: () => void
-  onLogout?: () => void
 }
 
-const Header: React.FC<IHeader> = ({ onAdd, onShowAbout, onLogout }) => {
+const Header: React.FC<IHeader> = ({ onAdd, onShowAbout }) => {
   const [showPopoverContent, setShowPopoverContent] = useState(false)
 
   const userInfo = useAppSelector(state => state.user.data)
@@ -77,7 +76,6 @@ const Header: React.FC<IHeader> = ({ onAdd, onShowAbout, onLogout }) => {
       >
         <Menu
           onShowAbout={onShowAbout}
-          onLogout={onLogout}
           onTouchEnd={() => setShowPopoverContent(false)}
         />
       </Popover>
