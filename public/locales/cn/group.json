@@ -41,11 +41,14 @@
   "noPaidSelf": "不能为自己付款",
   "enterAmount": "填写金额",
   "end": "已经到底啦",
-  "debtResolve": "债务和解",
+  "debtResolve": "和解所有债务",
   "zeroDebt": "所有债务已和解",
   "confirmResolve": "确认和解所有债务吗?",
   "invite": "邀请朋友加入群组 🥳",
   "confirmJoin": "确认加入",
   "selectAll": "选择所有",
-  "myCost": "我的支出"
+  "myCost": "我的支出",
+  "confirmResolveSingle": "确认和解单笔债务吗?",
+  "resolveSingleSuccess": "单笔债务和解成功",
+  "debtResolveMark": "债务和解"
 }

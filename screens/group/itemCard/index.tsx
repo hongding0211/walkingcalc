@@ -77,13 +77,22 @@ const ItemCard: React.FC<IItemCard> = props => {
 
         <View style={{ alignItems: 'flex-end', flexShrink: 0 }}>
           <ThemedText style={styles.amount}>{numberToString(data?.paid)}</ThemedText>
-          <ThemedText
-            type="SECOND"
-            style={styles.myPart}
-          >
-            {t('myPart')}:{' '}
-            {data?.forWhom?.indexOf(userInfo?.uuid) === -1 ? 0 : numberToString(data?.paid / data?.forWhom?.length)}
-          </ThemedText>
+          {data?.isDebtResolve ? (
+            <ThemedText
+              type="SECOND"
+              style={styles.myPart}
+            >
+              {t('debtResolveMark')}
+            </ThemedText>
+          ) : (
+            <ThemedText
+              type="SECOND"
+              style={styles.myPart}
+            >
+              {t('myPart')}:{' '}
+              {data?.forWhom?.indexOf(userInfo?.uuid) === -1 ? 0 : numberToString(data?.paid / data?.forWhom?.length)}
+            </ThemedText>
+          )}
         </View>
       </View>
     </Card>
