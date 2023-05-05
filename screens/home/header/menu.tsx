@@ -16,7 +16,6 @@ interface IItem {
 }
 
 interface IMenu {
-  onLogout?: () => void
   onShowAbout?: () => void
   onTouchEnd?: () => void
 }
@@ -39,7 +38,7 @@ const Item: React.FC<IItem> = ({ title, onPress }) => {
   )
 }
 
-const Menu: React.FC<IMenu> = ({ onLogout, onShowAbout, onTouchEnd }) => {
+const Menu: React.FC<IMenu> = ({ onShowAbout, onTouchEnd }) => {
   const userInfo = useAppSelector(state => state.user.data)
   const { t } = useTranslation('home')
   const navigation = useNavigation<SettingsProps['navigation']>()
@@ -54,10 +53,6 @@ const Menu: React.FC<IMenu> = ({ onLogout, onShowAbout, onTouchEnd }) => {
       onTouchEnd={onTouchEnd}
     >
       <Item title={userInfo?.name} />
-      <Item
-        title={t('logout')}
-        onPress={onLogout}
-      />
       <Item
         title={t('about')}
         onPress={onShowAbout}

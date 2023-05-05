@@ -118,25 +118,6 @@ const Home: React.FC = () => {
       })
   }, [])
 
-  const handleLogout = useCallback(() => {
-    Alert.alert(t('confirmLogout'), '', [
-      {
-        text: t('cancel') + '',
-        style: 'cancel',
-      },
-      {
-        text: t('confirm') + '',
-        onPress: () => {
-          dispatch(
-            setToken({
-              token: undefined,
-            })
-          )
-        },
-      },
-    ])
-  }, [])
-
   return (
     <>
       <SafeAreaView
@@ -149,7 +130,6 @@ const Home: React.FC = () => {
           <Header
             onAdd={() => setShowAddGroupModal(true)}
             onShowAbout={() => handleShowAbout(true)}
-            onLogout={handleLogout}
           />
 
           <Main
