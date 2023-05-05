@@ -7,6 +7,7 @@ const categoryMap: any = {
   ticket: '🎫',
   vacation: '🏝',
   game: '🎲',
+  debtResolve: '🤝',
 }
 
 export default categoryMap

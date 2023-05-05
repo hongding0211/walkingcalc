@@ -346,8 +346,8 @@ const GroupHome: React.FC = () => {
             who: d.from?.uuid || '',
             paid: d.amount,
             forWhom: [d.to?.uuid || ''],
-            type: 'transfer',
-            text: '',
+            type: 'debtResolve',
+            text: t('debtResolveMark'),
             long: '',
             lat: '',
             isDebtResolve: true,
@@ -372,6 +372,41 @@ const GroupHome: React.FC = () => {
       })
   }, [])
 
+  const resolveSingleDebt = useCallback((debtToBeResolved: IResolvedDebt) => {
+    dispatch(
+      setLoading({
+        status: true,
+      })
+    )
+    triggerAddRecord({
+      body: {
+        groupId,
+        who: debtToBeResolved.from?.uuid || '',
+        paid: debtToBeResolved.amount,
+        forWhom: [debtToBeResolved.to?.uuid || ''],
+        type: 'debtResolve',
+        text: t('debtResolveMark'),
+        long: '',
+        lat: '',
+        isDebtResolve: true,
+      },
+    })
+      .then(() => {
+        toast(t('resolveSingleSuccess') + '')
+      })
+      .catch(() => {
+        toast(t('generalError') + '')
+      })
+      .finally(() => {
+        dispatch(
+          setLoading({
+            status: false,
+          })
+        )
+        refreshData()
+      })
+  }, [])
+
   const handleResolveDebt = useCallback((debt: IResolvedDebt[]) => {
     Alert.alert(t('confirmResolve'), '', [
       {
@@ -381,6 +416,19 @@ const GroupHome: React.FC = () => {
       {
         text: t('confirm') + '',
         onPress: () => resolveDebt(debt),
+      },
+    ])
+  }, [])
+
+  const handleResolveSingleDebt = useCallback((debt: IResolvedDebt) => {
+    Alert.alert(t('confirmResolveSingle'), '', [
+      {
+        text: t('cancel') + '',
+        style: 'cancel',
+      },
+      {
+        text: t('confirm') + '',
+        onPress: () => resolveSingleDebt(debt),
       },
     ])
   }, [])
@@ -435,7 +483,7 @@ const GroupHome: React.FC = () => {
     setShowAddMember(true)
   }, [])
 
-  const sectiondListData = useMemo(() => {
+  const sectionedListData = useMemo(() => {
     let lastDay: number | undefined = undefined
     return listData?.map((i: any) => {
       const currentDay = Math.floor(i.modifiedAt / (1000 * 60 * 60 * 24))
@@ -476,7 +524,7 @@ const GroupHome: React.FC = () => {
         )}
         {listData !== undefined && groupData?.data && (
           <FlashList
-            data={sectiondListData}
+            data={sectionedListData}
             renderItem={(e: any) => (
               <Pressable
                 style={styles.item}
@@ -560,6 +608,7 @@ const GroupHome: React.FC = () => {
           <DebtDetail
             data={groupData?.data}
             onResolveDebt={handleResolveDebt}
+            onResolveSingleDebt={handleResolveSingleDebt}
           />
         </Modal>
       )}

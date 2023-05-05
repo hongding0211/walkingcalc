@@ -1,4 +1,4 @@
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { faArrowRight, faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -9,7 +9,8 @@ import Avatar from '../../../components/General/Avatar'
 import Button from '../../../components/General/Button'
 import Divider from '../../../components/General/Divider'
 import ThemedText from '../../../components/General/Themed/Text'
-import { Color, ColorDark } from '../../../constants/Colors'
+import ThemedPressable from '../../../components/General/ThemedPressable'
+import { Color, ColorDark, Typography, TypographyDark } from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
 import { IResolvedDebt, resolveDebt } from '../../../utlis/debt'
 import { numberToString } from '../../../utlis/moeny'
@@ -17,6 +18,7 @@ import { numberToString } from '../../../utlis/moeny'
 interface IDebtDetail {
   data?: Record<string, any>
   onResolveDebt?: (debt: IResolvedDebt[]) => void
+  onResolveSingleDebt?: (debt: IResolvedDebt) => void
 }
 
 interface IUserBar {
@@ -55,7 +57,7 @@ const UserBar: React.FC<IUserBar> = props => {
   )
 }
 
-const Transfer: React.FC<{ debt: IResolvedDebt }> = ({ debt }) => {
+const Transfer: React.FC<{ debt: IResolvedDebt } & { onPress?: () => void }> = ({ debt, onPress }) => {
   const { from, to, amount } = debt
 
   const theme = useContext(ThemeContext)
@@ -106,13 +108,30 @@ const Transfer: React.FC<{ debt: IResolvedDebt }> = ({ debt }) => {
           alignItems: 'center',
           justifyContent: 'center',
           width: Dimensions.get('window').width - 80,
-          backgroundColor: theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third,
           padding: 4,
           borderRadius: 4,
         }}
       >
         <Text style={{ fontSize: 10 }}>💸</Text>
         <ThemedText style={{ fontWeight: '500' }}>{numberToString(amount)}</ThemedText>
+
+        <View
+          style={{
+            position: 'absolute',
+            right: 0,
+          }}
+        >
+          <ThemedPressable
+            highLight
+            onPress={onPress}
+          >
+            <FontAwesomeIcon
+              size={14}
+              icon={faCircleCheck}
+              color={theme.scheme === 'LIGHT' ? Typography.Primary : TypographyDark.Primary}
+            />
+          </ThemedPressable>
+        </View>
       </View>
     </>
   )
@@ -120,7 +139,7 @@ const Transfer: React.FC<{ debt: IResolvedDebt }> = ({ debt }) => {
 const DebtDetail: React.FC<IDebtDetail> = props => {
   const { t } = useTranslation('group')
 
-  const { data, onResolveDebt } = props
+  const { data, onResolveDebt, onResolveSingleDebt } = props
 
   const resolvedDebt = resolveDebt([...(data?.membersInfo || []), ...(data?.tempUsers || [])])
 
@@ -171,7 +190,10 @@ const DebtDetail: React.FC<IDebtDetail> = props => {
                 key={idx}
                 style={{ rowGap: 8 }}
               >
-                <Transfer debt={d} />
+                <Transfer
+                  debt={d}
+                  onPress={() => onResolveSingleDebt && onResolveSingleDebt(d)}
+                />
                 <Divider />
               </View>
             ))}
