@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { StyleSheet, View } from 'react-native'
 
 import { Color, ColorDark } from '../../../constants/Colors'
@@ -12,9 +12,17 @@ interface IContainer {
 }
 
 const Container: React.FC<IContainer> = props => {
-  const { title, children: items } = props
+  const { title, children } = props
 
   const theme = useContext(ThemeContext)
+
+  const items = useMemo(
+    () =>
+      Array.isArray(children)
+        ? React.Children.map(children, (child, index) => React.cloneElement(child, { index, total: children.length }))
+        : React.cloneElement(children, { index: 0, total: 1 }),
+    []
+  )
 
   return (
     <View>
@@ -31,7 +39,6 @@ const Container: React.FC<IContainer> = props => {
           items.map((item, index) => (
             <View
               style={[
-                styles.item,
                 {
                   borderBottomColor: theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third,
                   borderBottomWidth: index === items.length - 1 ? 0 : 1,
@@ -42,7 +49,7 @@ const Container: React.FC<IContainer> = props => {
             </View>
           ))
         ) : (
-          <View style={[styles.item]}>{items}</View>
+          <View>{items}</View>
         )}
       </ThemedView>
     </View>
@@ -54,14 +61,10 @@ export default Container
 const styles = StyleSheet.create({
   container: {
     borderRadius: 12,
-    paddingHorizontal: 16,
   },
   title: {
     fontSize: 12,
     marginBottom: 5,
     marginLeft: 4,
-  },
-  item: {
-    paddingVertical: 16,
   },
 })
