@@ -7,11 +7,13 @@ import { Spinner } from 'native-base'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Dimensions, Pressable, StyleSheet, View } from 'react-native'
+import { Swipeable } from 'react-native-gesture-handler'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useDispatch } from 'react-redux'
 
 import AddRecord from './add'
 import AddMember from './addMember'
+import Delete from './components/delete'
 import DebtDetail from './debtDetail'
 import ItemCard from './itemCard'
 import ItemCardSkeleton from './itemCard/itemCardSkeleton'
@@ -70,6 +72,7 @@ const GroupHome: React.FC = () => {
 
   const scrollRef = useRef(false)
   const flashListRef = useRef<any>(undefined)
+  const swipeLock = useRef(false)
 
   const theme = useContext(ThemeContext)
   const insets = useSafeAreaInsets()
@@ -470,8 +473,13 @@ const GroupHome: React.FC = () => {
   }, [])
 
   const handlePressItemCard = useCallback((item: any) => {
-    setSelectedItem(item)
-    setShowItemDetail(true)
+    setTimeout(() => {
+      if (swipeLock.current) {
+        return
+      }
+      setSelectedItem(item)
+      setShowItemDetail(true)
+    }, 0)
   }, [])
   const handlePressQrcode = useCallback(() => {
     setShowShareModal(true)
@@ -481,6 +489,15 @@ const GroupHome: React.FC = () => {
   }, [])
   const handleAddMember = useCallback(() => {
     setShowAddMember(true)
+  }, [])
+
+  const handleSwipeBegin = useCallback(() => {
+    swipeLock.current = false
+  }, [])
+
+  const handleSwipeEnd = useCallback((item: any) => {
+    swipeLock.current = true
+    // TODO - HongD 06/28 16:05 delete
   }, [])
 
   const sectionedListData = useMemo(() => {
@@ -526,10 +543,7 @@ const GroupHome: React.FC = () => {
           <FlashList
             data={sectionedListData}
             renderItem={(e: any) => (
-              <Pressable
-                style={styles.item}
-                onPress={() => handlePressItemCard(e.item)}
-              >
+              <>
                 {e.item.sectionHead && (
                   <ThemedText
                     style={styles.sectionHeader}
@@ -538,8 +552,17 @@ const GroupHome: React.FC = () => {
                     {fullDate(e.item.modifiedAt)}
                   </ThemedText>
                 )}
-                <ItemCard data={e.item} />
-              </Pressable>
+                <Swipeable
+                  renderRightActions={() => <Delete />}
+                  onBegan={handleSwipeBegin}
+                  onEnded={() => handleSwipeEnd(e.item)}
+                  containerStyle={styles.item}
+                >
+                  <Pressable onPress={() => handlePressItemCard(e.item)}>
+                    <ItemCard data={e.item} />
+                  </Pressable>
+                </Swipeable>
+              </>
             )}
             estimatedItemSize={80}
             ListHeaderComponentStyle={{
@@ -676,6 +699,6 @@ const styles = StyleSheet.create({
   sectionHeader: {
     fontSize: 12,
     marginLeft: 8,
-    marginBottom: 8,
+    marginTop: 8,
   },
 })

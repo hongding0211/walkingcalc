@@ -14,6 +14,7 @@ import { Color, ColorDark, Typography, TypographyDark } from '../constants/Color
 import { ThemeContext } from '../feature/theme/themeContext'
 import useUser from '../feature/user/useUser'
 import Splash from '../screens/Splash'
+import Archived from '../screens/archived'
 import Group from '../screens/group'
 import Home from '../screens/home'
 import Login from '../screens/login/Login'
@@ -73,6 +74,21 @@ const RootScreen: React.FC = () => {
               headerTitle: '',
               headerLeft: () => <BackButton title={t('group') + ''} />,
               headerRight: () => <SettingButton />,
+              headerBlurEffect: 'regular',
+            }}
+          />
+          <Stack.Screen
+            name="Archived"
+            component={Archived}
+            options={{
+              headerTransparent: true,
+              headerTitle: tCommon('archivedGroup') + '',
+              headerTitleStyle: {
+                color: theme.scheme === 'LIGHT' ? Typography.Primary : TypographyDark.Primary,
+              },
+              headerStyle: {
+                backgroundColor: theme.scheme === 'LIGHT' ? Color.Background : ColorDark.Background,
+              },
               headerBlurEffect: 'regular',
             }}
           />

@@ -18,5 +18,7 @@
   "scanQrcode": "Scan to join",
   "confirmJoin": "Confirm join",
   "emptyGroupId": "Empty group ID",
-  "settings": "Settings"
+  "settings": "Settings",
+  "allGroups": "All Groups",
+  "archive": "Archive"
 }
