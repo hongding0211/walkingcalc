@@ -91,10 +91,6 @@ const RenderItem: React.FC<IRenderItem> = props => {
           total={total}
         />
       )}
-      containerStyle={{
-        borderTopColor: theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third,
-        borderTopWidth: index === 0 ? 0 : 1,
-      }}
       onBegan={handleSwipeBegin}
       onEnded={handleSwipeEnd}
       onSwipeableOpen={() => handleSwipeOpen(index)}

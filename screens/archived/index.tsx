@@ -54,18 +54,16 @@ const Archived: React.FC = () => {
     >
       <ScrollView contentContainerStyle={styles.container}>
         <ItemCard.Container key={archivedGroupData.data?.length}>
-          <FlashList
-            data={archivedGroupData.data}
-            renderItem={({ item, index }) => (
+          {archivedGroupData?.data &&
+            archivedGroupData.data.map((item, index) => (
               <RenderItem
+                key={item.id}
                 item={item}
                 index={index}
                 total={archivedGroupData?.data?.length || 0}
                 onRefresh={handleRefresh}
               />
-            )}
-            estimatedItemSize={50}
-          />
+            ))}
         </ItemCard.Container>
       </ScrollView>
     </View>
