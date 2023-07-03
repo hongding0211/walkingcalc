@@ -73,6 +73,7 @@ const GroupHome: React.FC = () => {
   const scrollRef = useRef(false)
   const flashListRef = useRef<any>(undefined)
   const swipeLock = useRef(false)
+  const swipeRef = useRef<any>(undefined)
 
   const theme = useContext(ThemeContext)
   const insets = useSafeAreaInsets()
@@ -266,11 +267,16 @@ const GroupHome: React.FC = () => {
       })
   }, [groupId])
 
+  const closeSwipe = useCallback(() => {
+    swipeRef.current?.close()
+  }, [])
+
   const handleDeleteRecord = useCallback(() => {
     Alert.alert(t('confirmDelete'), '', [
       {
         text: t('cancel') + '',
         style: 'cancel',
+        onPress: closeSwipe,
       },
       {
         text: t('confirm') + '',
@@ -491,14 +497,19 @@ const GroupHome: React.FC = () => {
     setShowAddMember(true)
   }, [])
 
-  const handleSwipeBegin = useCallback(() => {
+  const handleSwipeBegin = useCallback((item: any) => {
     swipeLock.current = false
+    setSelectedItem(item)
   }, [])
 
-  const handleSwipeEnd = useCallback((item: any) => {
+  const handleSwipeEnd = useCallback(() => {
     swipeLock.current = true
-    // TODO - HongD 06/28 16:05 delete
   }, [])
+
+  const handleSwipeOpen = useCallback(() => {
+    Haptics.selectionAsync().then()
+    handleDeleteRecord()
+  }, [handleDeleteRecord])
 
   const sectionedListData = useMemo(() => {
     let lastDay: number | undefined = undefined
@@ -554,9 +565,13 @@ const GroupHome: React.FC = () => {
                 )}
                 <Swipeable
                   renderRightActions={() => <Delete />}
-                  onBegan={handleSwipeBegin}
-                  onEnded={() => handleSwipeEnd(e.item)}
+                  onBegan={() => handleSwipeBegin(e.item)}
+                  onEnded={handleSwipeEnd}
+                  onSwipeableOpen={handleSwipeOpen}
                   containerStyle={styles.item}
+                  ref={(ref: any) => {
+                    swipeRef.current = ref
+                  }}
                 >
                   <Pressable onPress={() => handlePressItemCard(e.item)}>
                     <ItemCard data={e.item} />

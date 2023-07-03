@@ -14,9 +14,11 @@ import GroupCardSkeleton from './groupCardSkeleton'
 import TopCard from './topCard'
 import ThemedText from '../../../components/General/Themed/Text'
 import ThemedPressable from '../../../components/General/ThemedPressable'
+import useToast from '../../../components/Toast/useToast'
 import { Color, Typography, TypographyDark } from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
 import { GroupProps } from '../../../navigation/types'
+import { useArchiveGroup } from '../../../services/group'
 import use1l8n from '../../../utlis/use1l8n'
 
 interface IMain {
@@ -33,6 +35,9 @@ const Main: React.FC<IMain> = props => {
   const insets = useSafeAreaInsets()
   const t = use1l8n('home')
   const theme = useContext(ThemeContext)
+  const toast = useToast()
+
+  const { trigger: triggerGroupArchive } = useArchiveGroup()
 
   const swipeLock = useRef(false)
 
@@ -55,14 +60,35 @@ const Main: React.FC<IMain> = props => {
     onRefresh && onRefresh()
   }, [])
 
-  const handleSwipBegin = useCallback(() => {
+  const handleSwipeBegin = useCallback(() => {
     swipeLock.current = false
   }, [])
 
-  const handleSwipEnd = useCallback((index: number) => {
+  const handleSwipeEnd = useCallback(() => {
     swipeLock.current = true
-    // TODO - HongD 06/28 16:05 archive
   }, [])
+
+  const handleSwipeOpen = useCallback(
+    (index: number) => {
+      Haptics.selectionAsync().then()
+      triggerGroupArchive({
+        body: {
+          id: groupData?.data[index]?.id,
+        },
+      })
+        .then(res => {
+          if (res?.success) {
+            toast(t('archiveSuccess'))
+          } else {
+            toast(t('archiveFail'))
+          }
+        })
+        .finally(() => {
+          onRefresh && onRefresh()
+        })
+    },
+    [groupData]
+  )
 
   const handlePressArchive = useCallback(() => {
     navigation.navigate('Archived')
@@ -116,8 +142,9 @@ const Main: React.FC<IMain> = props => {
             <Swipeable
               renderLeftActions={() => <Archive title={t('archive')} />}
               containerStyle={{ marginTop: index === 0 ? 0 : 20 }}
-              onBegan={handleSwipBegin}
-              onEnded={() => handleSwipEnd(index)}
+              onBegan={handleSwipeBegin}
+              onEnded={handleSwipeEnd}
+              onSwipeableOpen={() => handleSwipeOpen(index)}
             >
               <Pressable onPress={() => handlePressGroupCard(index)}>
                 <GroupCard data={item} />

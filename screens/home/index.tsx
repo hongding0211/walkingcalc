@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { SafeAreaView, View } from 'react-native'
 import { useDispatch } from 'react-redux'
@@ -11,6 +11,7 @@ import JoinGroup from './group/join'
 import Header from './header'
 import Main from './main'
 import styles from './style'
+import { useAppSelector } from '../../app/store'
 import Modal from '../../components/General/Modal'
 import useToast from '../../components/Toast/useToast'
 import { Color, ColorDark } from '../../constants/Colors'
@@ -31,6 +32,7 @@ const Home: React.FC = () => {
   const theme = useContext(ThemeContext)
   const toast = useToast()
   const navigation = useNavigation<HomeProps['navigation']>()
+  const userInfo = useAppSelector(state => state.user.data)
 
   const { trigger: triggerGroupCreate } = useGroupCreate()
   const { trigger: triggerGroupJoin } = useGroupJoin()
@@ -117,6 +119,13 @@ const Home: React.FC = () => {
       })
   }, [])
 
+  const unarchivedGroupData = useMemo(() => {
+    const { uuid = '' } = userInfo || {}
+    return {
+      data: groupData?.data?.filter(e => e?.archivedUsers?.findIndex(e => e === uuid) === -1),
+    }
+  }, [groupData, userInfo])
+
   return (
     <>
       <SafeAreaView
@@ -133,7 +142,7 @@ const Home: React.FC = () => {
 
           <Main
             userDebt={userDebt}
-            groupData={groupData}
+            groupData={unarchivedGroupData}
             loading={isLoading}
             onRefresh={refresh}
           />

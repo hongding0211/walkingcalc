@@ -20,5 +20,9 @@
   "emptyGroupId": "Empty group ID",
   "settings": "Settings",
   "allGroups": "All Groups",
-  "archive": "Archive"
+  "archive": "Archive",
+  "archiveSuccess": "Archived",
+  "archiveFail": "Archive Fail",
+  "unarchiveSuccess": "Unarchived",
+  "unarchiveFail": "Unarchive failed"
 }
