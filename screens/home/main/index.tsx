@@ -54,7 +54,7 @@ const Main: React.FC<IMain> = props => {
         navigation.navigate('Group', {
           groupId: groupData.data[index].id,
         })
-      }, 0)
+      }, 100)
     },
     [groupData]
   )
