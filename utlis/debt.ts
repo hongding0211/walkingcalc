@@ -29,7 +29,7 @@ export function resolveDebt(u: IUser[]): IResolvedDebt[] {
     Math.abs(
       receivers.map(e => e.debt).reduce((pre, cur) => pre + cur, 0) -
         payers.map(e => e.debt).reduce((pre, cur) => pre + cur, 0)
-    ) > 1e-10
+    ) > 1e-1
   ) {
     return []
   }
