@@ -7,6 +7,7 @@ import React, { useCallback, useContext, useRef } from 'react'
 import { Dimensions, Pressable, StyleSheet, View } from 'react-native'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useDispatch } from 'react-redux'
 
 import Archive from './components/archive'
 import GroupCard from './groupCard'
@@ -16,6 +17,7 @@ import ThemedText from '../../../components/General/Themed/Text'
 import ThemedPressable from '../../../components/General/ThemedPressable'
 import useToast from '../../../components/Toast/useToast'
 import { Color, Typography, TypographyDark } from '../../../constants/Colors'
+import { setLoading } from '../../../feature/general/generalSlice'
 import { ThemeContext } from '../../../feature/theme/themeContext'
 import { GroupProps } from '../../../navigation/types'
 import { useArchiveGroup } from '../../../services/group'
@@ -24,18 +26,20 @@ import use1l8n from '../../../utlis/use1l8n'
 interface IMain {
   userDebt?: any
   groupData?: any
+  total?: number
   onRefresh?: () => void
   loading?: boolean
 }
 
 const Main: React.FC<IMain> = props => {
-  const { userDebt, groupData, onRefresh, loading } = props
+  const { userDebt, groupData, total = 0, onRefresh, loading } = props
 
   const navigation = useNavigation<GroupProps['navigation']>()
   const insets = useSafeAreaInsets()
   const t = use1l8n('home')
   const theme = useContext(ThemeContext)
   const toast = useToast()
+  const dispatch = useDispatch()
 
   const { trigger: triggerGroupArchive } = useArchiveGroup()
 
@@ -71,6 +75,11 @@ const Main: React.FC<IMain> = props => {
   const handleSwipeOpen = useCallback(
     (index: number) => {
       Haptics.selectionAsync().then()
+      dispatch(
+        setLoading({
+          status: true,
+        })
+      )
       triggerGroupArchive({
         body: {
           id: groupData?.data[index]?.id,
@@ -84,6 +93,11 @@ const Main: React.FC<IMain> = props => {
           }
         })
         .finally(() => {
+          dispatch(
+            setLoading({
+              status: false,
+            })
+          )
           onRefresh && onRefresh()
         })
     },
@@ -91,8 +105,12 @@ const Main: React.FC<IMain> = props => {
   )
 
   const handlePressArchive = useCallback(() => {
+    // 没有归档的群组
+    if (total === groupData.data.length) {
+      return
+    }
     navigation.navigate('Archived')
-  }, [])
+  }, [groupData])
 
   const headerComponent = useCallback(() => {
     return (
@@ -101,7 +119,7 @@ const Main: React.FC<IMain> = props => {
           style={styles.sectionHeader}
           type="SECOND"
         >
-          {`${t('allGroups')} (${groupData?.data?.length || 0})`}
+          {`${t('allGroups')} (${total})`}
         </ThemedText>
         <ThemedPressable
           highLight
@@ -114,11 +132,13 @@ const Main: React.FC<IMain> = props => {
               color: theme.scheme === 'LIGHT' ? Typography.Second : TypographyDark.Second,
             }}
           />
-          <FontAwesomeIcon
-            icon={faCircle}
-            style={styles.dot}
-            size={6}
-          />
+          {total !== groupData?.data?.length && (
+            <FontAwesomeIcon
+              icon={faCircle}
+              style={styles.dot}
+              size={6}
+            />
+          )}
         </ThemedPressable>
       </View>
     )

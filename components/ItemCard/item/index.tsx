@@ -13,11 +13,11 @@ interface IItem {
   onPress?: () => void
   children?: React.ReactNode[] | React.ReactNode
   index: number
-  total: number
+  total?: number
 }
 
 const Item: React.FC<IItem> = props => {
-  const { showArrow, title, onPress, children, index, total } = props
+  const { showArrow, title, onPress, children, index, total = 0 } = props
 
   const theme = useContext(ThemeContext)
 
@@ -26,7 +26,13 @@ const Item: React.FC<IItem> = props => {
       style={({ pressed }) => [
         styles.container,
         {
-          backgroundColor: pressed ? (theme.scheme === 'LIGHT' ? Color.Highlight : ColorDark.Highlight) : undefined,
+          backgroundColor: pressed
+            ? theme.scheme === 'LIGHT'
+              ? Color.Highlight
+              : ColorDark.Highlight
+            : theme.scheme === 'LIGHT'
+            ? Color.Background
+            : ColorDark.Background,
           borderTopLeftRadius: index === 0 ? 12 : 0,
           borderTopRightRadius: index === 0 ? 12 : 0,
           borderBottomLeftRadius: index === total - 1 ? 12 : 0,

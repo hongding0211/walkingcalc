@@ -21,6 +21,7 @@
   "settings": "Settings",
   "allGroups": "All Groups",
   "archive": "Archive",
+  "unarchive": "Unarchive",
   "archiveSuccess": "Archived",
   "archiveFail": "Archive Fail",
   "unarchiveSuccess": "Unarchived",

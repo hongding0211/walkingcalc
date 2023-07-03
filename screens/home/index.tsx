@@ -143,6 +143,7 @@ const Home: React.FC = () => {
           <Main
             userDebt={userDebt}
             groupData={unarchivedGroupData}
+            total={groupData?.data?.length || 0}
             loading={isLoading}
             onRefresh={refresh}
           />
