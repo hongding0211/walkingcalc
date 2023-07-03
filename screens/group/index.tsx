@@ -70,8 +70,6 @@ const GroupHome: React.FC = () => {
 
   const scrollRef = useRef(false)
   const flashListRef = useRef<any>(undefined)
-  const swipeLock = useRef(false)
-  const swipeRef = useRef<any>(undefined)
 
   const theme = useContext(ThemeContext)
   const insets = useSafeAreaInsets()
@@ -265,16 +263,11 @@ const GroupHome: React.FC = () => {
       })
   }, [groupId])
 
-  const closeSwipe = useCallback(() => {
-    swipeRef.current?.close()
-  }, [])
-
   const handleDeleteRecord = useCallback(() => {
     Alert.alert(t('confirmDelete'), '', [
       {
         text: t('cancel') + '',
         style: 'cancel',
-        onPress: closeSwipe,
       },
       {
         text: t('confirm') + '',
@@ -477,13 +470,8 @@ const GroupHome: React.FC = () => {
   }, [])
 
   const handlePressItemCard = useCallback((item: any) => {
-    setTimeout(() => {
-      if (swipeLock.current) {
-        return
-      }
-      setSelectedItem(item)
-      setShowItemDetail(true)
-    }, 0)
+    setSelectedItem(item)
+    setShowItemDetail(true)
   }, [])
   const handlePressQrcode = useCallback(() => {
     setShowShareModal(true)

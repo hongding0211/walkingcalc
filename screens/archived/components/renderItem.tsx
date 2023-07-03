@@ -42,7 +42,7 @@ const RenderItem: React.FC<IRenderItem> = props => {
       navigation.navigate('Group', {
         groupId: item.id,
       })
-    }, 0)
+    }, 100)
   }, [])
 
   const handleSwipeBegin = useCallback(() => {
