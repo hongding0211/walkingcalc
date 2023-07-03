@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   scroll: {
-    maxHeight: 300,
+    maxHeight: 135,
   },
   list: {
     rowGap: 16,

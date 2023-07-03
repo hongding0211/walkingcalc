@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 
 import RenderItem from './components/renderItem'
 import { useAppSelector } from '../../app/store'
+import ThemedView from '../../components/General/Themed/View'
 import ItemCard from '../../components/ItemCard'
 import { Color, ColorDark } from '../../constants/Colors'
 import { setLoading } from '../../feature/general/generalSlice'
@@ -40,7 +41,7 @@ const Archived: React.FC = () => {
   }, [groupLoading])
 
   if (!archivedGroupData.data?.length) {
-    return null
+    return <ThemedView style={{ flex: 1 }} />
   }
 
   return (
