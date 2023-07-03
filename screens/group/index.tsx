@@ -7,13 +7,11 @@ import { Spinner } from 'native-base'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Dimensions, Pressable, StyleSheet, View } from 'react-native'
-import { Swipeable } from 'react-native-gesture-handler'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useDispatch } from 'react-redux'
 
 import AddRecord from './add'
 import AddMember from './addMember'
-import Delete from './components/delete'
 import DebtDetail from './debtDetail'
 import ItemCard from './itemCard'
 import ItemCardSkeleton from './itemCard/itemCardSkeleton'
@@ -497,20 +495,6 @@ const GroupHome: React.FC = () => {
     setShowAddMember(true)
   }, [])
 
-  const handleSwipeBegin = useCallback((item: any) => {
-    swipeLock.current = false
-    setSelectedItem(item)
-  }, [])
-
-  const handleSwipeEnd = useCallback(() => {
-    swipeLock.current = true
-  }, [])
-
-  const handleSwipeOpen = useCallback(() => {
-    Haptics.selectionAsync().then()
-    handleDeleteRecord()
-  }, [handleDeleteRecord])
-
   const sectionedListData = useMemo(() => {
     let lastDay: number | undefined = undefined
     return listData?.map((i: any) => {
@@ -563,20 +547,12 @@ const GroupHome: React.FC = () => {
                     {fullDate(e.item.modifiedAt)}
                   </ThemedText>
                 )}
-                <Swipeable
-                  renderRightActions={() => <Delete />}
-                  onBegan={() => handleSwipeBegin(e.item)}
-                  onEnded={handleSwipeEnd}
-                  onSwipeableOpen={handleSwipeOpen}
-                  containerStyle={styles.item}
-                  ref={(ref: any) => {
-                    swipeRef.current = ref
-                  }}
+                <Pressable
+                  style={styles.item}
+                  onPress={() => handlePressItemCard(e.item)}
                 >
-                  <Pressable onPress={() => handlePressItemCard(e.item)}>
-                    <ItemCard data={e.item} />
-                  </Pressable>
-                </Swipeable>
+                  <ItemCard data={e.item} />
+                </Pressable>
               </>
             )}
             estimatedItemSize={80}
