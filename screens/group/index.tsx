@@ -70,6 +70,8 @@ const GroupHome: React.FC = () => {
 
   const scrollRef = useRef(false)
   const flashListRef = useRef<any>(undefined)
+  const swipeLock = useRef(false)
+  const swipeRef = useRef<any>(undefined)
 
   const theme = useContext(ThemeContext)
   const insets = useSafeAreaInsets()
@@ -263,11 +265,16 @@ const GroupHome: React.FC = () => {
       })
   }, [groupId])
 
+  const closeSwipe = useCallback(() => {
+    swipeRef.current?.close()
+  }, [])
+
   const handleDeleteRecord = useCallback(() => {
     Alert.alert(t('confirmDelete'), '', [
       {
         text: t('cancel') + '',
         style: 'cancel',
+        onPress: closeSwipe,
       },
       {
         text: t('confirm') + '',
@@ -470,8 +477,13 @@ const GroupHome: React.FC = () => {
   }, [])
 
   const handlePressItemCard = useCallback((item: any) => {
-    setSelectedItem(item)
-    setShowItemDetail(true)
+    setTimeout(() => {
+      if (swipeLock.current) {
+        return
+      }
+      setSelectedItem(item)
+      setShowItemDetail(true)
+    }, 0)
   }, [])
   const handlePressQrcode = useCallback(() => {
     setShowShareModal(true)
@@ -526,10 +538,7 @@ const GroupHome: React.FC = () => {
           <FlashList
             data={sectionedListData}
             renderItem={(e: any) => (
-              <Pressable
-                style={styles.item}
-                onPress={() => handlePressItemCard(e.item)}
-              >
+              <>
                 {e.item.sectionHead && (
                   <ThemedText
                     style={styles.sectionHeader}
@@ -538,8 +547,13 @@ const GroupHome: React.FC = () => {
                     {fullDate(e.item.modifiedAt)}
                   </ThemedText>
                 )}
-                <ItemCard data={e.item} />
-              </Pressable>
+                <Pressable
+                  style={styles.item}
+                  onPress={() => handlePressItemCard(e.item)}
+                >
+                  <ItemCard data={e.item} />
+                </Pressable>
+              </>
             )}
             estimatedItemSize={80}
             ListHeaderComponentStyle={{
@@ -625,7 +639,7 @@ const GroupHome: React.FC = () => {
       )}
       {showSetting && (
         <Modal
-          title={t('setting') + ''}
+          title={t('settings') + ''}
           onClose={handleCloseSetting}
         >
           <GroupSetting
@@ -676,6 +690,6 @@ const styles = StyleSheet.create({
   sectionHeader: {
     fontSize: 12,
     marginLeft: 8,
-    marginBottom: 8,
+    marginTop: 8,
   },
 })

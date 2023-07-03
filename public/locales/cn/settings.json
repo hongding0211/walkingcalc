@@ -1,0 +1,14 @@
+{
+  "user": "用户",
+  "logout": "登出",
+  "confirm": "确认",
+  "cancel": "取消",
+  "confirmLogout": "确认登出吗？",
+  "general": "通用",
+  "theme": "主题",
+  "light": "浅色",
+  "dark": "深色",
+  "follow": "跟随系统",
+  "language": "语言",
+  "editProfile": "编辑资料"
+}

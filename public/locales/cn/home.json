@@ -17,5 +17,13 @@
   "myOwn": "我欠别人",
   "scanQrcode": "扫码加入",
   "confirmJoin": "确认加入",
-  "emptyGroupId": "群组 ID 为空"
+  "emptyGroupId": "群组 ID 为空",
+  "settings": "设置",
+  "allGroups": "全部群组",
+  "archive": "归档",
+  "unarchive": "取消归档",
+  "archiveSuccess": "归档成功",
+  "archiveFail": "归档失败",
+  "unarchiveSuccess": "取消归档成功",
+  "unarchiveFail": "取消归档失败"
 }

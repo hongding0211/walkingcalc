@@ -1,3 +1,5 @@
 {
-  "noCameraAccess": "No access to camera"
+  "noCameraAccess": "No access to camera",
+  "settings": "Settings",
+  "archivedGroup": "Archived Groups"
 }

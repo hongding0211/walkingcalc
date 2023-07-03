@@ -137,6 +137,7 @@ export interface IGetGroupMy extends IApi {
         avatar: string
         debt: number
       }[]
+      archivedUsers: string[]
     }[]
   >
 }
@@ -269,5 +270,29 @@ export interface IPostGroupAddTempUser extends IApi {
   response: IResponse<{
     id: string
     name: string
+  }>
+}
+
+export interface IPostGroupArchive extends IApi {
+  request: IRequest<
+    undefined,
+    {
+      id: string
+    }
+  >
+  response: IResponse<{
+    id: string
+  }>
+}
+
+export interface IPostGroupUnarchive extends IApi {
+  request: IRequest<
+    undefined,
+    {
+      id: string
+    }
+  >
+  response: IResponse<{
+    id: string
   }>
 }

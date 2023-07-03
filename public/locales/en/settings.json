@@ -1,0 +1,14 @@
+{
+  "user": "User",
+  "logout": "Logout",
+  "confirm": "Confirm",
+  "cancel": "Cancel",
+  "confirmLogout": "Confirm logout?",
+  "general": "General",
+  "theme": "Theme",
+  "light": "Light",
+  "dark": "Dark",
+  "follow": "Follow System",
+  "language": "Language",
+  "editProfile": "Edit Profile"
+}

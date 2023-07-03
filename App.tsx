@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar'
 import { useColorScheme } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { Provider } from 'react-redux'
 
@@ -25,11 +26,13 @@ export default function App() {
       <SafeAreaProvider>
         <ThemeContext.Provider value={{ scheme: colorScheme === 'light' ? 'LIGHT' : 'DARK' }}>
           <LangContext.Provider value={locales}>
-            <Provider store={store}>
-              <StatusBar />
-              <Navigation />
-              <Loading />
-            </Provider>
+            <GestureHandlerRootView style={{ flex: 1 }}>
+              <Provider store={store}>
+                <StatusBar />
+                <Navigation />
+                <Loading />
+              </Provider>
+            </GestureHandlerRootView>
           </LangContext.Provider>
         </ThemeContext.Provider>
       </SafeAreaProvider>

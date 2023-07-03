@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, SafeAreaView, View } from 'react-native'
+import { SafeAreaView, View } from 'react-native'
 import { useDispatch } from 'react-redux'
 
 import About from './about'
@@ -11,12 +11,12 @@ import JoinGroup from './group/join'
 import Header from './header'
 import Main from './main'
 import styles from './style'
+import { useAppSelector } from '../../app/store'
 import Modal from '../../components/General/Modal'
 import useToast from '../../components/Toast/useToast'
 import { Color, ColorDark } from '../../constants/Colors'
 import { setLoading } from '../../feature/general/generalSlice'
 import { ThemeContext } from '../../feature/theme/themeContext'
-import { setToken } from '../../feature/user/userSlice'
 import { HomeProps } from '../../navigation/types'
 import { useGroupCreate, useGroupJoin, useGroupMy } from '../../services/group'
 import { useUserDebt } from '../../services/user'
@@ -32,6 +32,7 @@ const Home: React.FC = () => {
   const theme = useContext(ThemeContext)
   const toast = useToast()
   const navigation = useNavigation<HomeProps['navigation']>()
+  const userInfo = useAppSelector(state => state.user.data)
 
   const { trigger: triggerGroupCreate } = useGroupCreate()
   const { trigger: triggerGroupJoin } = useGroupJoin()
@@ -118,24 +119,12 @@ const Home: React.FC = () => {
       })
   }, [])
 
-  const handleLogout = useCallback(() => {
-    Alert.alert(t('confirmLogout'), '', [
-      {
-        text: t('cancel') + '',
-        style: 'cancel',
-      },
-      {
-        text: t('confirm') + '',
-        onPress: () => {
-          dispatch(
-            setToken({
-              token: undefined,
-            })
-          )
-        },
-      },
-    ])
-  }, [])
+  const unarchivedGroupData = useMemo(() => {
+    const { uuid = '' } = userInfo || {}
+    return {
+      data: groupData?.data?.filter(e => e?.archivedUsers?.findIndex(e => e === uuid) === -1),
+    }
+  }, [groupData, userInfo])
 
   return (
     <>
@@ -149,12 +138,12 @@ const Home: React.FC = () => {
           <Header
             onAdd={() => setShowAddGroupModal(true)}
             onShowAbout={() => handleShowAbout(true)}
-            onLogout={handleLogout}
           />
 
           <Main
             userDebt={userDebt}
-            groupData={groupData}
+            groupData={unarchivedGroupData}
+            total={groupData?.data?.length || 0}
             loading={isLoading}
             onRefresh={refresh}
           />

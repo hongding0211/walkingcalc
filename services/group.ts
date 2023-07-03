@@ -5,18 +5,22 @@ import {
   GET_GROUP,
   GET_GROUP_MY,
   POST_GROUP_ADD_TEMP_USER,
+  POST_GROUP_ARCHIVE,
   POST_GROUP_CREATE,
   POST_GROUP_INVITE,
   POST_GROUP_JOIN,
+  POST_GROUP_UNARCHIVE,
 } from './types/API'
 import {
   IDeleteGroup,
   IGetGroup,
   IGetGroupMy,
   IPostGroupAddTempUser,
+  IPostGroupArchive,
   IPostGroupCreate,
   IPostGroupInvite,
   IPostGroupJoin,
+  IPostGroupUnarchive,
 } from './types/interface'
 
 export function useGroupCreate() {
@@ -54,4 +58,12 @@ export function useGroupInvite() {
 
 export function useAddTempUser() {
   return useMutation<IPostGroupAddTempUser>('POST', POST_GROUP_ADD_TEMP_USER)
+}
+
+export function useArchiveGroup() {
+  return useMutation<IPostGroupArchive>('POST', POST_GROUP_ARCHIVE)
+}
+
+export function useUnarchiveGroup() {
+  return useMutation<IPostGroupUnarchive>('POST', POST_GROUP_UNARCHIVE)
 }
