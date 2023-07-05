@@ -30,6 +30,7 @@ const SSO: React.FC = () => {
           source={{ uri: SSO_URL }}
           onNavigationStateChange={handleNavStateChange}
           cacheEnabled={false}
+          injectedJavaScript="(function(){localStorage.clear()})()"
         />
       )}
     </>

@@ -121,8 +121,7 @@ const RootScreen: React.FC = () => {
             name="SsoMy"
             component={SsoMy}
             options={{
-              headerTitle: '',
-              headerTransparent: true,
+              headerTitle: tCommon('myProfile') + '',
             }}
           />
         </Stack.Group>

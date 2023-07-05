@@ -21,7 +21,7 @@ const Container: React.FC<IContainer> = props => {
       Array.isArray(children)
         ? React.Children.map(children, (child, index) => React.cloneElement(child, { index, total: children.length }))
         : React.cloneElement(children, { index: 0, total: 1 }),
-    []
+    [children]
   )
 
   return (
@@ -44,6 +44,7 @@ const Container: React.FC<IContainer> = props => {
                   borderBottomWidth: index === items.length - 1 ? 0 : 1,
                 },
               ]}
+              key={index}
             >
               {item}
             </View>

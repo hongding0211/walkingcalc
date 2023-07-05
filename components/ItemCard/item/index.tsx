@@ -12,7 +12,7 @@ interface IItem {
   title?: string
   onPress?: () => void
   children?: React.ReactNode[] | React.ReactNode
-  index: number
+  index?: number
   total?: number
 }
 

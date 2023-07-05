@@ -54,12 +54,12 @@ const Menu: React.FC<IMenu> = ({ onShowAbout, onTouchEnd }) => {
     >
       <Item title={userInfo?.name} />
       <Item
-        title={t('about')}
-        onPress={onShowAbout}
-      />
-      <Item
         title={t('settings')}
         onPress={handleSettings}
+      />
+      <Item
+        title={t('about')}
+        onPress={onShowAbout}
       />
     </ThemedView>
   )
