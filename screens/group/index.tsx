@@ -627,7 +627,7 @@ const GroupHome: React.FC = () => {
       )}
       {showSetting && (
         <Modal
-          title={t('settings') + ''}
+          title={t('setting') + ''}
           onClose={handleCloseSetting}
         >
           <GroupSetting

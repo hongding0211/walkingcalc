@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 
-import { setIsLogin, setIsLoginComplete, setToken, setUserData } from './userSlice'
+import { setIsLogin, setIsLoginComplete, setToken, setUpdate, setUserData } from './userSlice'
 import { useAppSelector } from '../../app/store'
 import useToast from '../../components/Toast/useToast'
 import { useUserInfo } from '../../services/user'
@@ -15,6 +15,7 @@ const useUser = () => {
   const dispatch = useDispatch()
   const { trigger: triggerGetUserInfo } = useUserInfo()
   const token = useAppSelector(state => state.user.token)
+  const update = useAppSelector(state => state.user.update)
   const { t } = useTranslation('login')
   const toast = useToast()
 
@@ -90,6 +91,53 @@ const useUser = () => {
         })
     }
   }, [token, hasReadToken])
+
+  useEffect(() => {
+    if (token && update) {
+      dispatch(setLoading({ status: true }))
+      triggerGetUserInfo({})
+        .then(res => {
+          if (res?.success && res?.data) {
+            dispatch(
+              setUserData({
+                data: res.data,
+              })
+            )
+            dispatch(
+              setIsLogin({
+                isLogin: true,
+              })
+            )
+          }
+        })
+        .catch(() => {
+          toast(t('loginFail') + '')
+          dispatch(
+            setToken({
+              token: undefined,
+            })
+          )
+          dispatch(
+            setUserData({
+              data: undefined,
+            })
+          )
+        })
+        .finally(() => {
+          dispatch(setLoading({ status: false }))
+          dispatch(
+            setIsLoginComplete({
+              isLoginComplete: true,
+            })
+          )
+          dispatch(
+            setUpdate({
+              update: false,
+            })
+          )
+        })
+    }
+  }, [token, update])
 
   return null
 }

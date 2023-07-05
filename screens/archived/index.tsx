@@ -1,4 +1,3 @@
-import { FlashList } from '@shopify/flash-list'
 import React, { useCallback, useContext, useEffect, useMemo } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -6,7 +5,6 @@ import { useDispatch } from 'react-redux'
 
 import RenderItem from './components/renderItem'
 import { useAppSelector } from '../../app/store'
-import ThemedView from '../../components/General/Themed/View'
 import ItemCard from '../../components/ItemCard'
 import { Color, ColorDark } from '../../constants/Colors'
 import { setLoading } from '../../feature/general/generalSlice'
@@ -41,7 +39,14 @@ const Archived: React.FC = () => {
   }, [groupLoading])
 
   if (!archivedGroupData.data?.length) {
-    return <ThemedView style={{ flex: 1 }} />
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: theme.scheme === 'LIGHT' ? Color.BackgroundSecond : ColorDark.BackgroundSecond,
+        }}
+      />
+    )
   }
 
   return (

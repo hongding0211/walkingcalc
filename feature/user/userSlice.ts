@@ -10,6 +10,7 @@ type UserState = {
     name?: string
     avatar?: string
   }
+  update?: boolean
 }
 
 export const userSlice = createSlice({
@@ -43,8 +44,11 @@ export const userSlice = createSlice({
     setIsLoginComplete: (state, action: PayloadAction<{ isLoginComplete: boolean }>) => {
       state.isLoginComplete = action.payload.isLoginComplete
     },
+    setUpdate: (state, action: PayloadAction<{ update: boolean }>) => {
+      state.update = action.payload.update
+    },
   },
 })
 
-export const { setToken, setUserData, setIsLogin, setIsLoginComplete } = userSlice.actions
+export const { setToken, setUserData, setIsLogin, setIsLoginComplete, setUpdate } = userSlice.actions
 export default userSlice.reducer

@@ -9,6 +9,7 @@ export type RootStackParamList = {
   Settings: undefined
   Archived: undefined
   CodeScan: undefined
+  SsoMy: undefined
 }
 
 export type LoginStackParamList = {

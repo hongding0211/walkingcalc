@@ -1,25 +1,16 @@
-import { useToast as useNBToast } from 'native-base'
-import { useRef } from 'react'
+import { useDispatch } from 'react-redux'
 
-import Toast from './index'
+import { setToast } from '../../feature/general/generalSlice'
 
 const useToast = () => {
-  const toast = useNBToast()
-
-  const show = useRef(false)
+  const dispatch = useDispatch()
 
   return (title = '') => {
-    if (show.current) {
-      return
-    }
-    toast.show({
-      render: () => <Toast title={title} />,
-    })
-    show.current = true
-    setTimeout(() => {
-      toast.closeAll()
-      show.current = false
-    }, 2000)
+    dispatch(
+      setToast({
+        msg: title,
+      })
+    )
   }
 }
 

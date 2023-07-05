@@ -19,6 +19,7 @@ import Group from '../screens/group'
 import Home from '../screens/home'
 import Login from '../screens/login/Login'
 import SSO from '../screens/modal/login/SSO'
+import SsoMy from '../screens/modal/login/ssoMy'
 import Settings from '../screens/settings'
 
 const LoginScreen: React.FC = () => {
@@ -114,6 +115,14 @@ const RootScreen: React.FC = () => {
             component={QRCodeScanner}
             options={{
               headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="SsoMy"
+            component={SsoMy}
+            options={{
+              headerTitle: '',
+              headerTransparent: true,
             }}
           />
         </Stack.Group>
