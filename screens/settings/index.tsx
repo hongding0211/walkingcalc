@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import React, { useCallback, useContext } from 'react'
 import { ScrollView, StyleSheet, Text, View, Alert } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -7,7 +8,6 @@ import { useAppSelector } from '../../app/store'
 import Avatar from '../../components/General/Avatar'
 import ThemedText from '../../components/General/Themed/Text'
 import ItemCard from '../../components/ItemCard'
-import useToast from '../../components/Toast/useToast'
 import { Color, ColorDark } from '../../constants/Colors'
 import { ThemeContext } from '../../feature/theme/themeContext'
 import { setToken } from '../../feature/user/userSlice'
@@ -19,8 +19,7 @@ const Settings: React.FC = () => {
   const t = use1l8n('settings')
   const userData = useAppSelector(state => state.user.data)
   const dispatch = useDispatch()
-  // TODO - HongD 07/03 18:17
-  const toast = useToast()
+  const navigation = useNavigation()
 
   const logout = useCallback(() => {
     dispatch(
@@ -44,8 +43,7 @@ const Settings: React.FC = () => {
   }, [])
 
   const handlePressEditProfile = useCallback(() => {
-    // TODO - HongD 06/27 00:17
-    toast('Coming soon')
+    navigation.navigate('SsoMy')
   }, [])
 
   return (

@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type GeneralState = {
   loading: boolean
+  toast: string
   scan: {
     data: any
     success: boolean
@@ -12,6 +13,7 @@ export const generalSlice = createSlice({
   name: 'general',
   initialState: {
     loading: false,
+    toast: '',
     scan: {
       data: undefined,
       success: false,
@@ -27,9 +29,12 @@ export const generalSlice = createSlice({
     setScanSuccess: (state, action: PayloadAction<{ success: boolean }>) => {
       state.scan.success = action.payload.success
     },
+    setToast: (state, action: PayloadAction<{ msg: string }>) => {
+      state.toast = action.payload.msg
+    },
   },
 })
 
-export const { setLoading, setScanCodeResult, setScanSuccess } = generalSlice.actions
+export const { setLoading, setScanCodeResult, setScanSuccess, setToast } = generalSlice.actions
 
 export default generalSlice.reducer

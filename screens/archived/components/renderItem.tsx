@@ -1,15 +1,13 @@
 import { useNavigation } from '@react-navigation/native'
 import * as Haptics from 'expo-haptics'
-import React, { useCallback, useContext, useRef } from 'react'
+import React, { useCallback, useRef } from 'react'
 import { Swipeable } from 'react-native-gesture-handler'
 import { useDispatch } from 'react-redux'
 
 import Unarchive from './unarchive'
 import ItemCard from '../../../components/ItemCard'
 import useToast from '../../../components/Toast/useToast'
-import { Color, ColorDark } from '../../../constants/Colors'
 import { setLoading } from '../../../feature/general/generalSlice'
-import { ThemeContext } from '../../../feature/theme/themeContext'
 import { GroupProps } from '../../../navigation/types'
 import { useUnarchiveGroup } from '../../../services/group'
 import use1l8n from '../../../utlis/use1l8n'
@@ -27,7 +25,6 @@ const RenderItem: React.FC<IRenderItem> = props => {
   const swipeLock = useRef(false)
 
   const navigation = useNavigation<GroupProps['navigation']>()
-  const theme = useContext(ThemeContext)
   const t = use1l8n('home')
   const toast = useToast()
   const dispatch = useDispatch()

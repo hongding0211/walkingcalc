@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 
 import store from './app/store'
 import Loading from './components/General/Loading'
+import Toast from './components/Toast'
 import { LangContext } from './feature/lang/langContext'
 import { ThemeContext } from './feature/theme/themeContext'
 import useCachedResources from './hooks/useCachedResources'
@@ -31,6 +32,7 @@ export default function App() {
                 <StatusBar />
                 <Navigation />
                 <Loading />
+                <Toast />
               </Provider>
             </GestureHandlerRootView>
           </LangContext.Provider>
