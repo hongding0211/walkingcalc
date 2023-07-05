@@ -8,7 +8,7 @@ import { Typography, TypographyDark } from '../../constants/Colors'
 import { setToast } from '../../feature/general/generalSlice'
 import { ThemeContext } from '../../feature/theme/themeContext'
 
-const bottomOffset = 50
+const bottomOffset = 20
 
 const Toast: React.FC = () => {
   const [show, setShow] = useState(false)
@@ -69,7 +69,7 @@ const Toast: React.FC = () => {
         styles.toastContainer,
         theme.scheme === 'LIGHT' ? styles.bg : styles.bgDark,
         {
-          bottom: safeArea.bottom,
+          bottom: safeArea.bottom + 30,
           opacity: opacityAnim.current,
           transform: [
             {
