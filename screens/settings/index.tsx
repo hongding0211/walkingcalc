@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native'
-import React, { useCallback, useContext } from 'react'
+import React, { useCallback, useContext, useEffect } from 'react'
 import { ScrollView, StyleSheet, Text, View, Alert } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useDispatch } from 'react-redux'
@@ -10,7 +10,7 @@ import ThemedText from '../../components/General/Themed/Text'
 import ItemCard from '../../components/ItemCard'
 import { Color, ColorDark } from '../../constants/Colors'
 import { ThemeContext } from '../../feature/theme/themeContext'
-import { setToken } from '../../feature/user/userSlice'
+import { setToken, setUpdate } from '../../feature/user/userSlice'
 import use1l8n from '../../utlis/use1l8n'
 
 const Settings: React.FC = () => {
@@ -44,6 +44,14 @@ const Settings: React.FC = () => {
 
   const handlePressEditProfile = useCallback(() => {
     navigation.navigate('SsoMy')
+  }, [])
+
+  useEffect(() => {
+    dispatch(
+      setUpdate({
+        update: true,
+      })
+    )
   }, [])
 
   return (
