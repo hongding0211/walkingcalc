@@ -47,7 +47,12 @@ export interface IGetUserLogin extends IApi {
 }
 
 export interface IGetUserInfo extends IApi {
-  request: IRequest<undefined, undefined>
+  request: IRequest<
+    {
+      pushToken?: string
+    },
+    undefined
+  >
   response: IResponse<{
     uuid: string
     name: string
