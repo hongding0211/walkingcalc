@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import * as Notifications from 'expo-notifications'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
@@ -53,7 +54,14 @@ const useUser = () => {
     }
     if (token) {
       dispatch(setLoading({ status: true }))
-      triggerGetUserInfo({})
+      Notifications.getDevicePushTokenAsync()
+        .then(v => {
+          return triggerGetUserInfo({
+            params: {
+              pushToken: v.data,
+            },
+          })
+        })
         .then(res => {
           if (res?.success && res?.data) {
             dispatch(
@@ -95,7 +103,14 @@ const useUser = () => {
   useEffect(() => {
     if (token && update) {
       dispatch(setLoading({ status: true }))
-      triggerGetUserInfo({})
+      Notifications.getDevicePushTokenAsync()
+        .then(v => {
+          return triggerGetUserInfo({
+            params: {
+              pushToken: v.data,
+            },
+          })
+        })
         .then(res => {
           if (res?.success && res?.data) {
             dispatch(

@@ -1357,6 +1357,23 @@
     semver "7.3.2"
     tempy "0.3.0"
 
+"@expo/image-utils@^0.3.18":
+  version "0.3.23"
+  resolved "https://registry.yarnpkg.com/@expo/image-utils/-/image-utils-0.3.23.tgz#f14fd7e1f5ff6f8e4911a41e27dd274470665c3f"
+  integrity sha512-nhUVvW0TrRE4jtWzHQl8TR4ox7kcmrc2I0itaeJGjxF5A54uk7avgA0wRt7jP1rdvqQo1Ke1lXyLYREdhN9tPw==
+  dependencies:
+    "@expo/spawn-async" "1.5.0"
+    chalk "^4.0.0"
+    fs-extra "9.0.0"
+    getenv "^1.0.0"
+    jimp-compact "0.16.1"
+    mime "^2.4.4"
+    node-fetch "^2.6.0"
+    parse-png "^2.1.0"
+    resolve-from "^5.0.0"
+    semver "7.3.2"
+    tempy "0.3.0"
+
 "@expo/json-file@8.2.36":
   version "8.2.36"
   resolved "https://registry.npmmirror.com/@expo/json-file/-/json-file-8.2.36.tgz#62a505cb7f30a34d097386476794680a3f7385ff"
@@ -1614,6 +1631,11 @@
   version "1.2.1"
   resolved "https://registry.npmmirror.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
+
+"@ide/backoff@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@ide/backoff/-/backoff-1.0.0.tgz#466842c25bd4a4833e0642fab41ccff064010176"
+  integrity sha512-F0YfUDjvT+Mtt/R4xdl2X0EYCHMMiJqNLdxHD++jDT5ydEFIyqbCHh51Qx2E211dgZprPKhV7sHmnXKpLuvc5g==
 
 "@internationalized/date@^3.1.0":
   version "3.1.0"
@@ -3637,6 +3659,17 @@ asap@~2.0.3, asap@~2.0.6:
   resolved "https://registry.npmmirror.com/asap/-/asap-2.0.6.tgz#e50347611d7e690943208bbdafebcbc2fb866d46"
   integrity sha512-BSHWgDSAiKs50o2Re8ppvp3seVHXSRM44cdSsT9FfNEUUZLOGWVCsiWaRPWM1Znn+mqZ1OfVZ3z3DWEzSp7hRA==
 
+assert@^2.0.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/assert/-/assert-2.1.0.tgz#6d92a238d05dc02e7427c881fb8be81c8448b2dd"
+  integrity sha512-eLHpSK/Y4nhMJ07gDaAzoX/XAKS8PSaojml3M0DM4JpV1LAi5JOJ/p6H/XWrl8L+DzVEvVCW1z3vWAaB9oTsQw==
+  dependencies:
+    call-bind "^1.0.2"
+    is-nan "^1.3.2"
+    object-is "^1.1.5"
+    object.assign "^4.1.4"
+    util "^0.12.5"
+
 assign-symbols@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmmirror.com/assign-symbols/-/assign-symbols-1.0.0.tgz#59667f41fadd4f20ccbc2bb96b8d4f7f78ec0367"
@@ -3876,6 +3909,11 @@ babel-preset-jest@^29.4.3:
   dependencies:
     babel-plugin-jest-hoist "^29.4.3"
     babel-preset-current-node-syntax "^1.0.0"
+
+badgin@^1.1.5:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/badgin/-/badgin-1.2.3.tgz#994b5f519827d7d5422224825b2c8faea2bc43ad"
+  integrity sha512-NQGA7LcfCpSzIbGRbkgjgdWkjy7HI+Th5VLxTJfW5EeaAf3fnS+xWQaQOCYiny+q6QSvxqoSO04vCx+4u++EJw==
 
 balanced-match@^1.0.0:
   version "1.0.2"
@@ -5374,7 +5412,7 @@ expect@^29.4.3:
     jest-message-util "^29.4.3"
     jest-util "^29.4.3"
 
-expo-application@~5.1.1:
+expo-application@~5.1.0, expo-application@~5.1.1:
   version "5.1.1"
   resolved "https://registry.npmmirror.com/expo-application/-/expo-application-5.1.1.tgz#5206bf0cf89cb0e32d1f5037a0481e5c86b951ab"
   integrity sha512-aDatTcTTCdTbHw8h4/Tq2ilc6InM5ntF9xWCJdOcnUEcglxxGphVI/lzJKBaBF6mJECA8mEOjpVg2EGxOctTwg==
@@ -5411,6 +5449,39 @@ expo-constants@~14.2.0, expo-constants@~14.2.1:
   dependencies:
     "@expo/config" "~8.0.0"
     uuid "^3.3.2"
+
+expo-dev-client@~2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/expo-dev-client/-/expo-dev-client-2.2.1.tgz#3abdb875e9c9ed30e1f6dadc2f80b392d15b1c1e"
+  integrity sha512-BDhKyni82LiT6PypgBns1/FLqo3cGDBluaj4/Pojx9P7x9iwOFcesepO8r6BCWb4LuBjdB+z2yQ1fMXxzNC3qQ==
+  dependencies:
+    expo-dev-launcher "2.2.1"
+    expo-dev-menu "2.2.0"
+    expo-dev-menu-interface "1.1.1"
+    expo-manifests "~0.5.0"
+    expo-updates-interface "~0.9.0"
+
+expo-dev-launcher@2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/expo-dev-launcher/-/expo-dev-launcher-2.2.1.tgz#db9eec550487400cdac9c2aeedd3b6791fd49469"
+  integrity sha512-TP9SOrNIKF5Whju7uhtBsJeOvf9idUSg7snhHNVRpm2mA5kReckeD3PFv4HsvBHdnrfoslpeq4spOdS6UUx3XA==
+  dependencies:
+    expo-dev-menu "2.2.0"
+    resolve-from "^5.0.0"
+    semver "^7.3.5"
+
+expo-dev-menu-interface@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/expo-dev-menu-interface/-/expo-dev-menu-interface-1.1.1.tgz#8a0d979f62d9a192696f66a77f75d8fab79e604b"
+  integrity sha512-doT+7WrSBnxCcTGZw9QIEZoL+43U4RywbG8XZwbhkcsFWGsh9scp0y/bv3ieFHxRtIdImxbxOoYh7fy1O6g28w==
+
+expo-dev-menu@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/expo-dev-menu/-/expo-dev-menu-2.2.0.tgz#849ec3601f1dc228ad2858e4a25614a72932a61c"
+  integrity sha512-ImRUD7IVyLme7t3S+pNsOOgCBorkriVNo+ryEmkAjzRTKlpiklhoc1GEdQUU3qvO6e66gUguMbs4wnaP6o4NEw==
+  dependencies:
+    expo-dev-menu-interface "1.1.1"
+    semver "^7.3.5"
 
 expo-eas-client@~0.5.0:
   version "0.5.1"
@@ -5499,6 +5570,21 @@ expo-modules-core@1.2.3:
   dependencies:
     compare-versions "^3.4.0"
     invariant "^2.2.4"
+
+expo-notifications@~0.18.1:
+  version "0.18.1"
+  resolved "https://registry.yarnpkg.com/expo-notifications/-/expo-notifications-0.18.1.tgz#c726bee7b6691d5f154b874afeda3b4561571cfc"
+  integrity sha512-lOEiuPE6ubkS5u7Nj/57gkmUGD/MxsRTC6bg9SGJqXIitBQZk3Tmv9y8bjTrn71n7DsrH8K7xCZTbVwr+kLQGg==
+  dependencies:
+    "@expo/image-utils" "^0.3.18"
+    "@ide/backoff" "^1.0.0"
+    abort-controller "^3.0.0"
+    assert "^2.0.0"
+    badgin "^1.1.5"
+    expo-application "~5.1.0"
+    expo-constants "~14.2.0"
+    fs-extra "^9.1.0"
+    uuid "^3.4.0"
 
 expo-splash-screen@~0.18.1:
   version "0.18.1"
@@ -6417,6 +6503,14 @@ is-accessor-descriptor@^1.0.0:
   dependencies:
     kind-of "^6.0.0"
 
+is-arguments@^1.0.4:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/is-arguments/-/is-arguments-1.1.1.tgz#15b3f88fda01f2a97fec84ca761a560f123efa9b"
+  integrity sha512-8Q7EARjzEnKpt/PCD7e1cgUS0a6X8u5tdSiMqXhojOdoV9TsMsiO+9VLC5vAmO8N7/GmXn7yjR8qnA6bVAEzfA==
+  dependencies:
+    call-bind "^1.0.2"
+    has-tostringtag "^1.0.0"
+
 is-array-buffer@^3.0.1:
   version "3.0.1"
   resolved "https://registry.npmmirror.com/is-array-buffer/-/is-array-buffer-3.0.1.tgz#deb1db4fcae48308d54ef2442706c0393997052a"
@@ -6566,6 +6660,13 @@ is-generator-fn@^2.0.0:
   resolved "https://registry.npmmirror.com/is-generator-fn/-/is-generator-fn-2.1.0.tgz#7d140adc389aaf3011a8f2a2a4cfa6faadffb118"
   integrity sha512-cTIB4yPYL/Grw0EaSzASzg6bBy9gqCofvWN8okThAYIxKJZC+udlRAmGbM0XLeniEJSs8uEgHPGuHSe1XsOLSQ==
 
+is-generator-function@^1.0.7:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/is-generator-function/-/is-generator-function-1.0.10.tgz#f1558baf1ac17e0deea7c0415c438351ff2b3c72"
+  integrity sha512-jsEjy9l3yiXEQ+PsXdmBwEPcOxaXWLspKdplFUVI9vq1iZgIekeC0L167qeu86czQaxed3q/Uzuw0swL0irL8A==
+  dependencies:
+    has-tostringtag "^1.0.0"
+
 is-glob@^2.0.0:
   version "2.0.1"
   resolved "https://registry.npmmirror.com/is-glob/-/is-glob-2.0.1.tgz#d096f926a3ded5600f3fdfd91198cb0888c2d863"
@@ -6591,6 +6692,14 @@ is-invalid-path@^0.1.0:
   integrity sha512-aZMG0T3F34mTg4eTdszcGXx54oiZ4NtHSft3hWNJMGJXUUqdIj3cOZuHcU0nCWWcY3jd7yRe/3AEm3vSNTpBGQ==
   dependencies:
     is-glob "^2.0.0"
+
+is-nan@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/is-nan/-/is-nan-1.3.2.tgz#043a54adea31748b55b6cd4e09aadafa69bd9e1d"
+  integrity sha512-E+zBKpQ2t6MEo1VsonYmluk9NxGrbzpeeLC2xIViuO2EjU2xsXsBPwTr3Ykv9l08UYEVEdWeRZNouaZqF6RN0w==
+  dependencies:
+    call-bind "^1.0.0"
+    define-properties "^1.1.3"
 
 is-negative-zero@^2.0.2:
   version "2.0.2"
@@ -6702,6 +6811,13 @@ is-typed-array@^1.1.10, is-typed-array@^1.1.9:
     for-each "^0.3.3"
     gopd "^1.0.1"
     has-tostringtag "^1.0.0"
+
+is-typed-array@^1.1.3:
+  version "1.1.12"
+  resolved "https://registry.yarnpkg.com/is-typed-array/-/is-typed-array-1.1.12.tgz#d0bab5686ef4a76f7a73097b95470ab199c57d4a"
+  integrity sha512-Z14TF2JNG8Lss5/HMqt0//T9JeHXttXy5pH/DBU4vi98ozO2btxzq9MwYDZYnKwU8nRsz/+GVFVRDq3DkVuSPg==
+  dependencies:
+    which-typed-array "^1.1.11"
 
 is-typedarray@^1.0.0:
   version "1.0.0"
@@ -8643,6 +8759,14 @@ object-inspect@^1.12.2, object-inspect@^1.12.3, object-inspect@^1.9.0:
   version "1.12.3"
   resolved "https://registry.npmmirror.com/object-inspect/-/object-inspect-1.12.3.tgz#ba62dffd67ee256c8c086dfae69e016cd1f198b9"
   integrity sha512-geUvdk7c+eizMNUDkRpW1wJwgfOiOeHbxBR/hLXK1aT6zmVSO0jsQcs7fj6MGw89jC/cjGfLcNOrtMYtGqm81g==
+
+object-is@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/object-is/-/object-is-1.1.5.tgz#b9deeaa5fc7f1846a0faecdceec138e5778f53ac"
+  integrity sha512-3cyDsyHgtmi7I7DfSSI2LDp6SK2lwvtbg0p0R1e0RvTqF5ceGx+K2dfSjm1bKDMVCFEDAQvy+o8c6a7VujOddw==
+  dependencies:
+    call-bind "^1.0.2"
+    define-properties "^1.1.3"
 
 object-keys@^1.1.1:
   version "1.1.1"
@@ -10937,6 +11061,17 @@ util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   resolved "https://registry.npmmirror.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
 
+util@^0.12.5:
+  version "0.12.5"
+  resolved "https://registry.yarnpkg.com/util/-/util-0.12.5.tgz#5f17a6059b73db61a875668781a1c2b136bd6fbc"
+  integrity sha512-kZf/K6hEIrWHI6XqOFUiiMa+79wE/D8Q+NCNAWclkyg3b4d2k7s0QGepNjiABc+aR3N1PAyHL7p6UcLY6LmrnA==
+  dependencies:
+    inherits "^2.0.3"
+    is-arguments "^1.0.4"
+    is-generator-function "^1.0.7"
+    is-typed-array "^1.1.3"
+    which-typed-array "^1.1.2"
+
 utils-merge@1.0.1:
   version "1.0.1"
   resolved "https://registry.npmmirror.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
@@ -11045,6 +11180,17 @@ which-module@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmmirror.com/which-module/-/which-module-2.0.0.tgz#d9ef07dce77b9902b8a3a8fa4b31c3e3f7e6e87a"
   integrity sha512-B+enWhmw6cjfVC7kS8Pj9pCrKSc5txArRyaYGe088shv/FGWH+0Rjx/xPgtsWfsUtS27FkP697E4DDhgrgoc0Q==
+
+which-typed-array@^1.1.11, which-typed-array@^1.1.2:
+  version "1.1.11"
+  resolved "https://registry.yarnpkg.com/which-typed-array/-/which-typed-array-1.1.11.tgz#99d691f23c72aab6768680805a271b69761ed61a"
+  integrity sha512-qe9UWWpkeG5yzZ0tNYxDmd7vo58HDBc39mZ0xWWpolAGADdFOzkfamWLDxkOWcvHQKVmdTyQdLD4NOfjLWTKew==
+  dependencies:
+    available-typed-arrays "^1.0.5"
+    call-bind "^1.0.2"
+    for-each "^0.3.3"
+    gopd "^1.0.1"
+    has-tostringtag "^1.0.0"
 
 which-typed-array@^1.1.9:
   version "1.1.9"
