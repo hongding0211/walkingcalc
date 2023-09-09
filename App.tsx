@@ -1,3 +1,4 @@
+import * as Notifications from 'expo-notifications'
 import { StatusBar } from 'expo-status-bar'
 import { useColorScheme } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
@@ -19,6 +20,22 @@ const locales = getLocales()
 export default function App() {
   const isLoadingComplete = useCachedResources()
   const colorScheme = useColorScheme()
+
+  Notifications.getPermissionsAsync()
+    .then(res => {
+      if (res.status !== 'undetermined') {
+        return
+      }
+      return Notifications.requestPermissionsAsync({
+        ios: {
+          allowAlert: true,
+          allowBadge: true,
+          allowSound: true,
+          allowAnnouncements: true,
+        },
+      })
+    })
+    .then()
 
   if (!isLoadingComplete) {
     return null
