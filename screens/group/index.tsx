@@ -135,16 +135,6 @@ const GroupHome: React.FC = () => {
     }
   }, [])
 
-  useEffect(() => {
-    if (!groupLoading && !groupData) {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'Home' }],
-      })
-      navigation.popToTop()
-    }
-  }, [groupData, groupLoading])
-
   const refreshData = useCallback(() => {
     mutateGroup().then()
     triggerRecord({
