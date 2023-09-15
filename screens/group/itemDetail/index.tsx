@@ -202,7 +202,7 @@ const ItemDetail: React.FC<IItemDetail> = props => {
             textDecorationLine: 'underline',
           }}
         >
-          Edit Group
+          Edit Record
         </ThemedText>
       </Pressable>
       <Button
