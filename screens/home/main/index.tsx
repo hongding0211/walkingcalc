@@ -21,7 +21,7 @@ import { setLoading } from '../../../feature/general/generalSlice'
 import { ThemeContext } from '../../../feature/theme/themeContext'
 import { GroupProps } from '../../../navigation/types'
 import { useArchiveGroup } from '../../../services/group'
-import use1l8n from '../../../utlis/use1l8n'
+import use1l8n from '../../../utils/use1l8n'
 
 interface IMain {
   userDebt?: any

@@ -1,5 +1,5 @@
 const BASE_URL_PROD = 'https://hong97.ltd/walkcalc/api'
-const BASE_URL_DEV = 'https://hong97.ltd/walkcalc/api'
+const BASE_URL_DEV = 'http://127.0.0.1:7001'
 
 const env = process.env['NODE_ENV']
 
@@ -21,3 +21,4 @@ export const POST_RECORD_DROP = BASE_URL + '/record/drop'
 export const DELETE_GROUP = BASE_URL + '/group'
 export const POST_GROUP_INVITE = BASE_URL + '/group/invite'
 export const POST_GROUP_ADD_TEMP_USER = BASE_URL + '/group/addTempUser'
+export const POST_GROUP_CHANGE_NAME = BASE_URL + '/group/changeName'

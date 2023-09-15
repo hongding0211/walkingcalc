@@ -7,7 +7,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import Card from '../../../components/Card'
 import ThemedText from '../../../components/General/Themed/Text'
 import { Color } from '../../../constants/Colors'
-import { numberToString } from '../../../utlis/moeny'
+import { numberToString } from '../../../utils/moeny'
 
 interface ITopCard {
   total: number

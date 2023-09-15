@@ -11,7 +11,7 @@ import ItemCard from '../../components/ItemCard'
 import { Color, ColorDark } from '../../constants/Colors'
 import { ThemeContext } from '../../feature/theme/themeContext'
 import { setToken, setUpdate } from '../../feature/user/userSlice'
-import use1l8n from '../../utlis/use1l8n'
+import use1l8n from '../../utils/use1l8n'
 
 const Settings: React.FC = () => {
   const insets = useSafeAreaInsets()

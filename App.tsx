@@ -13,7 +13,7 @@ import { ThemeContext } from './feature/theme/themeContext'
 import useCachedResources from './hooks/useCachedResources'
 import Navigation from './navigation'
 import './i18n'
-import getLocales from './utlis/locales'
+import getLocales from './utils/locales'
 
 const locales = getLocales()
 

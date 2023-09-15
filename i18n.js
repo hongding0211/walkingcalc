@@ -11,7 +11,7 @@ import groupEn from './public/locales/en/group.json'
 import homeEn from './public/locales/en/home.json'
 import loginEn from './public/locales/en/login.json'
 import settingsEn from './public/locales/en/settings.json'
-import getLocales from './utlis/locales'
+import getLocales from './utils/locales'
 
 const locales = getLocales()
 

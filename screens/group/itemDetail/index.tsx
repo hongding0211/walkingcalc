@@ -1,10 +1,10 @@
-import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { faEdit, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import dayjs from 'dayjs'
 import { ScrollView, Skeleton } from 'native-base'
 import React, { useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text, Pressable } from 'react-native'
 import MapView, { Marker } from 'react-native-maps'
 
 import FormItem from '../../../components/FormItem'
@@ -12,12 +12,13 @@ import Avatar from '../../../components/General/Avatar'
 import Button from '../../../components/General/Button'
 import Divider from '../../../components/General/Divider'
 import ThemedText from '../../../components/General/Themed/Text'
+import useToast from '../../../components/Toast/useToast'
 import categoryMap from '../../../constants/Category'
 import { Color, ColorDark } from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
 import { MembersContext } from '../../../feature/user/membersContext'
-import { numberToString } from '../../../utlis/moeny'
-import { useDate } from '../../../utlis/useDate'
+import { numberToString } from '../../../utils/moeny'
+import { useDate } from '../../../utils/useDate'
 
 interface IItemDetail {
   data?: Record<string, any>
@@ -59,11 +60,17 @@ const ItemDetail: React.FC<IItemDetail> = props => {
   const member = useContext(MembersContext)
   const { t } = useTranslation('group')
   const { fullDate } = useDate()
+  const toast = useToast()
 
   const { long: longitude, lat: latitude } = data || {}
 
   const handleMapReady = useCallback(() => {
     setMapLoading(false)
+  }, [])
+
+  const handleEditRecord = useCallback(() => {
+    // TODO - HongD 09/15 22:56
+    toast('Coming soon')
   }, [])
 
   return (
@@ -178,6 +185,26 @@ const ItemDetail: React.FC<IItemDetail> = props => {
           {t('remark')}: {data.text}
         </ThemedText>
       )}
+      <Pressable
+        style={{ flexDirection: 'row', alignItems: 'center', columnGap: 4 }}
+        onPress={handleEditRecord}
+      >
+        <FontAwesomeIcon
+          icon={faEdit}
+          size={10}
+          color={theme.scheme === 'LIGHT' ? Color.Second : ColorDark.Second}
+        />
+        <ThemedText
+          type="SECOND"
+          style={{
+            fontSize: 12,
+            fontWeight: '500',
+            textDecorationLine: 'underline',
+          }}
+        >
+          Edit Group
+        </ThemedText>
+      </Pressable>
       <Button
         type="DANGER"
         title={t('delete')}

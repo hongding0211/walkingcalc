@@ -12,8 +12,8 @@ import ThemedText from '../../../components/General/Themed/Text'
 import ThemedPressable from '../../../components/General/ThemedPressable'
 import { Color, ColorDark, Typography, TypographyDark } from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
-import { IResolvedDebt, resolveDebt } from '../../../utlis/debt'
-import { numberToString } from '../../../utlis/moeny'
+import { IResolvedDebt, resolveDebt } from '../../../utils/debt'
+import { numberToString } from '../../../utils/moeny'
 
 interface IDebtDetail {
   data?: Record<string, any>

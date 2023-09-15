@@ -8,8 +8,8 @@ import { useAppSelector } from '../../../app/store'
 import Card from '../../../components/Card'
 import ThemedText from '../../../components/General/Themed/Text'
 import { Color } from '../../../constants/Colors'
-import { numberToString } from '../../../utlis/moeny'
-import { useDate } from '../../../utlis/useDate'
+import { numberToString } from '../../../utils/moeny'
+import { useDate } from '../../../utils/useDate'
 
 interface IGroupCard {
   data: Record<string, any>

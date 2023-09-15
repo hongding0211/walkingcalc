@@ -37,6 +37,7 @@
   "generalError": "网络开小差",
   "enterName": "输入名字",
   "emptyName": "名字不能为空",
+  "changeGroupName": "修改群组名称",
   "duplicateName": "名字不能重复",
   "noPaidSelf": "不能为自己付款",
   "enterAmount": "填写金额",
@@ -50,5 +51,6 @@
   "myCost": "我的支出",
   "confirmResolveSingle": "确认和解单笔债务吗?",
   "resolveSingleSuccess": "单笔债务和解成功",
-  "debtResolveMark": "债务和解"
+  "debtResolveMark": "债务和解",
+  "changeNameSuccess": "群组名称已修改"
 }

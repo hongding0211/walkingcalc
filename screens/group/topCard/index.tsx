@@ -11,7 +11,7 @@ import ThemedPressable from '../../../components/General/ThemedPressable'
 import StackedAvatar from '../../../components/StackedAvatar'
 import { Color, ColorDark, Typography, TypographyDark } from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
-import { numberToString } from '../../../utlis/moeny'
+import { numberToString } from '../../../utils/moeny'
 
 interface ITopCard {
   data?: Record<string, any>

@@ -30,8 +30,8 @@ import { MembersContext, useMembersContext } from '../../feature/user/membersCon
 import { GroupProps } from '../../navigation/types'
 import { useAddTempUser, useDeleteGroup, useGroup, useGroupInvite } from '../../services/group'
 import { useAddRecord, useDropRecord, useRecordGroup } from '../../services/record'
-import { IResolvedDebt } from '../../utlis/debt'
-import { useDate } from '../../utlis/useDate'
+import { IResolvedDebt } from '../../utils/debt'
+import { useDate } from '../../utils/useDate'
 
 const Loading = () => {
   return (
@@ -288,6 +288,10 @@ const GroupHome: React.FC = () => {
       },
     ])
   }, [groupId])
+
+  const handleNameChanged = useCallback(() => {
+    mutateGroup().then()
+  }, [])
 
   const handleConfirmAddUser = useCallback((data?: { user?: any; tempUser?: any }) => {
     if (!groupId || !data || !data.user || !data.tempUser) {
@@ -634,6 +638,7 @@ const GroupHome: React.FC = () => {
             data={groupData?.data}
             recordCnt={total}
             onDismiss={handleDismissGroup}
+            onChangeName={handleNameChanged}
           />
         </Modal>
       )}

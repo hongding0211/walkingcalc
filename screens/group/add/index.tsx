@@ -19,7 +19,7 @@ import useToast from '../../../components/Toast/useToast'
 import { setLoading } from '../../../feature/general/generalSlice'
 import { MembersContext } from '../../../feature/user/membersContext'
 import { useAddRecord } from '../../../services/record'
-import { stringToNumber } from '../../../utlis/moeny'
+import { stringToNumber } from '../../../utils/moeny'
 
 interface IAddGroup {
   groupId?: string

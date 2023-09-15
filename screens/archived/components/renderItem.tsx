@@ -10,7 +10,7 @@ import useToast from '../../../components/Toast/useToast'
 import { setLoading } from '../../../feature/general/generalSlice'
 import { GroupProps } from '../../../navigation/types'
 import { useUnarchiveGroup } from '../../../services/group'
-import use1l8n from '../../../utlis/use1l8n'
+import use1l8n from '../../../utils/use1l8n'
 
 interface IRenderItem {
   item: any
