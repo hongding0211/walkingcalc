@@ -37,6 +37,7 @@
   "generalError": "Network issues",
   "enterName": "Enter name",
   "emptyName": "Empty name",
+  "changeGroupName": "Modify group name",
   "duplicateName": "Duplicated name",
   "noPaidSelf": "Cannot pay for yourself",
   "enterAmount": "Enter amount",
@@ -50,5 +51,6 @@
   "myCost": "My cost",
   "confirmResolveSingle": "Confirm resolve single debt?",
   "resolveSingleSuccess": "Debt resolved",
-  "debtResolveMark": "Debt Resolve"
+  "debtResolveMark": "Debt Resolve",
+  "changeNameSuccess": "Group name modified"
 }

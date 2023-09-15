@@ -6,6 +6,7 @@ import {
   GET_GROUP_MY,
   POST_GROUP_ADD_TEMP_USER,
   POST_GROUP_ARCHIVE,
+  POST_GROUP_CHANGE_NAME,
   POST_GROUP_CREATE,
   POST_GROUP_INVITE,
   POST_GROUP_JOIN,
@@ -17,6 +18,7 @@ import {
   IGetGroupMy,
   IPostGroupAddTempUser,
   IPostGroupArchive,
+  IPostGroupChangeName,
   IPostGroupCreate,
   IPostGroupInvite,
   IPostGroupJoin,
@@ -66,4 +68,8 @@ export function useArchiveGroup() {
 
 export function useUnarchiveGroup() {
   return useMutation<IPostGroupUnarchive>('POST', POST_GROUP_UNARCHIVE)
+}
+
+export function useChangeGroupName() {
+  return useMutation<IPostGroupChangeName>('POST', POST_GROUP_CHANGE_NAME)
 }

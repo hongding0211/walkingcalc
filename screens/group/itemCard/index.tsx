@@ -13,8 +13,8 @@ import categoryMap from '../../../constants/Category'
 import { Color, ColorDark, Typography, TypographyDark } from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
 import { MembersContext } from '../../../feature/user/membersContext'
-import { numberToString } from '../../../utlis/moeny'
-import { useDate } from '../../../utlis/useDate'
+import { numberToString } from '../../../utils/moeny'
+import { useDate } from '../../../utils/useDate'
 
 interface IItemCard {
   data?: Record<string, any>

@@ -301,3 +301,17 @@ export interface IPostGroupUnarchive extends IApi {
     id: string
   }>
 }
+
+export interface IPostGroupChangeName extends IApi {
+  request: IRequest<
+    undefined,
+    {
+      id: string
+      name: string
+    }
+  >
+  response: IResponse<{
+    id: string
+    name: string
+  }>
+}
