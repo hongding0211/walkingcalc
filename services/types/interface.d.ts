@@ -315,3 +315,16 @@ export interface IPostGroupChangeName extends IApi {
     name: string
   }>
 }
+
+export type UserMeta = {
+  pushToken?: string
+  language?: string
+  applicationInfo?: any
+  deviceInfo?: any
+  lastOpened?: number
+}
+
+export interface IPostUserMeta extends IApi {
+  request: IRequest<undefined, UserMeta>
+  response: IResponse<UserMeta>
+}

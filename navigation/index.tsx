@@ -13,6 +13,7 @@ import QRCodeScanner from '../components/QRCodeScaner'
 import { Color, ColorDark, Typography, TypographyDark } from '../constants/Colors'
 import { ThemeContext } from '../feature/theme/themeContext'
 import useUser from '../feature/user/useUser'
+import useUserMeta from '../feature/user/useUserMeta'
 import Splash from '../screens/Splash'
 import Archived from '../screens/archived'
 import Group from '../screens/group'
@@ -55,6 +56,8 @@ const RootScreen: React.FC = () => {
   const { t } = useTranslation('group')
   const { t: tCommon } = useTranslation('common')
   const theme = useContext(ThemeContext)
+
+  useUserMeta()
 
   return (
     <NativeBaseProvider>
