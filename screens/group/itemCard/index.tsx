@@ -1,9 +1,8 @@
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { ScrollView } from 'native-base'
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, ScrollView } from 'react-native'
 
 import { useAppSelector } from '../../../app/store'
 import Card from '../../../components/Card'
@@ -32,7 +31,7 @@ const ItemCard: React.FC<IItemCard> = props => {
   return (
     <Card>
       <View style={styles.container}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', flex: 0 }}>
           <View style={{ alignItems: 'center' }}>
             <ThemedText style={styles.emoji}>{categoryMap[data?.type] || '🍎'}</ThemedText>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -53,19 +52,12 @@ const ItemCard: React.FC<IItemCard> = props => {
             style={[styles.divider, { backgroundColor: theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third }]}
           />
           <View style={{ flexShrink: 1, paddingRight: 8 }}>
-            <ScrollView horizontal>
-              <View
-                onStartShouldSetResponder={() => true}
-                style={{ flexDirection: 'row', columnGap: 4 }}
-              >
-                {data?.forWhom?.map((e: any) => (
-                  <Tag
-                    key={e}
-                    text={member.get(e)?.name || ''}
-                  />
-                ))}
-              </View>
-            </ScrollView>
+            <View
+              onStartShouldSetResponder={() => true}
+              style={{ flexDirection: 'row', columnGap: 4 }}
+            >
+              <Tag text={member.get(data?.who)?.name || ''} />
+            </View>
             <ThemedText
               type="SECOND"
               style={styles.time}
@@ -75,7 +67,7 @@ const ItemCard: React.FC<IItemCard> = props => {
           </View>
         </View>
 
-        <View style={{ alignItems: 'flex-end', flexShrink: 0 }}>
+        <View style={{ alignItems: 'flex-end', flex: 1 }}>
           <ThemedText style={styles.amount}>{numberToString(data?.paid)}</ThemedText>
           {data?.isDebtResolve ? (
             <ThemedText
@@ -85,13 +77,28 @@ const ItemCard: React.FC<IItemCard> = props => {
               {t('debtResolveMark')}
             </ThemedText>
           ) : (
-            <ThemedText
-              type="SECOND"
-              style={styles.myPart}
-            >
-              {t('myPart')}:{' '}
-              {data?.forWhom?.indexOf(userInfo?.uuid) === -1 ? 0 : numberToString(data?.paid / data?.forWhom?.length)}
-            </ThemedText>
+            <>
+              {data?.text && (
+                <ThemedText
+                  type="SECOND"
+                  style={[styles.myPart]}
+                  numberOfLines={1}
+                >
+                  {`${data.text}`}
+                </ThemedText>
+              )}
+              {!data?.text && (
+                <ThemedText
+                  type="SECOND"
+                  style={styles.myPart}
+                >
+                  {t('myPart')}:{' '}
+                  {data?.forWhom?.indexOf(userInfo?.uuid) === -1
+                    ? 0
+                    : numberToString(data?.paid / data?.forWhom?.length)}
+                </ThemedText>
+              )}
+            </>
           )}
         </View>
       </View>
@@ -127,6 +134,6 @@ const styles = StyleSheet.create({
   },
   myPart: {
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: '500',
   },
 })
