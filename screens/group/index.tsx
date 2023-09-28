@@ -1,4 +1,4 @@
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faL, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { FlashList } from '@shopify/flash-list'
@@ -11,6 +11,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useDispatch } from 'react-redux'
 
 import AddRecord from './add'
+import EditRecord from './add/edit'
 import AddMember from './addMember'
 import DebtDetail from './debtDetail'
 import ItemCard from './itemCard'
@@ -57,6 +58,7 @@ const AddButton: React.FC<{ onPress?: () => void }> = ({ onPress }) => (
 
 const GroupHome: React.FC = () => {
   const [showAddRecord, setShowAddRecord] = useState(false)
+  const [showEditRecord, setShowEditRecord] = useState(false)
   const [showShareModal, setShowShareModal] = useState(false)
   const [showDebtDetail, setShowDebtDetail] = useState(false)
   const [showItemDetail, setShowItemDetail] = useState(false)
@@ -276,6 +278,11 @@ const GroupHome: React.FC = () => {
     ])
   }, [groupId, selectedItem])
 
+  const handleClickEditRecord = useCallback(() => {
+    setShowItemDetail(false)
+    setShowEditRecord(true)
+  }, [])
+
   const handleDismissGroup = useCallback(() => {
     Alert.alert(t('confirmDismiss'), '', [
       {
@@ -450,8 +457,17 @@ const GroupHome: React.FC = () => {
     handleCloseAddRecord()
   }, [])
 
+  const handleEditRecord = useCallback(() => {
+    refreshData()
+    scrollToTop()
+    handleCloseEditRecord()
+  }, [])
+
   const handleCloseAddRecord = useCallback(() => {
     setShowAddRecord(false)
+  }, [])
+  const handleCloseEditRecord = useCallback(() => {
+    setShowEditRecord(false)
   }, [])
   const handleCloseShare = useCallback(() => {
     setShowShareModal(false)
@@ -598,6 +614,18 @@ const GroupHome: React.FC = () => {
           />
         </Modal>
       )}
+      {showEditRecord && (
+        <Modal
+          title={t('editRecord') + ''}
+          onClose={handleCloseEditRecord}
+        >
+          <EditRecord
+            groupId={groupId}
+            data={selectedItem}
+            onEdit={handleEditRecord}
+          />
+        </Modal>
+      )}
       {showShareModal && (
         <Modal
           title={t('share') + ''}
@@ -626,6 +654,7 @@ const GroupHome: React.FC = () => {
           <ItemDetail
             data={selectedItem}
             onDelete={handleDeleteRecord}
+            onEdit={handleClickEditRecord}
           />
         </Modal>
       )}

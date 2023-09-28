@@ -23,6 +23,7 @@ import { useDate } from '../../../utils/useDate'
 interface IItemDetail {
   data?: Record<string, any>
   onDelete?: () => void
+  onEdit?: () => void
 }
 
 interface IUserBar {
@@ -52,7 +53,7 @@ const UserBar: React.FC<IUserBar> = props => {
 }
 
 const ItemDetail: React.FC<IItemDetail> = props => {
-  const { data, onDelete } = props
+  const { data, onDelete, onEdit } = props
 
   const [mapLoading, setMapLoading] = useState(true)
 
@@ -69,8 +70,7 @@ const ItemDetail: React.FC<IItemDetail> = props => {
   }, [])
 
   const handleEditRecord = useCallback(() => {
-    // TODO - HongD 09/15 22:56
-    toast('Coming soon')
+    onEdit && onEdit()
   }, [])
 
   return (

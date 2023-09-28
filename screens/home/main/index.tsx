@@ -64,6 +64,10 @@ const Main: React.FC<IMain> = props => {
     onRefresh && onRefresh()
   }, [])
 
+  const handleSwipeActivated = useCallback(() => {
+    Haptics.selectionAsync().then()
+  }, [])
+
   const handleSwipeBegin = useCallback(() => {
     swipeLock.current = false
   }, [])
@@ -74,7 +78,7 @@ const Main: React.FC<IMain> = props => {
 
   const handleSwipeOpen = useCallback(
     (index: number) => {
-      Haptics.selectionAsync().then()
+      Haptics.notificationAsync().then()
       dispatch(
         setLoading({
           status: true,
@@ -162,6 +166,7 @@ const Main: React.FC<IMain> = props => {
             <Swipeable
               renderLeftActions={() => <Archive title={t('archive')} />}
               containerStyle={{ marginTop: index === 0 ? 0 : 20 }}
+              onActivated={handleSwipeActivated}
               onBegan={handleSwipeBegin}
               onEnded={handleSwipeEnd}
               onSwipeableOpen={() => handleSwipeOpen(index)}
