@@ -185,26 +185,28 @@ const ItemDetail: React.FC<IItemDetail> = props => {
           {t('remark')}: {data.text}
         </ThemedText>
       )}
-      <Pressable
-        style={{ flexDirection: 'row', alignItems: 'center', columnGap: 4 }}
-        onPress={handleEditRecord}
-      >
-        <FontAwesomeIcon
-          icon={faEdit}
-          size={10}
-          color={theme.scheme === 'LIGHT' ? Color.Second : ColorDark.Second}
-        />
-        <ThemedText
-          type="SECOND"
-          style={{
-            fontSize: 12,
-            fontWeight: '500',
-            textDecorationLine: 'underline',
-          }}
+      {data?.isDebtResolve && (
+        <Pressable
+          style={{ flexDirection: 'row', alignItems: 'center', columnGap: 4 }}
+          onPress={handleEditRecord}
         >
-          Edit Record
-        </ThemedText>
-      </Pressable>
+          <FontAwesomeIcon
+            icon={faEdit}
+            size={10}
+            color={theme.scheme === 'LIGHT' ? Color.Second : ColorDark.Second}
+          />
+          <ThemedText
+            type="SECOND"
+            style={{
+              fontSize: 12,
+              fontWeight: '500',
+              textDecorationLine: 'underline',
+            }}
+          >
+            Edit Record
+          </ThemedText>
+        </Pressable>
+      )}
       <Button
         type="DANGER"
         title={t('delete')}
