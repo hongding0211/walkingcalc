@@ -12,12 +12,13 @@ interface IItem {
   title?: string
   onPress?: () => void
   children?: React.ReactNode[] | React.ReactNode
+  rightComponent?: React.ReactNode[] | React.ReactNode
   index?: number
   total?: number
 }
 
 const Item: React.FC<IItem> = props => {
-  const { showArrow, title, onPress, children, index, total = 0 } = props
+  const { showArrow, title, onPress, children, index, total = 0, rightComponent } = props
 
   const theme = useContext(ThemeContext)
 
@@ -43,6 +44,7 @@ const Item: React.FC<IItem> = props => {
     >
       {title && <ThemedText>{title}</ThemedText>}
       {children}
+      {!showArrow && rightComponent ? rightComponent : undefined}
       {showArrow && (
         <FontAwesomeIcon
           style={{

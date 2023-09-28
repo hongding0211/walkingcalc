@@ -5,11 +5,14 @@ import { Swipeable } from 'react-native-gesture-handler'
 import { useDispatch } from 'react-redux'
 
 import Unarchive from './unarchive'
+import { useAppSelector } from '../../../app/store'
+import ThemedText from '../../../components/General/Themed/Text'
 import ItemCard from '../../../components/ItemCard'
 import useToast from '../../../components/Toast/useToast'
 import { setLoading } from '../../../feature/general/generalSlice'
 import { GroupProps } from '../../../navigation/types'
 import { useUnarchiveGroup } from '../../../services/group'
+import { numberToString } from '../../../utils/moeny'
 import use1l8n from '../../../utils/use1l8n'
 
 interface IRenderItem {
@@ -31,6 +34,9 @@ const RenderItem: React.FC<IRenderItem> = props => {
 
   const { trigger: triggerGroupUnarchive } = useUnarchiveGroup()
 
+  const userInfo = useAppSelector(state => state.user.data)
+  const debt = item?.membersInfo.find((e: any) => e.uuid === userInfo?.uuid)?.debt
+
   const handlePress = useCallback(() => {
     setTimeout(() => {
       if (swipeLock.current) {
@@ -42,6 +48,10 @@ const RenderItem: React.FC<IRenderItem> = props => {
     }, 100)
   }, [])
 
+  const handleSwipeActivated = useCallback(() => {
+    Haptics.selectionAsync().then()
+  }, [])
+
   const handleSwipeBegin = useCallback(() => {
     swipeLock.current = false
   }, [])
@@ -51,7 +61,7 @@ const RenderItem: React.FC<IRenderItem> = props => {
   }, [])
 
   const handleSwipeOpen = useCallback((index: number) => {
-    Haptics.selectionAsync().then()
+    Haptics.notificationAsync().then()
     dispatch(
       setLoading({
         status: true,
@@ -88,6 +98,7 @@ const RenderItem: React.FC<IRenderItem> = props => {
           total={total}
         />
       )}
+      onActivated={handleSwipeActivated}
       onBegan={handleSwipeBegin}
       onEnded={handleSwipeEnd}
       onSwipeableOpen={() => handleSwipeOpen(index)}
@@ -97,6 +108,7 @@ const RenderItem: React.FC<IRenderItem> = props => {
         index={index}
         total={total}
         onPress={handlePress}
+        rightComponent={<ThemedText type="SECOND">{(debt < -1e-10 ? '' : '+') + numberToString(debt)}</ThemedText>}
       />
     </Swipeable>
   )

@@ -1,11 +1,12 @@
 const categoryMap: any = {
-  food: '🍙',
-  transfer: '💶',
-  beverage: '🧋',
-  traffic: '🛵',
-  shopping: '🛍',
-  ticket: '🎫',
+  food: '🍚',
+  beverage: '🥃',
+  shopping: '🛒',
+  traffic: '🚗',
+  accommodation: '🏠',
   vacation: '🏝',
+  transfer: '💰',
+  ticket: '🎫',
   game: '🎲',
   debtResolve: '🤝',
 }

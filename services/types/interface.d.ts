@@ -225,6 +225,32 @@ export interface IPostRecord extends IApi {
   }>
 }
 
+export interface IPostRecordUpdate extends IApi {
+  request: IRequest<
+    undefined,
+    {
+      groupId: string
+      recordId: string
+      who: string
+      paid: number
+      forWhom: string[]
+      type: string
+      text: string
+      isDebtResolve?: boolean
+    }
+  >
+  response: IResponse<{
+    groupId: string
+    recordId: string
+    paid: number
+    forWhom: string[]
+    type: string
+    text: string
+    createdAt: number
+    modifiedAt: number
+  }>
+}
+
 export interface IPostRecordDrop extends IApi {
   request: IRequest<
     undefined,
