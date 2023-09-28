@@ -185,7 +185,7 @@ const ItemDetail: React.FC<IItemDetail> = props => {
           {t('remark')}: {data.text}
         </ThemedText>
       )}
-      {data?.isDebtResolve && (
+      {!data?.isDebtResolve && (
         <Pressable
           style={{ flexDirection: 'row', alignItems: 'center', columnGap: 4 }}
           onPress={handleEditRecord}
