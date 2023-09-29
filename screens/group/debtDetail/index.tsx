@@ -27,6 +27,8 @@ interface IUserBar {
   debt?: number
 }
 
+const height = Dimensions.get('screen').height
+
 const UserBar: React.FC<IUserBar> = props => {
   const { name, avatar, debt } = props
 
@@ -145,61 +147,63 @@ const DebtDetail: React.FC<IDebtDetail> = props => {
 
   return (
     <View style={styles.container}>
-      <FormItem title={t('debtDetail') + `(${data?.membersInfo?.length + data?.tempUsers?.length})`}>
-        <ScrollView style={styles.scroll}>
-          <View
-            style={styles.list}
-            onStartShouldSetResponder={() => true}
-          >
-            {data?.membersInfo?.map(m => (
-              <View
-                key={m.uuid}
-                style={{ rowGap: 8 }}
-              >
-                <UserBar
-                  name={m.name}
-                  debt={m.debt}
-                  avatar={m.avatar}
-                />
-                <Divider />
-              </View>
-            ))}
-            {data?.tempUsers?.map(m => (
-              <View
-                key={m.uuid}
-                style={{ rowGap: 8 }}
-              >
-                <UserBar
-                  name={m.name}
-                  debt={m.debt}
-                />
-                <Divider />
-              </View>
-            ))}
+      <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+        <FormItem title={t('debtDetail') + `(${data?.membersInfo?.length + data?.tempUsers?.length})`}>
+          <View>
+            <View
+              style={styles.list}
+              onStartShouldSetResponder={() => true}
+            >
+              {data?.membersInfo?.map(m => (
+                <View
+                  key={m.uuid}
+                  style={{ rowGap: 8 }}
+                >
+                  <UserBar
+                    name={m.name}
+                    debt={m.debt}
+                    avatar={m.avatar}
+                  />
+                  <Divider />
+                </View>
+              ))}
+              {data?.tempUsers?.map(m => (
+                <View
+                  key={m.uuid}
+                  style={{ rowGap: 8 }}
+                >
+                  <UserBar
+                    name={m.name}
+                    debt={m.debt}
+                  />
+                  <Divider />
+                </View>
+              ))}
+            </View>
           </View>
-        </ScrollView>
-      </FormItem>
-      <FormItem title={t('debtResolve') + `(${resolvedDebt.length})`}>
-        <ScrollView style={{ maxHeight: 200 }}>
-          <View
-            style={styles.list}
-            onStartShouldSetResponder={() => true}
-          >
-            {resolvedDebt.map((d, idx) => (
-              <View
-                key={idx}
-                style={{ rowGap: 8 }}
-              >
-                <Transfer
-                  debt={d}
-                  onPress={() => onResolveSingleDebt && onResolveSingleDebt(d)}
-                />
-                <Divider />
-              </View>
-            ))}
+        </FormItem>
+        <FormItem title={t('debtResolve') + `(${resolvedDebt.length})`}>
+          <View>
+            <View
+              style={styles.list}
+              onStartShouldSetResponder={() => true}
+            >
+              {resolvedDebt.map((d, idx) => (
+                <View
+                  key={idx}
+                  style={{ rowGap: 8 }}
+                >
+                  <Transfer
+                    debt={d}
+                    onPress={() => onResolveSingleDebt && onResolveSingleDebt(d)}
+                  />
+                  <Divider />
+                </View>
+              ))}
+            </View>
           </View>
-        </ScrollView>
-      </FormItem>
+        </FormItem>
+      </ScrollView>
       <Button
         title={t('debtResolve')}
         type="DANGER"
@@ -213,15 +217,15 @@ export default DebtDetail
 
 const styles = StyleSheet.create({
   container: {
+    maxHeight: height * 0.6,
+  },
+  scrollViewContainer: {
     rowGap: 16,
   },
   bar: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-  },
-  scroll: {
-    maxHeight: 135,
   },
   list: {
     rowGap: 16,
