@@ -209,8 +209,8 @@ const ItemDetail: React.FC<IItemDetail> = props => {
             <ThemedText
               type="SECOND"
               style={{
-                fontSize: 10,
-                lineHeight: 14,
+                fontSize: 11,
+                lineHeight: 16,
                 marginTop: -8,
               }}
             >
