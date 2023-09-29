@@ -12,7 +12,6 @@ import Avatar from '../../../components/General/Avatar'
 import Button from '../../../components/General/Button'
 import Divider from '../../../components/General/Divider'
 import ThemedText from '../../../components/General/Themed/Text'
-import useToast from '../../../components/Toast/useToast'
 import categoryMap from '../../../constants/Category'
 import { Color, ColorDark } from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
@@ -61,7 +60,6 @@ const ItemDetail: React.FC<IItemDetail> = props => {
   const member = useContext(MembersContext)
   const { t } = useTranslation('group')
   const { fullDate } = useDate()
-  const toast = useToast()
 
   const { long: longitude, lat: latitude } = data || {}
 
@@ -82,7 +80,7 @@ const ItemDetail: React.FC<IItemDetail> = props => {
             style={[styles.divider, { backgroundColor: theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third }]}
           />
           <View>
-            <ThemedText style={{ fontSize: 12 }}>{fullDate(data?.modifiedAt)}</ThemedText>
+            <ThemedText style={{ fontSize: 12 }}>{fullDate(data?.createdAt)}</ThemedText>
             <ThemedText
               style={{
                 fontWeight: '500',
@@ -90,7 +88,7 @@ const ItemDetail: React.FC<IItemDetail> = props => {
                 marginTop: 2,
               }}
             >
-              {dayjs(data?.modifiedAt).format('HH:mm')}
+              {dayjs(data?.createdAt).format('HH:mm')}
             </ThemedText>
           </View>
         </View>
@@ -186,26 +184,46 @@ const ItemDetail: React.FC<IItemDetail> = props => {
         </ThemedText>
       )}
       {!data?.isDebtResolve && (
-        <Pressable
-          style={{ flexDirection: 'row', alignItems: 'center', columnGap: 4 }}
-          onPress={handleEditRecord}
-        >
-          <FontAwesomeIcon
-            icon={faEdit}
-            size={10}
-            color={theme.scheme === 'LIGHT' ? Color.Second : ColorDark.Second}
-          />
-          <ThemedText
-            type="SECOND"
-            style={{
-              fontSize: 12,
-              fontWeight: '500',
-              textDecorationLine: 'underline',
-            }}
+        <>
+          <Pressable
+            style={{ flexDirection: 'row', alignItems: 'center', columnGap: 4 }}
+            onPress={handleEditRecord}
           >
-            Edit Record
-          </ThemedText>
-        </Pressable>
+            <FontAwesomeIcon
+              icon={faEdit}
+              size={10}
+              color={theme.scheme === 'LIGHT' ? Color.Second : ColorDark.Second}
+            />
+            <ThemedText
+              type="SECOND"
+              style={{
+                fontSize: 12,
+                fontWeight: '500',
+                textDecorationLine: 'underline',
+              }}
+            >
+              Edit Record
+            </ThemedText>
+          </Pressable>
+          {(data?.createdBy || data?.modifiedBy || data?.modifiedAt !== data?.createdAt) && (
+            <ThemedText
+              type="SECOND"
+              style={{
+                fontSize: 10,
+                lineHeight: 14,
+                marginTop: -8,
+              }}
+            >
+              {data?.createdBy && `${t('createdBy')}: ${member.get(data.createdBy)?.name}`}
+              {data?.modifiedBy &&
+                `${data?.createdBy ? ', ' : ''}${t('latestUpdatedBy')}: ${member.get(data.modifiedBy)?.name}`}
+              {data?.modifiedAt !== data?.createdAt &&
+                `${data?.createdBy || data?.modifiedBy ? '\r\n' : ''}${t('latestUpdated')}: ${fullDate(
+                  data?.modifiedAt
+                )} ${dayjs(data?.modifiedAt).format('HH:mm')}`}
+            </ThemedText>
+          )}
+        </>
       )}
       <Button
         type="DANGER"

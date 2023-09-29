@@ -56,5 +56,8 @@
   "confirmResolveSingle": "Confirm resolve single debt?",
   "resolveSingleSuccess": "Debt resolved",
   "debtResolveMark": "Debt Resolve",
-  "changeNameSuccess": "Group name modified"
+  "changeNameSuccess": "Group name modified",
+  "latestUpdated": "Latest updated",
+  "latestUpdatedBy": "Updated by",
+  "createdBy": "Created by"
 }

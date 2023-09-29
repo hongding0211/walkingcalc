@@ -56,5 +56,8 @@
   "confirmResolveSingle": "确认和解单笔债务吗?",
   "resolveSingleSuccess": "单笔债务和解成功",
   "debtResolveMark": "债务和解",
-  "changeNameSuccess": "群组名称已修改"
+  "changeNameSuccess": "群组名称已修改",
+  "latestUpdated": "更新时间",
+  "latestUpdatedBy": "更新",
+  "createdBy": "创建"
 }

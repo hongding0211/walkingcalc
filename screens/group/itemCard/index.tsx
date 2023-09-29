@@ -62,7 +62,7 @@ const ItemCard: React.FC<IItemCard> = props => {
               type="SECOND"
               style={styles.time}
             >
-              {time(data?.modifiedAt)}
+              {time(data?.createdAt)}
             </ThemedText>
           </View>
         </View>
