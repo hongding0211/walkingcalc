@@ -1,4 +1,4 @@
-import { faArrowRight, faCircleCheck } from '@fortawesome/free-solid-svg-icons'
+import { faArrowRight, faCircleCheck, faL } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -147,7 +147,10 @@ const DebtDetail: React.FC<IDebtDetail> = props => {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+      <ScrollView
+        contentContainerStyle={styles.scrollViewContainer}
+        showsVerticalScrollIndicator={false}
+      >
         <FormItem title={t('debtDetail') + `(${data?.membersInfo?.length + data?.tempUsers?.length})`}>
           <View>
             <View
