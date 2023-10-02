@@ -2,7 +2,7 @@
   "expo": {
     "name": "WalkingCalc",
     "slug": "walkingcalc",
-    "version": "1.2.4g",
+    "version": "1.2.4h",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "walkingcalc",

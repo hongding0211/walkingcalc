@@ -480,7 +480,7 @@ const GroupHome: React.FC = () => {
     })
       .then(res => {
         if (res?.success) {
-          const idx = listData.findIndex(e => e.recordId === id)
+          const idx = listData.findIndex((e: any) => e.recordId === id)
           if (idx !== -1) {
             setListData([...listData.slice(0, idx), res.data, ...listData.slice(idx + 1)])
           } else {
@@ -544,7 +544,7 @@ const GroupHome: React.FC = () => {
   const sectionedListData = useMemo(() => {
     let lastDay: number | undefined = undefined
     return listData?.map((i: any) => {
-      const currentDay = Math.floor(i.modifiedAt / (1000 * 60 * 60 * 24))
+      const currentDay = Math.floor(i.createdAt / (1000 * 60 * 60 * 24))
       const sectionHead = lastDay !== currentDay
       lastDay = currentDay
       return {
