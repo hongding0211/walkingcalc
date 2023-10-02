@@ -192,6 +192,35 @@ export interface IGetRecordGroup extends IApi {
       recordId: string
       createdAt: number
       modifiedAt: number
+      isDebtResolve?: boolean
+      createdBy?: string
+      modifiedBy?: string
+    }[]
+  >
+}
+
+export interface IGetRecordById extends IApi {
+  request: IRequest<
+    {
+      id: string
+    },
+    undefined
+  >
+  response: IResponse<
+    {
+      who: string
+      paid: number
+      forWhom: string[]
+      type: string
+      text: string
+      long: string
+      lat: string
+      recordId: string
+      createdAt: number
+      modifiedAt: number
+      isDebtResolve?: boolean
+      createdBy?: string
+      modifiedBy?: string
     }[]
   >
 }

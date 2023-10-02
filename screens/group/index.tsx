@@ -30,7 +30,7 @@ import { ThemeContext } from '../../feature/theme/themeContext'
 import { MembersContext, useMembersContext } from '../../feature/user/membersContext'
 import { GroupProps } from '../../navigation/types'
 import { useAddTempUser, useDeleteGroup, useGroup, useGroupInvite } from '../../services/group'
-import { useAddRecord, useDropRecord, useRecordGroup } from '../../services/record'
+import { useAddRecord, useDropRecord, useRecordById, useRecordGroup } from '../../services/record'
 import { IResolvedDebt } from '../../utils/debt'
 import { useDate } from '../../utils/useDate'
 
@@ -91,6 +91,7 @@ const GroupHome: React.FC = () => {
   const { trigger: triggerDismissGroup } = useDeleteGroup()
   const { trigger: triggerInvite } = useGroupInvite()
   const { trigger: triggerAddTempUser } = useAddTempUser()
+  const { trigger: triggerGetRecordById } = useRecordById()
 
   const membersContextValue = useMembersContext(groupData?.data)
 
@@ -218,7 +219,16 @@ const GroupHome: React.FC = () => {
         recordId: selectedItem.recordId,
       },
     })
-      .then(() => {
+      .then(res => {
+        if (res?.success) {
+          const idx = listData.findIndex((e: any) => e.recordId === selectedItem.recordId)
+          if (idx !== -1) {
+            setListData([...listData.slice(0, idx), ...listData.slice(idx + 1)])
+            setTotal(listData.length - 1)
+            setShowItemDetail(false)
+            return
+          }
+        }
         refreshData()
         scrollToTop()
         setShowItemDetail(false)
@@ -233,7 +243,7 @@ const GroupHome: React.FC = () => {
           })
         )
       })
-  }, [groupId, selectedItem])
+  }, [groupId, selectedItem, listData])
 
   const dismissGroup = useCallback(() => {
     if (!groupId) {
@@ -276,7 +286,7 @@ const GroupHome: React.FC = () => {
         onPress: deleteRecord,
       },
     ])
-  }, [groupId, selectedItem])
+  }, [groupId, selectedItem, listData])
 
   const handleClickEditRecord = useCallback(() => {
     setShowItemDetail(false)
@@ -458,10 +468,38 @@ const GroupHome: React.FC = () => {
   }, [])
 
   const handleEditRecord = useCallback(() => {
-    refreshData()
-    scrollToTop()
     handleCloseEditRecord()
-  }, [])
+    setLoading({
+      status: true,
+    })
+    const id = selectedItem.recordId
+    triggerGetRecordById({
+      params: {
+        id,
+      },
+    })
+      .then(res => {
+        if (res?.success) {
+          const idx = listData.findIndex(e => e.recordId === id)
+          if (idx !== -1) {
+            setListData([...listData.slice(0, idx), res.data, ...listData.slice(idx + 1)])
+          } else {
+            throw new Error()
+          }
+        } else {
+          throw new Error()
+        }
+      })
+      .catch(() => {
+        refreshData()
+        scrollToTop()
+      })
+      .finally(() => {
+        setLoading({
+          status: false,
+        })
+      })
+  }, [selectedItem, listData])
 
   const handleCloseAddRecord = useCallback(() => {
     setShowAddRecord(false)
