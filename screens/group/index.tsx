@@ -131,13 +131,6 @@ const GroupHome: React.FC = () => {
       })
   }, [groupId])
 
-  useEffect(() => {
-    const timer = setInterval(refreshData, 30000)
-    return () => {
-      clearInterval(timer)
-    }
-  }, [])
-
   const refreshData = useCallback(() => {
     mutateGroup().then()
     triggerRecord({

@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 
-import { AvatarColorPalettes } from '../../../constants/Colors'
+import { AvatarColorPalettes, Color } from '../../../constants/Colors'
+import { ThemeContext } from '../../../feature/theme/themeContext'
 
 interface IAvatar {
   source?: string
@@ -12,12 +13,20 @@ interface IAvatar {
 const Avatar: React.FC<IAvatar> = props => {
   const { source, name = 'User', size = 40 } = props
 
+  const theme = useContext(ThemeContext)
+
   if (source) {
     return (
       <Image
         source={{ uri: `${source}?x-oss-process=image/resize,w_${size * 3}` }}
         defaultSource={require('./fallbackAvatar.png')}
-        style={{ width: size, height: size, borderRadius: 99999, resizeMode: 'cover' }}
+        style={[
+          { width: size, height: size, borderRadius: 99999, resizeMode: 'cover' },
+          {
+            borderWidth: 1,
+            borderColor: Color.BackgroundSecond,
+          },
+        ]}
       />
     )
   }
