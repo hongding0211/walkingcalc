@@ -1,6 +1,6 @@
 {
   "name": "walkingcalc",
-  "version": "1.0.0",
+  "version": "1.2.5",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
@@ -9,7 +9,8 @@
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "eslint --fix .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "bump": "bump -c -t -p"
   },
   "jest": {
     "preset": "jest-expo"
@@ -64,7 +65,8 @@
     "react-native-web": "~0.18.9",
     "react-native-webview": "11.26.0",
     "react-redux": "^8.0.5",
-    "swr": "^2.0.3"
+    "swr": "^2.0.3",
+    "version-bump-prompt": "^6.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
