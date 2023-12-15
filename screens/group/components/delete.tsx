@@ -1,7 +1,7 @@
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 import { Color } from '../../../constants/Colors'
 
@@ -24,10 +24,7 @@ const Delete: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <FontAwesomeIcon
-          icon={faTrashCan}
-          style={styles.icon}
-        />
+        <FontAwesomeIcon icon={faTrashCan} style={styles.icon} />
       </View>
     </View>
   )

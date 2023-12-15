@@ -3,7 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import React, { useContext } from 'react'
 import { Pressable, StyleSheet } from 'react-native'
 
-import { Color, Typography, TypographyDark, ColorDark } from '../../../constants/Colors'
+import {
+  Color,
+  ColorDark,
+  Typography,
+  TypographyDark,
+} from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
 import ThemedText from '../../General/Themed/Text'
 
@@ -18,7 +23,15 @@ interface IItem {
 }
 
 const Item: React.FC<IItem> = props => {
-  const { showArrow, title, onPress, children, index, total = 0, rightComponent } = props
+  const {
+    showArrow,
+    title,
+    onPress,
+    children,
+    index,
+    total = 0,
+    rightComponent,
+  } = props
 
   const theme = useContext(ThemeContext)
 
@@ -48,7 +61,10 @@ const Item: React.FC<IItem> = props => {
       {showArrow && (
         <FontAwesomeIcon
           style={{
-            color: theme.scheme === 'LIGHT' ? Typography.Second : TypographyDark.Second,
+            color:
+              theme.scheme === 'LIGHT'
+                ? Typography.Second
+                : TypographyDark.Second,
           }}
           size={14}
           icon={faAngleRight}

@@ -19,10 +19,7 @@ const CreateGroup: React.FC<ICreateGroup> = ({ onConfirm }) => {
   return (
     <View style={styles.container}>
       <FormItem title={t('groupName') + ''}>
-        <Input
-          value={groupName}
-          onChangeText={setGroupName}
-        />
+        <Input value={groupName} onChangeText={setGroupName} />
       </FormItem>
       <View style={styles.btn}>
         <Button

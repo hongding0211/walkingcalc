@@ -18,7 +18,9 @@ export function resolveDebt(u: IUser[]): IResolvedDebt[] {
 
   const users = cloneDeep(u)
 
-  const receivers = users.filter(u => u.debt >= 0).sort((x, y) => y.debt - x.debt)
+  const receivers = users
+    .filter(u => u.debt >= 0)
+    .sort((x, y) => y.debt - x.debt)
   const payers = users
     .filter(u => u.debt < 0)
     .sort((x, y) => x.debt - y.debt)

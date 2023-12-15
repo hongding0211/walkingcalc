@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 type GeneralState = {
   loading: boolean
@@ -35,6 +35,7 @@ export const generalSlice = createSlice({
   },
 })
 
-export const { setLoading, setScanCodeResult, setScanSuccess, setToast } = generalSlice.actions
+export const { setLoading, setScanCodeResult, setScanSuccess, setToast } =
+  generalSlice.actions
 
 export default generalSlice.reducer

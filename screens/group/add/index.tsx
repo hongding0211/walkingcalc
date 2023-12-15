@@ -1,12 +1,16 @@
 import * as Haptics from 'expo-haptics'
 import * as Location from 'expo-location'
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { useDispatch } from 'react-redux'
 
-import CategoryRadio from './categoryRadio'
-import NumberInput from './numberInput'
 import { useAppSelector } from '../../../app/store'
 import FormItem from '../../../components/FormItem'
 import Button from '../../../components/General/Button'
@@ -20,6 +24,8 @@ import { setLoading } from '../../../feature/general/generalSlice'
 import { MembersContext } from '../../../feature/user/membersContext'
 import { useAddRecord } from '../../../services/record'
 import { stringToNumber } from '../../../utils/moeny'
+import CategoryRadio from './categoryRadio'
+import NumberInput from './numberInput'
 
 interface IAddGroup {
   groupId?: string
@@ -128,14 +134,14 @@ const AddRecord: React.FC<IAddGroup> = props => {
 
   return (
     <View style={styles.container}>
-      <NumberInput
-        value={paid}
-        onChangeText={setPaid}
-      />
+      <NumberInput value={paid} onChangeText={setPaid} />
       <FormItem title={t('who') + ''}>
         <Radio
           value={who}
-          options={[...members.values()].map(m => ({ value: m.uuid, title: m.name }))}
+          options={[...members.values()].map(m => ({
+            value: m.uuid,
+            title: m.name,
+          }))}
           onChange={setWho}
         />
       </FormItem>
@@ -144,10 +150,7 @@ const AddRecord: React.FC<IAddGroup> = props => {
           <View style={styles.titleContainer}>
             <ThemedText style={styles.title}>{t('for')}</ThemedText>
             <ThemedPressable onPress={handlePressSelectAll}>
-              <ThemedText
-                type="SECOND"
-                style={styles.textButton}
-              >
+              <ThemedText type="SECOND" style={styles.textButton}>
                 {t('selectAll')}
               </ThemedText>
             </ThemedPressable>
@@ -156,25 +159,22 @@ const AddRecord: React.FC<IAddGroup> = props => {
       >
         <Checkbox
           value={forWhom}
-          options={[...members.values()].map(m => ({ value: m.uuid, title: m.name }))}
+          options={[...members.values()].map(m => ({
+            value: m.uuid,
+            title: m.name,
+          }))}
           onChange={setForWhom}
         />
       </FormItem>
       <FormItem title={t('category') + ''}>
-        <CategoryRadio
-          value={type}
-          onChange={setType}
-        />
+        <CategoryRadio value={type} onChange={setType} />
       </FormItem>
       <Input
         value={text}
         onChangeText={setText}
         placeholder={t('remark') + ''}
       />
-      <Button
-        title={t('add')}
-        onPress={handleAdd}
-      />
+      <Button title={t('add')} onPress={handleAdd} />
     </View>
   )
 }

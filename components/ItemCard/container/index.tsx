@@ -19,7 +19,9 @@ const Container: React.FC<IContainer> = props => {
   const items = useMemo(
     () =>
       Array.isArray(children)
-        ? React.Children.map(children, (child, index) => React.cloneElement(child, { index, total: children.length }))
+        ? React.Children.map(children, (child, index) =>
+            React.cloneElement(child, { index, total: children.length })
+          )
         : React.cloneElement(children, { index: 0, total: 1 }),
     [children]
   )
@@ -27,10 +29,7 @@ const Container: React.FC<IContainer> = props => {
   return (
     <View>
       {title && (
-        <ThemedText
-          type="SECOND"
-          style={styles.title}
-        >
+        <ThemedText type="SECOND" style={styles.title}>
           {title}
         </ThemedText>
       )}
@@ -40,7 +39,8 @@ const Container: React.FC<IContainer> = props => {
             <View
               style={[
                 {
-                  borderBottomColor: theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third,
+                  borderBottomColor:
+                    theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third,
                   borderBottomWidth: index === items.length - 1 ? 0 : 1,
                 },
               ]}

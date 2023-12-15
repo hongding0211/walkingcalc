@@ -1,4 +1,9 @@
-import { faChevronRight, faCirclePlus, faCrown, faQrcode } from '@fortawesome/free-solid-svg-icons'
+import {
+  faChevronRight,
+  faCirclePlus,
+  faCrown,
+  faQrcode,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -9,7 +14,12 @@ import Card from '../../../components/Card'
 import ThemedText from '../../../components/General/Themed/Text'
 import ThemedPressable from '../../../components/General/ThemedPressable'
 import StackedAvatar from '../../../components/StackedAvatar'
-import { Color, ColorDark, Typography, TypographyDark } from '../../../constants/Colors'
+import {
+  Color,
+  ColorDark,
+  Typography,
+  TypographyDark,
+} from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
 import { numberToString } from '../../../utils/moeny'
 
@@ -20,15 +30,15 @@ interface ITopCard {
   onAddMember?: () => void
 }
 
-const StackComponent: React.FC<{ top: string; children?: React.ReactNode }> = props => {
+const StackComponent: React.FC<{
+  top: string
+  children?: React.ReactNode
+}> = props => {
   const { top, children } = props
 
   return (
     <View style={[styles.stackText]}>
-      <ThemedText
-        type="SECOND"
-        style={styles.topText}
-      >
+      <ThemedText type="SECOND" style={styles.topText}>
         {top}
       </ThemedText>
       <View style={{ marginTop: 6 }}>{children}</View>
@@ -36,15 +46,16 @@ const StackComponent: React.FC<{ top: string; children?: React.ReactNode }> = pr
   )
 }
 
-const StackText: React.FC<{ top: string; bottom: string; align: 'flex-start' | 'flex-end' }> = props => {
+const StackText: React.FC<{
+  top: string
+  bottom: string
+  align: 'flex-start' | 'flex-end'
+}> = props => {
   const { top, bottom, align } = props
 
   return (
     <View style={[styles.stackText, { alignItems: align }]}>
-      <ThemedText
-        type="SECOND"
-        style={styles.topText}
-      >
+      <ThemedText type="SECOND" style={styles.topText}>
         {top}
       </ThemedText>
       <ThemedText style={styles.bottomText}>{bottom}</ThemedText>
@@ -59,7 +70,9 @@ const TopCard: React.FC<ITopCard> = props => {
   const theme = useContext(ThemeContext)
   const userInfo = useAppSelector(state => state.user.data)
 
-  const debt = props.data?.membersInfo.find((e: any) => e.uuid === userInfo?.uuid)?.debt
+  const debt = props.data?.membersInfo.find(
+    (e: any) => e.uuid === userInfo?.uuid
+  )?.debt
 
   if (!data) {
     return null
@@ -80,14 +93,8 @@ const TopCard: React.FC<ITopCard> = props => {
                 }}
               />
             )}
-            <ThemedPressable
-              highLight
-              onPress={onPressQrcode}
-            >
-              <FontAwesomeIcon
-                icon={faQrcode}
-                style={styles.topRight}
-              />
+            <ThemedPressable highLight onPress={onPressQrcode}>
+              <FontAwesomeIcon icon={faQrcode} style={styles.topRight} />
             </ThemedPressable>
           </View>
         </View>
@@ -96,13 +103,17 @@ const TopCard: React.FC<ITopCard> = props => {
             <StackedAvatar
               data={[...props.data?.membersInfo, ...props.data?.tempUsers]}
               tail={
-                props.data?.membersInfo.length + props.data?.tempUsers.length < 4 && (
+                props.data?.membersInfo.length + props.data?.tempUsers.length <
+                  4 && (
                   <FontAwesomeIcon
                     icon={faCirclePlus}
                     size={14}
                     style={{
                       marginLeft: 4,
-                      color: theme.scheme === 'LIGHT' ? Color.Second : ColorDark.Second,
+                      color:
+                        theme.scheme === 'LIGHT'
+                          ? Color.Second
+                          : ColorDark.Second,
                     }}
                   />
                 )
@@ -120,7 +131,12 @@ const TopCard: React.FC<ITopCard> = props => {
             <FontAwesomeIcon
               icon={faChevronRight}
               size={12}
-              style={{ color: theme.scheme === 'LIGHT' ? Typography.Primary : TypographyDark.Primary }}
+              style={{
+                color:
+                  theme.scheme === 'LIGHT'
+                    ? Typography.Primary
+                    : TypographyDark.Primary,
+              }}
             />
           </ThemedPressable>
           <StackText

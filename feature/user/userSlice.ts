@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 type UserState = {
   isLogin: boolean
@@ -41,7 +41,10 @@ export const userSlice = createSlice({
     setIsLogin: (state, action: PayloadAction<{ isLogin: boolean }>) => {
       state.isLogin = action.payload.isLogin
     },
-    setIsLoginComplete: (state, action: PayloadAction<{ isLoginComplete: boolean }>) => {
+    setIsLoginComplete: (
+      state,
+      action: PayloadAction<{ isLoginComplete: boolean }>
+    ) => {
       state.isLoginComplete = action.payload.isLoginComplete
     },
     setUpdate: (state, action: PayloadAction<{ update: boolean }>) => {
@@ -50,5 +53,11 @@ export const userSlice = createSlice({
   },
 })
 
-export const { setToken, setUserData, setIsLogin, setIsLoginComplete, setUpdate } = userSlice.actions
+export const {
+  setToken,
+  setUserData,
+  setIsLogin,
+  setIsLoginComplete,
+  setUpdate,
+} = userSlice.actions
 export default userSlice.reducer

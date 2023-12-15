@@ -21,7 +21,12 @@ const Avatar: React.FC<IAvatar> = props => {
         source={{ uri: `${source}?x-oss-process=image/resize,w_${size * 3}` }}
         defaultSource={require('./fallbackAvatar.png')}
         style={[
-          { width: size, height: size, borderRadius: 99999, resizeMode: 'cover' },
+          {
+            width: size,
+            height: size,
+            borderRadius: 99999,
+            resizeMode: 'cover',
+          },
           {
             borderWidth: 1,
             borderColor: Color.BackgroundSecond,
@@ -44,7 +49,9 @@ const Avatar: React.FC<IAvatar> = props => {
         },
       ]}
     >
-      <Text style={[styles.text, { fontSize: Math.round(size / 2) }]}>{name[0]}</Text>
+      <Text style={[styles.text, { fontSize: Math.round(size / 2) }]}>
+        {name[0]}
+      </Text>
     </View>
   )
 }

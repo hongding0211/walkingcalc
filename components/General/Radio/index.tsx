@@ -27,15 +27,13 @@ const SingleRadio: React.FC<ISingleRadio> = props => {
   const theme = useContext(ThemeContext)
 
   return (
-    <ThemedPressable
-      onPress={props.onPress}
-      style={styles.container}
-    >
+    <ThemedPressable onPress={props.onPress} style={styles.container}>
       <View
         style={[
           styles.dot,
           {
-            backgroundColor: theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third,
+            backgroundColor:
+              theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third,
           },
           props.selected
             ? {
@@ -45,11 +43,7 @@ const SingleRadio: React.FC<ISingleRadio> = props => {
         ]}
       >
         {props.selected && (
-          <FontAwesomeIcon
-            icon={faCircle}
-            size={6}
-            style={{ color: '#fff' }}
-          />
+          <FontAwesomeIcon icon={faCircle} size={6} style={{ color: '#fff' }} />
         )}
       </View>
       <ThemedText style={{ fontWeight: '500' }}>{props.title}</ThemedText>

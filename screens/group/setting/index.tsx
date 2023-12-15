@@ -1,6 +1,6 @@
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import DialogButton from 'react-native-dialog/lib/Button'
@@ -38,10 +38,7 @@ const User: React.FC<IUser> = props => {
 
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center', columnGap: 6 }}>
-      <Avatar
-        size={16}
-        source={avatar}
-      />
+      <Avatar size={16} source={avatar} />
       <ThemedText style={{ fontWeight: '500' }}>{name}</ThemedText>
     </View>
   )
@@ -103,46 +100,30 @@ const GroupSetting: React.FC<IGroupSetting> = props => {
           <View style={styles.itemContainer}>
             <ThemedText style={styles.text}>{data?.name}</ThemedText>
             {data?.isOwner && (
-              <ThemedPressable
-                padding={8}
-                onPress={handlePressEditName}
-              >
+              <ThemedPressable padding={8} onPress={handlePressEditName}>
                 <FontAwesomeIcon
                   icon={faEdit}
                   size={10}
-                  color={theme.scheme === 'LIGHT' ? Color.Second : ColorDark.Second}
+                  color={
+                    theme.scheme === 'LIGHT' ? Color.Second : ColorDark.Second
+                  }
                 />
               </ThemedPressable>
             )}
           </View>
         </FormItem>
         <Divider />
-        <FormItem
-          title={t('groupId') + ''}
-          style={styles.title}
-          type="SECOND"
-        >
+        <FormItem title={t('groupId') + ''} style={styles.title} type="SECOND">
           <ThemedText style={styles.text}>{data?.id}</ThemedText>
         </FormItem>
         <Divider />
-        <FormItem
-          title={t('members') + ''}
-          style={styles.title}
-          type="SECOND"
-        >
+        <FormItem title={t('members') + ''} style={styles.title} type="SECOND">
           <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap' }}>
             {data?.membersInfo?.map((m: any) => (
-              <User
-                name={m?.name}
-                avatar={m?.avatar}
-                key={m?.uuid}
-              />
+              <User name={m?.name} avatar={m?.avatar} key={m?.uuid} />
             ))}
             {data?.tempUsers?.map((u: any) => (
-              <User
-                name={u?.name}
-                key={u?.uuid}
-              />
+              <User name={u?.name} key={u?.uuid} />
             ))}
           </View>
         </FormItem>
@@ -155,22 +136,17 @@ const GroupSetting: React.FC<IGroupSetting> = props => {
           <ThemedText style={styles.text}>{recordCnt}</ThemedText>
         </FormItem>
         <Divider />
-        <FormItem
-          title={t('myCost') + ''}
-          style={styles.title}
-          type="SECOND"
-        >
+        <FormItem title={t('myCost') + ''} style={styles.title} type="SECOND">
           <ThemedText style={styles.text}>
-            {numberToString(data?.membersInfo.find((e: any) => e.uuid === userData?.uuid).cost || 0)}
+            {numberToString(
+              data?.membersInfo.find((e: any) => e.uuid === userData?.uuid)
+                .cost || 0
+            )}
           </ThemedText>
         </FormItem>
         <Divider />
         {data?.isOwner && (
-          <Button
-            type="DANGER"
-            title={t('dismiss')}
-            onPress={onDismiss}
-          />
+          <Button type="DANGER" title={t('dismiss')} onPress={onDismiss} />
         )}
       </View>
 

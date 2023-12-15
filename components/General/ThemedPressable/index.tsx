@@ -11,7 +11,13 @@ interface IThemedPressable {
 }
 
 const ThemedPressable: React.FC<IThemedPressable & PressableProps> = props => {
-  const { highLight = false, padding = 4, borderRadius = 4, style, ...restProps } = props
+  const {
+    highLight = false,
+    padding = 4,
+    borderRadius = 4,
+    style,
+    ...restProps
+  } = props
 
   const theme = useContext(ThemeContext)
 
@@ -24,7 +30,8 @@ const ThemedPressable: React.FC<IThemedPressable & PressableProps> = props => {
         },
         highLight && pressed
           ? {
-              backgroundColor: theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third,
+              backgroundColor:
+                theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third,
             }
           : {},
         style,

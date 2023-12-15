@@ -24,7 +24,11 @@ const Button: React.FC<IButton> = ({
   return (
     <Pressable
       onPress={onPress}
-      style={[styles.btn, type === 'PRIMARY' ? styles.color : styles.colorDanger, block ? styles.block : {}]}
+      style={[
+        styles.btn,
+        type === 'PRIMARY' ? styles.color : styles.colorDanger,
+        block ? styles.block : {},
+      ]}
       disabled={disabled}
     >
       {icon && <FontAwesomeIcon icon={icon} />}

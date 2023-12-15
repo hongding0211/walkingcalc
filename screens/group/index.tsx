@@ -1,15 +1,47 @@
-import { faL, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { FlashList } from '@shopify/flash-list'
 import * as Haptics from 'expo-haptics'
 import { Spinner } from 'native-base'
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Dimensions, Pressable, StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useDispatch } from 'react-redux'
 
+import Modal from '../../components/General/Modal'
+import ThemedText from '../../components/General/Themed/Text'
+import useToast from '../../components/Toast/useToast'
+import { Color, ColorDark } from '../../constants/Colors'
+import { setLoading } from '../../feature/general/generalSlice'
+import { ThemeContext } from '../../feature/theme/themeContext'
+import {
+  MembersContext,
+  useMembersContext,
+} from '../../feature/user/membersContext'
+import { GroupProps } from '../../navigation/types'
+import {
+  useAddTempUser,
+  useDeleteGroup,
+  useGroup,
+  useGroupInvite,
+} from '../../services/group'
+import {
+  useAddRecord,
+  useDropRecord,
+  useRecordById,
+  useRecordGroup,
+} from '../../services/record'
+import { IResolvedDebt } from '../../utils/debt'
+import { useDate } from '../../utils/useDate'
 import AddRecord from './add'
 import EditRecord from './add/edit'
 import AddMember from './addMember'
@@ -21,38 +53,14 @@ import GroupSetting from './setting'
 import Share from './share'
 import TopCard from './topCard'
 import TopCardSkeleton from './topCardSkeleton'
-import Modal from '../../components/General/Modal'
-import ThemedText from '../../components/General/Themed/Text'
-import useToast from '../../components/Toast/useToast'
-import { Color, ColorDark } from '../../constants/Colors'
-import { setLoading } from '../../feature/general/generalSlice'
-import { ThemeContext } from '../../feature/theme/themeContext'
-import { MembersContext, useMembersContext } from '../../feature/user/membersContext'
-import { GroupProps } from '../../navigation/types'
-import { useAddTempUser, useDeleteGroup, useGroup, useGroupInvite } from '../../services/group'
-import { useAddRecord, useDropRecord, useRecordById, useRecordGroup } from '../../services/record'
-import { IResolvedDebt } from '../../utils/debt'
-import { useDate } from '../../utils/useDate'
 
 const Loading = () => {
-  return (
-    <Spinner
-      size="sm"
-      color="muted.300"
-    />
-  )
+  return <Spinner size="sm" color="muted.300" />
 }
 
 const AddButton: React.FC<{ onPress?: () => void }> = ({ onPress }) => (
-  <Pressable
-    style={styles.addBtn}
-    onPress={onPress}
-  >
-    <FontAwesomeIcon
-      icon={faPlus}
-      size={28}
-      style={{ color: '#fff' }}
-    />
+  <Pressable style={styles.addBtn} onPress={onPress}>
+    <FontAwesomeIcon icon={faPlus} size={28} style={{ color: '#fff' }} />
   </Pressable>
 )
 
@@ -84,7 +92,11 @@ const GroupHome: React.FC = () => {
 
   const { groupId, showSetting } = route.params || {}
 
-  const { data: groupData, mutate: mutateGroup, isLoading: groupLoading } = useGroup(groupId)
+  const {
+    data: groupData,
+    mutate: mutateGroup,
+    isLoading: groupLoading,
+  } = useGroup(groupId)
   const { trigger: triggerRecord } = useRecordGroup()
   const { trigger: triggerAddRecord } = useAddRecord()
   const { trigger: triggerDropRecord } = useDropRecord()
@@ -214,7 +226,9 @@ const GroupHome: React.FC = () => {
     })
       .then(res => {
         if (res?.success) {
-          const idx = listData.findIndex((e: any) => e.recordId === selectedItem.recordId)
+          const idx = listData.findIndex(
+            (e: any) => e.recordId === selectedItem.recordId
+          )
           if (idx !== -1) {
             setListData([...listData.slice(0, idx), ...listData.slice(idx + 1)])
             setTotal(listData.length - 1)
@@ -303,44 +317,47 @@ const GroupHome: React.FC = () => {
     mutateGroup().then()
   }, [])
 
-  const handleConfirmAddUser = useCallback((data?: { user?: any; tempUser?: any }) => {
-    if (!groupId || !data || !data.user || !data.tempUser) {
-      return
-    }
-    dispatch(
-      setLoading({
-        status: true,
-      })
-    )
-    Promise.all([
-      triggerInvite({
-        body: {
-          id: groupId,
-          members: data.user?.map((u: any) => u.uuid) || [],
-        },
-      }),
-      ...data.tempUser.map((t: string) =>
-        triggerAddTempUser({
+  const handleConfirmAddUser = useCallback(
+    (data?: { user?: any; tempUser?: any }) => {
+      if (!groupId || !data || !data.user || !data.tempUser) {
+        return
+      }
+      dispatch(
+        setLoading({
+          status: true,
+        })
+      )
+      Promise.all([
+        triggerInvite({
           body: {
             id: groupId,
-            name: t,
+            members: data.user?.map((u: any) => u.uuid) || [],
           },
-        })
-      ),
-    ])
-      .catch(() => {
-        toast(t('generalError') + '')
-      })
-      .finally(() => {
-        setShowAddMember(false)
-        refreshData()
-        dispatch(
-          setLoading({
-            status: false,
+        }),
+        ...data.tempUser.map((t: string) =>
+          triggerAddTempUser({
+            body: {
+              id: groupId,
+              name: t,
+            },
           })
-        )
-      })
-  }, [])
+        ),
+      ])
+        .catch(() => {
+          toast(t('generalError') + '')
+        })
+        .finally(() => {
+          setShowAddMember(false)
+          refreshData()
+          dispatch(
+            setLoading({
+              status: false,
+            })
+          )
+        })
+    },
+    []
+  )
 
   const resolveDebt = useCallback((debtToBeResolved: IResolvedDebt[]) => {
     if (debtToBeResolved.length < 1) {
@@ -475,7 +492,11 @@ const GroupHome: React.FC = () => {
         if (res?.success) {
           const idx = listData.findIndex((e: any) => e.recordId === id)
           if (idx !== -1) {
-            setListData([...listData.slice(0, idx), res.data, ...listData.slice(idx + 1)])
+            setListData([
+              ...listData.slice(0, idx),
+              res.data,
+              ...listData.slice(idx + 1),
+            ])
           } else {
             throw new Error()
           }
@@ -562,7 +583,10 @@ const GroupHome: React.FC = () => {
         style={[
           styles.container,
           {
-            backgroundColor: theme.scheme === 'LIGHT' ? Color.BackgroundSecond : ColorDark.BackgroundSecond,
+            backgroundColor:
+              theme.scheme === 'LIGHT'
+                ? Color.BackgroundSecond
+                : ColorDark.BackgroundSecond,
           },
         ]}
       >
@@ -579,10 +603,7 @@ const GroupHome: React.FC = () => {
             renderItem={(e: any) => (
               <>
                 {e.item.sectionHead && (
-                  <ThemedText
-                    style={styles.sectionHeader}
-                    type="SECOND"
-                  >
+                  <ThemedText style={styles.sectionHeader} type="SECOND">
                     {fullDate(e.item.modifiedAt)}
                   </ThemedText>
                 )}
@@ -610,10 +631,7 @@ const GroupHome: React.FC = () => {
               <>
                 {isLoading && <Loading />}
                 {!isLoading && page === Math.ceil(total / 10) && (
-                  <ThemedText
-                    style={{ fontSize: 12 }}
-                    type="SECOND"
-                  >
+                  <ThemedText style={{ fontSize: 12 }} type="SECOND">
                     - {t('end')} -
                   </ThemedText>
                 )}
@@ -635,21 +653,12 @@ const GroupHome: React.FC = () => {
       </View>
 
       {showAddRecord && (
-        <Modal
-          title={t('addRecord') + ''}
-          onClose={handleCloseAddRecord}
-        >
-          <AddRecord
-            groupId={groupId}
-            onAdd={handleAddRecord}
-          />
+        <Modal title={t('addRecord') + ''} onClose={handleCloseAddRecord}>
+          <AddRecord groupId={groupId} onAdd={handleAddRecord} />
         </Modal>
       )}
       {showEditRecord && (
-        <Modal
-          title={t('editRecord') + ''}
-          onClose={handleCloseEditRecord}
-        >
+        <Modal title={t('editRecord') + ''} onClose={handleCloseEditRecord}>
           <EditRecord
             groupId={groupId}
             data={selectedItem}
@@ -658,18 +667,12 @@ const GroupHome: React.FC = () => {
         </Modal>
       )}
       {showShareModal && (
-        <Modal
-          title={t('share') + ''}
-          onClose={handleCloseShare}
-        >
+        <Modal title={t('share') + ''} onClose={handleCloseShare}>
           <Share groupId={groupId} />
         </Modal>
       )}
       {showDebtDetail && (
-        <Modal
-          title={t('debtDetail') + ''}
-          onClose={handleCloseDebtDetail}
-        >
+        <Modal title={t('debtDetail') + ''} onClose={handleCloseDebtDetail}>
           <DebtDetail
             data={groupData?.data}
             onResolveDebt={handleResolveDebt}
@@ -678,10 +681,7 @@ const GroupHome: React.FC = () => {
         </Modal>
       )}
       {showItemDetail && (
-        <Modal
-          title={t('recordDetail') + ''}
-          onClose={handleCloseItemDetail}
-        >
+        <Modal title={t('recordDetail') + ''} onClose={handleCloseItemDetail}>
           <ItemDetail
             data={selectedItem}
             onDelete={handleDeleteRecord}
@@ -690,10 +690,7 @@ const GroupHome: React.FC = () => {
         </Modal>
       )}
       {showSetting && (
-        <Modal
-          title={t('setting') + ''}
-          onClose={handleCloseSetting}
-        >
+        <Modal title={t('setting') + ''} onClose={handleCloseSetting}>
           <GroupSetting
             data={groupData?.data}
             recordCnt={total}
@@ -703,10 +700,7 @@ const GroupHome: React.FC = () => {
         </Modal>
       )}
       {showAddMember && (
-        <Modal
-          title={t('addMember') + ''}
-          onClose={handleCloseAddMember}
-        >
+        <Modal title={t('addMember') + ''} onClose={handleCloseAddMember}>
           <AddMember
             groupData={groupData?.data}
             onConfirm={handleConfirmAddUser}

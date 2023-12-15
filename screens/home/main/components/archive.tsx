@@ -1,7 +1,7 @@
 import { faArchive } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import React from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
 import { Color } from '../../../../constants/Colors'
 
@@ -33,10 +33,7 @@ const Archive: React.FC<IArchive> = props => {
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <FontAwesomeIcon
-          icon={faArchive}
-          style={styles.icon}
-        />
+        <FontAwesomeIcon icon={faArchive} style={styles.icon} />
         <Text style={styles.text}>{title}</Text>
       </View>
     </View>

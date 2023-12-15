@@ -88,26 +88,22 @@ const JoinGroup: React.FC<IJoinGroup> = ({ onConfirm }) => {
   return (
     <View style={styles.container}>
       <FormItem title={t('groupId') + ''}>
-        <Input
-          value={groupId}
-          onChangeText={handleTextChange}
-        />
+        <Input value={groupId} onChangeText={handleTextChange} />
       </FormItem>
       <Pressable
         onPress={handleClickScan}
         style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}
       >
         <FontAwesomeIcon
-          style={{ color: theme.scheme === 'LIGHT' ? Color.Second : ColorDark.Second }}
+          style={{
+            color: theme.scheme === 'LIGHT' ? Color.Second : ColorDark.Second,
+          }}
           icon={faExpand}
         />
         <ThemedText type="SECOND">{t('scanQrcode')}</ThemedText>
       </Pressable>
       <View style={styles.btn}>
-        <Button
-          title={t('confirm') + ''}
-          onPress={handleConfirm}
-        />
+        <Button title={t('confirm') + ''} onPress={handleConfirm} />
       </View>
     </View>
   )

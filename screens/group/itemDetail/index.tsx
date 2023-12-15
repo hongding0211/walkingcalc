@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import { ScrollView, Skeleton } from 'native-base'
 import React, { useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, Text, Pressable } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 import MapView, { Marker } from 'react-native-maps'
 
 import FormItem from '../../../components/FormItem'
@@ -37,16 +37,14 @@ const UserBar: React.FC<IUserBar> = props => {
   return (
     <View style={styles.bar}>
       <View style={styles.bar}>
-        <Avatar
-          size={24}
-          source={avatar}
-          name={name}
-        />
+        <Avatar size={24} source={avatar} name={name} />
         <ThemedText style={{ marginLeft: 10, fontWeight: '500' }}>
           {name && name?.length > 10 ? name?.slice(0, 10) + '...' : name}
         </ThemedText>
       </View>
-      <ThemedText style={{ fontWeight: '500', fontSize: 16 }}>{numberToString(debt || 0)}</ThemedText>
+      <ThemedText style={{ fontWeight: '500', fontSize: 16 }}>
+        {numberToString(debt || 0)}
+      </ThemedText>
     </View>
   )
 }
@@ -75,12 +73,22 @@ const ItemDetail: React.FC<IItemDetail> = props => {
     <View style={styles.container}>
       <View style={styles.bar}>
         <View style={styles.bar}>
-          <ThemedText style={styles.emoji}>{categoryMap[data?.type]}</ThemedText>
+          <ThemedText style={styles.emoji}>
+            {categoryMap[data?.type]}
+          </ThemedText>
           <View
-            style={[styles.divider, { backgroundColor: theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third }]}
+            style={[
+              styles.divider,
+              {
+                backgroundColor:
+                  theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third,
+              },
+            ]}
           />
           <View>
-            <ThemedText style={{ fontSize: 12 }}>{fullDate(data?.createdAt)}</ThemedText>
+            <ThemedText style={{ fontSize: 12 }}>
+              {fullDate(data?.createdAt)}
+            </ThemedText>
             <ThemedText
               style={{
                 fontWeight: '500',
@@ -98,7 +106,11 @@ const ItemDetail: React.FC<IItemDetail> = props => {
             size={14}
             style={{ color: Color.Primary }}
           />
-          <Text style={{ marginLeft: 4, color: Color.Primary, fontWeight: '500' }}>{data?.forWhom?.length}</Text>
+          <Text
+            style={{ marginLeft: 4, color: Color.Primary, fontWeight: '500' }}
+          >
+            {data?.forWhom?.length}
+          </Text>
         </View>
       </View>
       <Divider />
@@ -112,15 +124,9 @@ const ItemDetail: React.FC<IItemDetail> = props => {
       <Divider />
       <FormItem title={t('for') + `(${data?.forWhom?.length})`}>
         <ScrollView style={{ maxHeight: 135 }}>
-          <View
-            style={{ gap: 8 }}
-            onStartShouldSetResponder={() => true}
-          >
+          <View style={{ gap: 8 }} onStartShouldSetResponder={() => true}>
             {data?.forWhom?.map((u: any, idx: any) => (
-              <View
-                key={u}
-                style={{ gap: 8 }}
-              >
+              <View key={u} style={{ gap: 8 }}>
                 <UserBar
                   name={member.get(u)?.name}
                   avatar={member.get(u)?.avatar}
@@ -176,10 +182,7 @@ const ItemDetail: React.FC<IItemDetail> = props => {
         </View>
       )}
       {data?.text && (
-        <ThemedText
-          style={{ fontWeight: '500', fontSize: 12 }}
-          type="SECOND"
-        >
+        <ThemedText style={{ fontWeight: '500', fontSize: 12 }} type="SECOND">
           {t('remark')}: {data.text}
         </ThemedText>
       )}
@@ -205,7 +208,9 @@ const ItemDetail: React.FC<IItemDetail> = props => {
               Edit Record
             </ThemedText>
           </Pressable>
-          {(data?.createdBy || data?.modifiedBy || data?.modifiedAt !== data?.createdAt) && (
+          {(data?.createdBy ||
+            data?.modifiedBy ||
+            data?.modifiedAt !== data?.createdAt) && (
             <ThemedText
               type="SECOND"
               style={{
@@ -214,22 +219,23 @@ const ItemDetail: React.FC<IItemDetail> = props => {
                 marginTop: -8,
               }}
             >
-              {data?.createdBy && `${t('createdBy')}: ${member.get(data.createdBy)?.name}`}
+              {data?.createdBy &&
+                `${t('createdBy')}: ${member.get(data.createdBy)?.name}`}
               {data?.modifiedBy &&
-                `${data?.createdBy ? ', ' : ''}${t('latestUpdatedBy')}: ${member.get(data.modifiedBy)?.name}`}
+                `${data?.createdBy ? ', ' : ''}${t('latestUpdatedBy')}: ${
+                  member.get(data.modifiedBy)?.name
+                }`}
               {data?.modifiedAt !== data?.createdAt &&
-                `${data?.createdBy || data?.modifiedBy ? '\r\n' : ''}${t('latestUpdated')}: ${fullDate(
+                `${data?.createdBy || data?.modifiedBy ? '\r\n' : ''}${t(
+                  'latestUpdated'
+                )}: ${fullDate(data?.modifiedAt)} ${dayjs(
                   data?.modifiedAt
-                )} ${dayjs(data?.modifiedAt).format('HH:mm')}`}
+                ).format('HH:mm')}`}
             </ThemedText>
           )}
         </>
       )}
-      <Button
-        type="DANGER"
-        title={t('delete')}
-        onPress={onDelete}
-      />
+      <Button type="DANGER" title={t('delete')} onPress={onDelete} />
     </View>
   )
 }

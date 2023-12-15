@@ -1,7 +1,7 @@
 import { faFileExport } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import React from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
 import { Color } from '../../../constants/Colors'
 
@@ -44,10 +44,7 @@ const Unarchive: React.FC<IUnarchive> = props => {
       ]}
     >
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <FontAwesomeIcon
-          icon={faFileExport}
-          style={styles.icon}
-        />
+        <FontAwesomeIcon icon={faFileExport} style={styles.icon} />
         <Text style={styles.text}>{title}</Text>
       </View>
     </View>

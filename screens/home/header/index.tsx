@@ -5,12 +5,12 @@ import { useTranslation } from 'react-i18next'
 import { Pressable, StyleSheet, View } from 'react-native'
 import Popover from 'react-native-popover-view'
 
-import Menu from './menu'
 import { useAppSelector } from '../../../app/store'
 import Avatar from '../../../components/General/Avatar'
 import ThemedText from '../../../components/General/Themed/Text'
 import { Color, ColorDark } from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
+import Menu from './menu'
 
 interface IHeader {
   onAdd?: () => void
@@ -34,14 +34,15 @@ const Header: React.FC<IHeader> = ({ onAdd, onShowAbout }) => {
         onPress={handleAddGroup}
         style={({ pressed }) => [
           styles.left,
-          pressed ? (theme.scheme === 'LIGHT' ? styles.pressed : styles.pressedDark) : {},
+          pressed
+            ? theme.scheme === 'LIGHT'
+              ? styles.pressed
+              : styles.pressedDark
+            : {},
         ]}
       >
         <ThemedText style={styles.title}>{t('group')}</ThemedText>
-        <FontAwesomeIcon
-          icon={faCirclePlus}
-          style={styles.addBtn}
-        />
+        <FontAwesomeIcon icon={faCirclePlus} style={styles.addBtn} />
       </Pressable>
       <Popover
         from={
@@ -50,10 +51,7 @@ const Header: React.FC<IHeader> = ({ onAdd, onShowAbout }) => {
               setShowPopoverContent(!showPopoverContent)
             }}
           >
-            <Avatar
-              name={userInfo?.name}
-              source={userInfo?.avatar}
-            />
+            <Avatar name={userInfo?.name} source={userInfo?.avatar} />
           </Pressable>
         }
         isVisible={showPopoverContent}
@@ -66,7 +64,8 @@ const Header: React.FC<IHeader> = ({ onAdd, onShowAbout }) => {
         onRequestClose={() => setShowPopoverContent(false)}
         popoverStyle={{
           borderRadius: 5,
-          backgroundColor: theme.scheme === 'LIGHT' ? Color.Background : ColorDark.Background,
+          backgroundColor:
+            theme.scheme === 'LIGHT' ? Color.Background : ColorDark.Background,
         }}
         arrowSize={{
           width: 0,

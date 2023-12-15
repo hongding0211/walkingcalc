@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next'
 import { Image, View } from 'react-native'
 import { useDispatch } from 'react-redux'
 
-import styles from './style'
 import Button from '../../components/General/Button'
 import ThemedText from '../../components/General/Themed/Text'
 import ThemedView from '../../components/General/Themed/View'
@@ -13,6 +12,7 @@ import { setLoading } from '../../feature/general/generalSlice'
 import { setToken } from '../../feature/user/userSlice'
 import { LoginProps } from '../../navigation/types'
 import { useLogin } from '../../services/user'
+import styles from './style'
 
 const Login: React.FC = () => {
   const navigation = useNavigation<LoginProps['navigation']>()
@@ -67,19 +67,13 @@ const Login: React.FC = () => {
             style={styles.img}
           />
           <ThemedText style={styles.title}>Walking Calculator</ThemedText>
-          <ThemedText
-            type="SECOND"
-            style={styles.subTitle}
-          >
+          <ThemedText type="SECOND" style={styles.subTitle}>
             {t('subTitle')}
           </ThemedText>
         </View>
 
         <View style={styles.btnGroup}>
-          <Button
-            title={t('login')}
-            onPress={handleLoginWithSSO}
-          />
+          <Button title={t('login')} onPress={handleLoginWithSSO} />
         </View>
       </View>
     </ThemedView>

@@ -9,10 +9,6 @@ import Swipeable from 'react-native-gesture-handler/Swipeable'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useDispatch } from 'react-redux'
 
-import Archive from './components/archive'
-import GroupCard from './groupCard'
-import GroupCardSkeleton from './groupCardSkeleton'
-import TopCard from './topCard'
 import ThemedText from '../../../components/General/Themed/Text'
 import ThemedPressable from '../../../components/General/ThemedPressable'
 import useToast from '../../../components/Toast/useToast'
@@ -22,6 +18,10 @@ import { ThemeContext } from '../../../feature/theme/themeContext'
 import { GroupProps } from '../../../navigation/types'
 import { useArchiveGroup } from '../../../services/group'
 import use1l8n from '../../../utils/use1l8n'
+import Archive from './components/archive'
+import GroupCard from './groupCard'
+import GroupCardSkeleton from './groupCardSkeleton'
+import TopCard from './topCard'
 
 interface IMain {
   userDebt?: any
@@ -119,29 +119,22 @@ const Main: React.FC<IMain> = props => {
   const headerComponent = useCallback(() => {
     return (
       <View style={styles.headerComponentContainer}>
-        <ThemedText
-          style={styles.sectionHeader}
-          type="SECOND"
-        >
+        <ThemedText style={styles.sectionHeader} type="SECOND">
           {`${t('allGroups')} (${total})`}
         </ThemedText>
-        <ThemedPressable
-          highLight
-          onPress={handlePressArchive}
-        >
+        <ThemedPressable highLight onPress={handlePressArchive}>
           <FontAwesomeIcon
             icon={faArchive}
             size={14}
             style={{
-              color: theme.scheme === 'LIGHT' ? Typography.Second : TypographyDark.Second,
+              color:
+                theme.scheme === 'LIGHT'
+                  ? Typography.Second
+                  : TypographyDark.Second,
             }}
           />
           {total !== groupData?.data?.length && (
-            <FontAwesomeIcon
-              icon={faCircle}
-              style={styles.dot}
-              size={6}
-            />
+            <FontAwesomeIcon icon={faCircle} style={styles.dot} size={6} />
           )}
         </ThemedPressable>
       </View>

@@ -2,7 +2,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, StyleSheet, Text } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
 import { useAppSelector } from '../../../app/store'
 import Card from '../../../components/Card'
@@ -15,15 +15,16 @@ interface IGroupCard {
   data: Record<string, any>
 }
 
-const StackText: React.FC<{ top: string; bottom: string; align: 'flex-start' | 'flex-end' }> = props => {
+const StackText: React.FC<{
+  top: string
+  bottom: string
+  align: 'flex-start' | 'flex-end'
+}> = props => {
   const { top, bottom, align } = props
 
   return (
     <View style={[styles.stackText, { alignItems: align }]}>
-      <ThemedText
-        type="SECOND"
-        style={styles.topText}
-      >
+      <ThemedText type="SECOND" style={styles.topText}>
         {top}
       </ThemedText>
       <ThemedText style={styles.bottomText}>{bottom}</ThemedText>
@@ -36,7 +37,9 @@ const GroupCard: React.FC<IGroupCard> = props => {
   const { date } = useDate()
   const userInfo = useAppSelector(state => state.user.data)
 
-  const debt = props.data?.membersInfo.find((e: any) => e.uuid === userInfo?.uuid)?.debt
+  const debt = props.data?.membersInfo.find(
+    (e: any) => e.uuid === userInfo?.uuid
+  )?.debt
 
   return (
     <Card>
@@ -44,12 +47,10 @@ const GroupCard: React.FC<IGroupCard> = props => {
         <View style={styles.bar}>
           <ThemedText style={styles.title}>{props.data?.name || ''}</ThemedText>
           <View style={styles.topRightContainer}>
-            <FontAwesomeIcon
-              style={styles.topRight}
-              icon={faUser}
-              size={12}
-            />
-            <Text style={styles.topRight}>{props.data?.membersInfo?.length + props.data?.tempUsers?.length}</Text>
+            <FontAwesomeIcon style={styles.topRight} icon={faUser} size={12} />
+            <Text style={styles.topRight}>
+              {props.data?.membersInfo?.length + props.data?.tempUsers?.length}
+            </Text>
           </View>
         </View>
         <View style={styles.bar}>

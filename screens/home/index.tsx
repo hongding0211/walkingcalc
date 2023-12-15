@@ -1,16 +1,15 @@
 import { useNavigation } from '@react-navigation/native'
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import { SafeAreaView, View } from 'react-native'
 import { useDispatch } from 'react-redux'
 
-import About from './about'
-import AddGroup from './group/add'
-import CreateGroup from './group/create'
-import JoinGroup from './group/join'
-import Header from './header'
-import Main from './main'
-import styles from './style'
 import { useAppSelector } from '../../app/store'
 import Modal from '../../components/General/Modal'
 import useToast from '../../components/Toast/useToast'
@@ -20,12 +19,21 @@ import { ThemeContext } from '../../feature/theme/themeContext'
 import { HomeProps } from '../../navigation/types'
 import { useGroupCreate, useGroupJoin, useGroupMy } from '../../services/group'
 import { useUserDebt } from '../../services/user'
+import About from './about'
+import AddGroup from './group/add'
+import CreateGroup from './group/create'
+import JoinGroup from './group/join'
+import Header from './header'
+import Main from './main'
+import styles from './style'
 
 const Home: React.FC = () => {
   const [showAddGroupModal, setShowAddGroupModal] = useState(false)
   const [showAboutModal, setShowAboutModal] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [addGroupComponent, setAddGroupComponent] = useState<'DEFAULT' | 'CREATE' | 'JOIN'>('DEFAULT')
+  const [addGroupComponent, setAddGroupComponent] = useState<
+    'DEFAULT' | 'CREATE' | 'JOIN'
+  >('DEFAULT')
 
   const { t } = useTranslation('home')
   const dispatch = useDispatch()
@@ -37,8 +45,16 @@ const Home: React.FC = () => {
   const { trigger: triggerGroupCreate } = useGroupCreate()
   const { trigger: triggerGroupJoin } = useGroupJoin()
 
-  const { data: userDebt, mutate: mutateUserDebt, isLoading: userDebtLoading } = useUserDebt()
-  const { data: groupData, mutate: mutateGroup, isLoading: groupLoading } = useGroupMy()
+  const {
+    data: userDebt,
+    mutate: mutateUserDebt,
+    isLoading: userDebtLoading,
+  } = useUserDebt()
+  const {
+    data: groupData,
+    mutate: mutateGroup,
+    isLoading: groupLoading,
+  } = useGroupMy()
 
   const refresh = useCallback(() => {
     mutateUserDebt().then()
@@ -122,7 +138,9 @@ const Home: React.FC = () => {
   const unarchivedGroupData = useMemo(() => {
     const { uuid = '' } = userInfo || {}
     return {
-      data: groupData?.data?.filter(e => e?.archivedUsers?.findIndex(e => e === uuid) === -1),
+      data: groupData?.data?.filter(
+        e => e?.archivedUsers?.findIndex(e => e === uuid) === -1
+      ),
     }
   }, [groupData, userInfo])
 
@@ -130,7 +148,10 @@ const Home: React.FC = () => {
     <>
       <SafeAreaView
         style={{
-          backgroundColor: theme.scheme === 'LIGHT' ? Color.BackgroundSecond : ColorDark.BackgroundSecond,
+          backgroundColor:
+            theme.scheme === 'LIGHT'
+              ? Color.BackgroundSecond
+              : ColorDark.BackgroundSecond,
           flex: 1,
         }}
       >
@@ -153,7 +174,11 @@ const Home: React.FC = () => {
       {showAddGroupModal && (
         <Modal
           hideTitle={addGroupComponent === 'DEFAULT'}
-          title={addGroupComponent === 'CREATE' ? t('createGroup') + '' : t('joinGroup') + ''}
+          title={
+            addGroupComponent === 'CREATE'
+              ? t('createGroup') + ''
+              : t('joinGroup') + ''
+          }
           onClose={handleCloseAddGroupModal}
         >
           {addGroupComponent === 'DEFAULT' && (
@@ -162,16 +187,17 @@ const Home: React.FC = () => {
               onJoinGroup={() => setAddGroupComponent('JOIN')}
             />
           )}
-          {addGroupComponent === 'CREATE' && <CreateGroup onConfirm={handleCreateGroup} />}
-          {addGroupComponent === 'JOIN' && <JoinGroup onConfirm={handleJoinGroup} />}
+          {addGroupComponent === 'CREATE' && (
+            <CreateGroup onConfirm={handleCreateGroup} />
+          )}
+          {addGroupComponent === 'JOIN' && (
+            <JoinGroup onConfirm={handleJoinGroup} />
+          )}
         </Modal>
       )}
 
       {showAboutModal && (
-        <Modal
-          title={t('about') + ''}
-          onClose={() => handleShowAbout(false)}
-        >
+        <Modal title={t('about') + ''} onClose={() => handleShowAbout(false)}>
           <About />
         </Modal>
       )}

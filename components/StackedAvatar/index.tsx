@@ -16,20 +16,10 @@ interface IStackedAvatar {
 const StackedAvatar: React.FC<IStackedAvatar> = props => {
   const { data, size = 22, tail } = props
   return (
-    <ScrollView
-      horizontal
-      contentContainerStyle={{ alignItems: 'center' }}
-    >
+    <ScrollView horizontal contentContainerStyle={{ alignItems: 'center' }}>
       {data?.map((e, idx) => (
-        <View
-          style={{ marginRight: 4 }}
-          key={`${idx}_${e.name}`}
-        >
-          <Avatar
-            name={e.name}
-            source={e.avatar}
-            size={size}
-          />
+        <View style={{ marginRight: 4 }} key={`${idx}_${e.name}`}>
+          <Avatar name={e.name} source={e.avatar} size={size} />
         </View>
       ))}
       {tail}

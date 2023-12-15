@@ -4,7 +4,6 @@ import React, { useCallback, useRef } from 'react'
 import { Swipeable } from 'react-native-gesture-handler'
 import { useDispatch } from 'react-redux'
 
-import Unarchive from './unarchive'
 import { useAppSelector } from '../../../app/store'
 import ThemedText from '../../../components/General/Themed/Text'
 import ItemCard from '../../../components/ItemCard'
@@ -14,6 +13,7 @@ import { GroupProps } from '../../../navigation/types'
 import { useUnarchiveGroup } from '../../../services/group'
 import { numberToString } from '../../../utils/moeny'
 import use1l8n from '../../../utils/use1l8n'
+import Unarchive from './unarchive'
 
 interface IRenderItem {
   item: any
@@ -35,7 +35,9 @@ const RenderItem: React.FC<IRenderItem> = props => {
   const { trigger: triggerGroupUnarchive } = useUnarchiveGroup()
 
   const userInfo = useAppSelector(state => state.user.data)
-  const debt = item?.membersInfo.find((e: any) => e.uuid === userInfo?.uuid)?.debt
+  const debt = item?.membersInfo.find(
+    (e: any) => e.uuid === userInfo?.uuid
+  )?.debt
 
   const handlePress = useCallback(() => {
     setTimeout(() => {
@@ -92,11 +94,7 @@ const RenderItem: React.FC<IRenderItem> = props => {
   return (
     <Swipeable
       renderLeftActions={() => (
-        <Unarchive
-          title={t('unarchive')}
-          index={index}
-          total={total}
-        />
+        <Unarchive title={t('unarchive')} index={index} total={total} />
       )}
       onActivated={handleSwipeActivated}
       onBegan={handleSwipeBegin}
@@ -108,7 +106,11 @@ const RenderItem: React.FC<IRenderItem> = props => {
         index={index}
         total={total}
         onPress={handlePress}
-        rightComponent={<ThemedText type="SECOND">{(debt < -1e-10 ? '' : '+') + numberToString(debt)}</ThemedText>}
+        rightComponent={
+          <ThemedText type="SECOND">
+            {(debt < -1e-10 ? '' : '+') + numberToString(debt)}
+          </ThemedText>
+        }
       />
     </Swipeable>
   )

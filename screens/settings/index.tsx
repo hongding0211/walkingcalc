@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { useCallback, useContext, useEffect } from 'react'
-import { ScrollView, StyleSheet, Text, View, Alert } from 'react-native'
+import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useDispatch } from 'react-redux'
 
@@ -60,18 +60,22 @@ const Settings: React.FC = () => {
         flex: 1,
         paddingTop: insets.top + 42,
         paddingBottom: insets.bottom,
-        backgroundColor: theme.scheme === 'LIGHT' ? Color.BackgroundSecond : ColorDark.BackgroundSecond,
+        backgroundColor:
+          theme.scheme === 'LIGHT'
+            ? Color.BackgroundSecond
+            : ColorDark.BackgroundSecond,
       }}
     >
       <ScrollView contentContainerStyle={styles.container}>
         <ItemCard.Container title={t('user')}>
           <ItemCard.Item>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-              <Avatar
-                size={24}
-                source={userData?.avatar}
-              />
-              <ThemedText style={{ fontWeight: '500' }}>{userData?.name}</ThemedText>
+            <View
+              style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}
+            >
+              <Avatar size={24} source={userData?.avatar} />
+              <ThemedText style={{ fontWeight: '500' }}>
+                {userData?.name}
+              </ThemedText>
             </View>
           </ItemCard.Item>
           <ItemCard.Item

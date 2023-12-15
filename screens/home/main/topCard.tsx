@@ -38,7 +38,9 @@ const TopCard: React.FC<ITopCard> = props => {
           {t('totalDebt')}
         </Text>
       </View>
-      <ThemedText style={styles.amount}>{`${total < -1e-10 ? '' : '+'}` + numberToString(total)}</ThemedText>
+      <ThemedText style={styles.amount}>
+        {`${total < -1e-10 ? '' : '+'}` + numberToString(total)}
+      </ThemedText>
     </Card>
   )
 }
