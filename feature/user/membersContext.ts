@@ -10,7 +10,10 @@ interface IMembersContext extends Map<[IMember['uuid']], IMember> {}
 
 export const MembersContext = createContext<IMembersContext>(new Map())
 
-export const useMembersContext = (data?: { membersInfo: IMember[]; tempUsers: IMember[] }): IMembersContext => {
+export const useMembersContext = (data?: {
+  membersInfo: IMember[]
+  tempUsers: IMember[]
+}): IMembersContext => {
   const map = new Map()
   if (!data) {
     return map

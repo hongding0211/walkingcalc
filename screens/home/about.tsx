@@ -12,13 +12,18 @@ const About: React.FC = () => {
         style={styles.img}
       />
       <View>
-        <ThemedText style={{ fontWeight: '700', marginBottom: 6 }}>Walking Calculator</ThemedText>
-        <ThemedText style={{ fontSize: 14, fontWeight: '500', marginBottom: 6 }}>Build with React Native</ThemedText>
-        <ThemedText style={{ fontSize: 12, marginBottom: 16 }}>Version: {appSetting.expo.version}</ThemedText>
+        <ThemedText style={{ fontWeight: '700', marginBottom: 6 }}>
+          Walking Calculator
+        </ThemedText>
         <ThemedText
-          type="SECOND"
-          style={{ fontSize: 12, marginBottom: 6 }}
+          style={{ fontSize: 14, fontWeight: '500', marginBottom: 6 }}
         >
+          Build with React Native
+        </ThemedText>
+        <ThemedText style={{ fontSize: 12, marginBottom: 16 }}>
+          Version: {appSetting.expo.version}
+        </ThemedText>
+        <ThemedText type="SECOND" style={{ fontSize: 12, marginBottom: 6 }}>
           © {new Date(Date.now()).getFullYear()} Hong
         </ThemedText>
       </View>

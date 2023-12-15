@@ -13,7 +13,10 @@ const Divider: React.FC<{ type?: 'Horizon' | 'Vertical' }> = props => {
     return (
       <View
         style={[
-          { backgroundColor: theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third },
+          {
+            backgroundColor:
+              theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third,
+          },
           {
             height: 1,
           },
@@ -24,7 +27,10 @@ const Divider: React.FC<{ type?: 'Horizon' | 'Vertical' }> = props => {
     return (
       <View
         style={[
-          { backgroundColor: theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third },
+          {
+            backgroundColor:
+              theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third,
+          },
           {
             width: 1,
           },

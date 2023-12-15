@@ -1,11 +1,12 @@
 {
-  "extends": "universe/native",
-  "ignorePatterns": [
-    "dist/**/*"
-  ],
-  "plugins": [
-    "unused-imports"
-  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "ignorePatterns": ["dist/**/*"],
+  "plugins": ["unused-imports"],
   "rules": {
     "unused-imports/no-unused-imports": "error",
     "unused-imports/no-unused-vars": [

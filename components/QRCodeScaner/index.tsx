@@ -9,7 +9,10 @@ import { StyleSheet, View } from 'react-native'
 import { useDispatch } from 'react-redux'
 
 import { Color, ColorDark } from '../../constants/Colors'
-import { setScanCodeResult, setScanSuccess } from '../../feature/general/generalSlice'
+import {
+  setScanCodeResult,
+  setScanSuccess,
+} from '../../feature/general/generalSlice'
 import { ThemeContext } from '../../feature/theme/themeContext'
 import { CodeScanProps } from '../../navigation/types'
 import ThemedText from '../General/Themed/Text'
@@ -19,16 +22,22 @@ const NoAccess = () => {
   const theme = useContext(ThemeContext)
 
   return (
-    <View style={{ rowGap: 16, alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+    <View
+      style={{
+        rowGap: 16,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1,
+      }}
+    >
       <FontAwesomeIcon
-        style={{ color: theme.scheme === 'LIGHT' ? Color.Second : ColorDark.Second }}
+        style={{
+          color: theme.scheme === 'LIGHT' ? Color.Second : ColorDark.Second,
+        }}
         icon={faBan}
         size={32}
       />
-      <ThemedText
-        type="SECOND"
-        style={{ fontSize: 16, fontWeight: '500' }}
-      >
+      <ThemedText type="SECOND" style={{ fontSize: 16, fontWeight: '500' }}>
         {t('noCameraAccess')}
       </ThemedText>
     </View>
@@ -36,7 +45,9 @@ const NoAccess = () => {
 }
 
 const QRCodeScanner: React.FC = () => {
-  const [hasPermission, setHasPermission] = useState<boolean | undefined>(undefined)
+  const [hasPermission, setHasPermission] = useState<boolean | undefined>(
+    undefined
+  )
   const navigation = useNavigation<CodeScanProps['navigation']>()
   const dispatch = useDispatch()
 
@@ -80,10 +91,7 @@ const QRCodeScanner: React.FC = () => {
   }
 
   return (
-    <BarCodeScanner
-      onBarCodeScanned={handleScan}
-      style={styles.container}
-    />
+    <BarCodeScanner onBarCodeScanned={handleScan} style={styles.container} />
   )
 }
 

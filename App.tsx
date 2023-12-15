@@ -11,8 +11,8 @@ import Toast from './components/Toast'
 import { LangContext } from './feature/lang/langContext'
 import { ThemeContext } from './feature/theme/themeContext'
 import useCachedResources from './hooks/useCachedResources'
-import Navigation from './navigation'
 import './i18n'
+import Navigation from './navigation'
 import getLocales from './utils/locales'
 
 const locales = getLocales()
@@ -42,7 +42,9 @@ export default function App() {
   } else {
     return (
       <SafeAreaProvider>
-        <ThemeContext.Provider value={{ scheme: colorScheme === 'light' ? 'LIGHT' : 'DARK' }}>
+        <ThemeContext.Provider
+          value={{ scheme: colorScheme === 'light' ? 'LIGHT' : 'DARK' }}
+        >
           <LangContext.Provider value={locales}>
             <GestureHandlerRootView style={{ flex: 1 }}>
               <Provider store={store}>

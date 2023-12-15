@@ -8,7 +8,11 @@ import Divider from '../../../components/General/Divider'
 import { Color, ColorDark } from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
 
-const IconItem: React.FC<{ icon?: any; title?: string; onPress?: () => void }> = ({ icon, title, onPress }) => {
+const IconItem: React.FC<{
+  icon?: any
+  title?: string
+  onPress?: () => void
+}> = ({ icon, title, onPress }) => {
   const theme = useContext(ThemeContext)
 
   return (
@@ -17,17 +21,16 @@ const IconItem: React.FC<{ icon?: any; title?: string; onPress?: () => void }> =
         styles.iconContainer,
         pressed
           ? {
-              backgroundColor: theme.scheme === 'LIGHT' ? Color.Highlight : ColorDark.Highlight,
+              backgroundColor:
+                theme.scheme === 'LIGHT'
+                  ? Color.Highlight
+                  : ColorDark.Highlight,
             }
           : {},
       ]}
       onPress={onPress}
     >
-      <FontAwesomeIcon
-        icon={icon}
-        size={40}
-        style={styles.icon}
-      />
+      <FontAwesomeIcon icon={icon} size={40} style={styles.icon} />
       <Text style={styles.title}>{title}</Text>
     </Pressable>
   )

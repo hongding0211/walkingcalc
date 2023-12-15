@@ -19,10 +19,7 @@ const FormItem: React.FC<IFormItem> = props => {
       {titleComponent ? (
         titleComponent
       ) : (
-        <ThemedText
-          style={[styles.title, style]}
-          type={type}
-        >
+        <ThemedText style={[styles.title, style]} type={type}>
           {title}
         </ThemedText>
       )}

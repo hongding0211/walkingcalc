@@ -1,6 +1,12 @@
 import { debounce } from 'lodash'
 import { Skeleton } from 'native-base'
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native'
 
@@ -29,7 +35,8 @@ const User: React.FC<IUser> = props => {
       <View
         style={{
           height: 1,
-          backgroundColor: theme.scheme === 'LIGHT' ? Color.Fourth : ColorDark.Fourth,
+          backgroundColor:
+            theme.scheme === 'LIGHT' ? Color.Fourth : ColorDark.Fourth,
         }}
       />
     </Pressable>
@@ -139,7 +146,8 @@ const UserSearch: React.FC<IUserSearch> = props => {
                 ...layout,
               },
               {
-                borderColor: theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third,
+                borderColor:
+                  theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third,
               },
               styles.container,
             ]}
@@ -149,7 +157,9 @@ const UserSearch: React.FC<IUserSearch> = props => {
                 <Skeleton.Text
                   lines={3}
                   py={2}
-                  startColor={theme.scheme === 'LIGHT' ? 'muted.200' : 'muted.800'}
+                  startColor={
+                    theme.scheme === 'LIGHT' ? 'muted.200' : 'muted.800'
+                  }
                 />
               )}
               {!loading &&

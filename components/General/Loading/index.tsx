@@ -19,7 +19,10 @@ const Loading: React.FC = () => {
         style={[
           styles.iconContainer,
           {
-            backgroundColor: theme.scheme === 'LIGHT' ? 'rgba(246, 246, 246, 0.8)' : 'rgba(47, 47, 47, 0.8)',
+            backgroundColor:
+              theme.scheme === 'LIGHT'
+                ? 'rgba(246, 246, 246, 0.8)'
+                : 'rgba(47, 47, 47, 0.8)',
           },
         ]}
       >

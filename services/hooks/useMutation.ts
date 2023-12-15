@@ -44,7 +44,10 @@ function useMutator<T extends IApi>(
   }
 }
 
-export default function useMutation<T extends IApi>(method: Method, url: string) {
+export default function useMutation<T extends IApi>(
+  method: Method,
+  url: string
+) {
   const fetcher = useMutator<T>(method)
   return useSWRMutation(url, fetcher)
 }

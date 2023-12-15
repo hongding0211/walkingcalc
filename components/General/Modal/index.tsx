@@ -2,14 +2,19 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { BlurView } from 'expo-blur'
 import React, { useCallback, useContext } from 'react'
-import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, View } from 'react-native'
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native'
 
-import styles from './style'
 import { Color, ColorDark } from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
 import ThemedText from '../Themed/Text'
 import ThemedView from '../Themed/View'
 import ThemedPressable from '../ThemedPressable'
+import styles from './style'
 
 interface IModal {
   title?: string
@@ -33,10 +38,7 @@ const Modal: React.FC<IModal> = props => {
 
   return (
     <>
-      <BlurView
-        style={[styles.mask]}
-        intensity={50}
-      />
+      <BlurView style={[styles.mask]} intensity={50} />
 
       <TouchableWithoutFeedback onPress={handlePressClose}>
         <View style={styles.container}>
@@ -49,13 +51,15 @@ const Modal: React.FC<IModal> = props => {
                 {!hideTitle && (
                   <View style={styles.title}>
                     <ThemedText style={styles.titleText}>{title}</ThemedText>
-                    <ThemedPressable
-                      highLight
-                      onPress={handlePressClose}
-                    >
+                    <ThemedPressable highLight onPress={handlePressClose}>
                       <FontAwesomeIcon
                         icon={faXmark}
-                        style={{ color: theme.scheme === 'LIGHT' ? Color.Second : ColorDark.Second }}
+                        style={{
+                          color:
+                            theme.scheme === 'LIGHT'
+                              ? Color.Second
+                              : ColorDark.Second,
+                        }}
                       />
                     </ThemedPressable>
                   </View>

@@ -13,7 +13,6 @@
 
 ![appstore](https://img.shields.io/itunes/v/6446189408?label=Walking%20Calc&style=for-the-badge)
 
-
 ## 🌈 Features
 
 - ✏️ 随手记录

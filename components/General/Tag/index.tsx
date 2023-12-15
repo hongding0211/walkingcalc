@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
 import { Color } from '../../../constants/Colors'
 

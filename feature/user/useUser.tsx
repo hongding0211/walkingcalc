@@ -4,11 +4,17 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 
-import { setIsLogin, setIsLoginComplete, setToken, setUpdate, setUserData } from './userSlice'
 import { useAppSelector } from '../../app/store'
 import useToast from '../../components/Toast/useToast'
 import { useUserInfo } from '../../services/user'
 import { setLoading } from '../general/generalSlice'
+import {
+  setIsLogin,
+  setIsLoginComplete,
+  setToken,
+  setUpdate,
+  setUserData,
+} from './userSlice'
 
 const useUser = () => {
   const [hasReadToken, setHasReadToken] = useState(false)

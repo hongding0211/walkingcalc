@@ -1,7 +1,12 @@
 import React, { useContext } from 'react'
 import { StyleSheet, TextInput } from 'react-native'
 
-import { Color, ColorDark, Typography, TypographyDark } from '../../../constants/Colors'
+import {
+  Color,
+  ColorDark,
+  Typography,
+  TypographyDark,
+} from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
 
 const Input: React.FC<TextInput['props']> = props => {
@@ -17,7 +22,10 @@ const Input: React.FC<TextInput['props']> = props => {
         styles.input,
         {
           borderColor: theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third,
-          color: theme.scheme === 'LIGHT' ? Typography.Primary : TypographyDark.Primary,
+          color:
+            theme.scheme === 'LIGHT'
+              ? Typography.Primary
+              : TypographyDark.Primary,
         },
       ]}
     />

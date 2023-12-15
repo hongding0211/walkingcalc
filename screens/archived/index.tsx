@@ -3,13 +3,13 @@ import { ScrollView, StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useDispatch } from 'react-redux'
 
-import RenderItem from './components/renderItem'
 import { useAppSelector } from '../../app/store'
 import ItemCard from '../../components/ItemCard'
 import { Color, ColorDark } from '../../constants/Colors'
 import { setLoading } from '../../feature/general/generalSlice'
 import { ThemeContext } from '../../feature/theme/themeContext'
 import { useGroupMy } from '../../services/group'
+import RenderItem from './components/renderItem'
 
 const Archived: React.FC = () => {
   const insets = useSafeAreaInsets()
@@ -17,12 +17,18 @@ const Archived: React.FC = () => {
   const userInfo = useAppSelector(state => state.user.data)
   const dispatch = useDispatch()
 
-  const { data: groupData, mutate: mutateGroup, isLoading: groupLoading } = useGroupMy()
+  const {
+    data: groupData,
+    mutate: mutateGroup,
+    isLoading: groupLoading,
+  } = useGroupMy()
 
   const archivedGroupData = useMemo(() => {
     const { uuid = '' } = userInfo || {}
     return {
-      data: groupData?.data?.filter(e => e?.archivedUsers?.findIndex(e => e === uuid) !== -1),
+      data: groupData?.data?.filter(
+        e => e?.archivedUsers?.findIndex(e => e === uuid) !== -1
+      ),
     }
   }, [groupData, userInfo])
 
@@ -43,7 +49,10 @@ const Archived: React.FC = () => {
       <View
         style={{
           flex: 1,
-          backgroundColor: theme.scheme === 'LIGHT' ? Color.BackgroundSecond : ColorDark.BackgroundSecond,
+          backgroundColor:
+            theme.scheme === 'LIGHT'
+              ? Color.BackgroundSecond
+              : ColorDark.BackgroundSecond,
         }}
       />
     )
@@ -55,7 +64,10 @@ const Archived: React.FC = () => {
         flex: 1,
         paddingTop: insets.top + 42,
         paddingBottom: insets.bottom,
-        backgroundColor: theme.scheme === 'LIGHT' ? Color.BackgroundSecond : ColorDark.BackgroundSecond,
+        backgroundColor:
+          theme.scheme === 'LIGHT'
+            ? Color.BackgroundSecond
+            : ColorDark.BackgroundSecond,
       }}
     >
       <ScrollView contentContainerStyle={styles.container}>

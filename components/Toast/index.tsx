@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { StyleSheet, Animated, Text } from 'react-native'
+import { Animated, StyleSheet, Text } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useDispatch } from 'react-redux'
 
@@ -81,7 +81,10 @@ const Toast: React.FC = () => {
     >
       <Text
         style={{
-          color: theme.scheme === 'LIGHT' ? TypographyDark.Primary : Typography.Primary,
+          color:
+            theme.scheme === 'LIGHT'
+              ? TypographyDark.Primary
+              : Typography.Primary,
           fontWeight: '500',
         }}
       >

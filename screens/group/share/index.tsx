@@ -17,16 +17,9 @@ const Share: React.FC<IShare> = props => {
 
   return (
     <View style={styles.container}>
-      <QRCode
-        value={value}
-        size={150}
-        backgroundColor="#ffffff"
-      />
+      <QRCode value={value} size={150} backgroundColor="#ffffff" />
       <ThemedText style={styles.text}>{groupId}</ThemedText>
-      <ThemedText
-        style={styles.subText}
-        type="SECOND"
-      >
+      <ThemedText style={styles.subText} type="SECOND">
         {t('invite')}
       </ThemedText>
     </View>

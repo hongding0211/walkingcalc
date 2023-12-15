@@ -28,7 +28,8 @@ const Item: React.FC<IItem> = ({ title, onPress }) => {
       style={[
         styles.item,
         {
-          borderBottomColor: theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third,
+          borderBottomColor:
+            theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third,
         },
       ]}
       onPress={onPress}
@@ -48,19 +49,10 @@ const Menu: React.FC<IMenu> = ({ onShowAbout, onTouchEnd }) => {
   }, [])
 
   return (
-    <ThemedView
-      style={styles.menu}
-      onTouchEnd={onTouchEnd}
-    >
+    <ThemedView style={styles.menu} onTouchEnd={onTouchEnd}>
       <Item title={userInfo?.name} />
-      <Item
-        title={t('settings')}
-        onPress={handleSettings}
-      />
-      <Item
-        title={t('about')}
-        onPress={onShowAbout}
-      />
+      <Item title={t('settings')} onPress={handleSettings} />
+      <Item title={t('about')} onPress={onShowAbout} />
     </ThemedView>
   )
 }

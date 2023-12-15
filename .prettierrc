@@ -3,11 +3,8 @@
   "singleQuote": true,
   "semi": false,
   "arrowParens": "avoid",
-  "singleAttributePerLine": true,
   "importOrder": ["^@core/(.*)$", "^@server/(.*)$", "^@ui/(.*)$", "^[./]"],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true,
-  "plugins": [
-    "@trivago/prettier-plugin-sort-imports"
-  ]
+  "plugins": ["@trivago/prettier-plugin-sort-imports"]
 }

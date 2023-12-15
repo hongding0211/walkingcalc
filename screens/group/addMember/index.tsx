@@ -33,11 +33,7 @@ const User: React.FC<IUser> = props => {
 
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center', columnGap: 6 }}>
-      <Avatar
-        size={16}
-        name={name}
-        source={avatar}
-      />
+      <Avatar size={16} name={name} source={avatar} />
       <ThemedText style={{ fontWeight: '500' }}>{name}</ThemedText>
     </View>
   )
@@ -126,7 +122,10 @@ const AddMember: React.FC<IAddMember> = props => {
             style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}
           >
             <FontAwesomeIcon
-              style={{ color: theme.scheme === 'LIGHT' ? Color.Second : ColorDark.Second }}
+              style={{
+                color:
+                  theme.scheme === 'LIGHT' ? Color.Second : ColorDark.Second,
+              }}
               icon={faUserPlus}
             />
             <ThemedText type="SECOND">{t('addTempUser')}</ThemedText>
@@ -134,7 +133,10 @@ const AddMember: React.FC<IAddMember> = props => {
         )}
         <Divider />
         <FormItem
-          title={t('members') + `(${groupData?.membersInfo?.length + groupData?.tempUsers?.length})`}
+          title={
+            t('members') +
+            `(${groupData?.membersInfo?.length + groupData?.tempUsers?.length})`
+          }
           style={styles.title}
           type="SECOND"
         >
@@ -144,17 +146,10 @@ const AddMember: React.FC<IAddMember> = props => {
               style={{ flexDirection: 'row', gap: 8 }}
             >
               {groupData?.membersInfo?.map((m: any) => (
-                <User
-                  name={m?.name}
-                  avatar={m?.avatar}
-                  key={m?.uuid}
-                />
+                <User name={m?.name} avatar={m?.avatar} key={m?.uuid} />
               ))}
               {groupData?.tempUsers?.map((u: any) => (
-                <User
-                  name={u?.name}
-                  key={u?.uuid}
-                />
+                <User name={u?.name} key={u?.uuid} />
               ))}
             </View>
           </ScrollView>
@@ -178,15 +173,15 @@ const AddMember: React.FC<IAddMember> = props => {
                       onPress={() => handlePressDelUser(m)}
                       key={m?.uuid}
                     >
-                      <User
-                        name={m?.name}
-                        avatar={m?.avatar}
-                      />
+                      <User name={m?.name} avatar={m?.avatar} />
                       <FontAwesomeIcon
                         icon={faCircleXmark}
                         size={10}
                         style={{
-                          color: theme.scheme === 'LIGHT' ? Color.Second : ColorDark.Second,
+                          color:
+                            theme.scheme === 'LIGHT'
+                              ? Color.Second
+                              : ColorDark.Second,
                           marginLeft: 4,
                         }}
                       />
@@ -203,7 +198,10 @@ const AddMember: React.FC<IAddMember> = props => {
                         icon={faCircleXmark}
                         size={10}
                         style={{
-                          color: theme.scheme === 'LIGHT' ? Color.Second : ColorDark.Second,
+                          color:
+                            theme.scheme === 'LIGHT'
+                              ? Color.Second
+                              : ColorDark.Second,
                           marginLeft: 4,
                         }}
                       />
@@ -237,10 +235,7 @@ const AddMember: React.FC<IAddMember> = props => {
           label={t('cancel')}
           onPress={() => setShowDialog(false)}
         />
-        <DialogButton
-          label={t('confirm')}
-          onPress={handleConfirmAddTempUser}
-        />
+        <DialogButton label={t('confirm')} onPress={handleConfirmAddTempUser} />
       </DialogContainer>
     </>
   )

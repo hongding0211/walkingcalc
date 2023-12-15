@@ -4,13 +4,16 @@ import { NativeBaseProvider } from 'native-base'
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import linking from './linking'
-import { LoginStackParamList, RootStackParamList } from './types'
 import { useAppSelector } from '../app/store'
 import BackButton from '../components/Header/left'
 import SettingButton from '../components/Header/right'
 import QRCodeScanner from '../components/QRCodeScaner'
-import { Color, ColorDark, Typography, TypographyDark } from '../constants/Colors'
+import {
+  Color,
+  ColorDark,
+  Typography,
+  TypographyDark,
+} from '../constants/Colors'
 import { ThemeContext } from '../feature/theme/themeContext'
 import useUser from '../feature/user/useUser'
 import useUserMeta from '../feature/user/useUserMeta'
@@ -22,6 +25,8 @@ import Login from '../screens/login/Login'
 import SSO from '../screens/modal/login/SSO'
 import SsoMy from '../screens/modal/login/ssoMy'
 import Settings from '../screens/settings'
+import linking from './linking'
+import { LoginStackParamList, RootStackParamList } from './types'
 
 const LoginScreen: React.FC = () => {
   const Stack = createNativeStackNavigator<LoginStackParamList>()
@@ -88,10 +93,16 @@ const RootScreen: React.FC = () => {
               headerTransparent: true,
               headerTitle: tCommon('archivedGroup') + '',
               headerTitleStyle: {
-                color: theme.scheme === 'LIGHT' ? Typography.Primary : TypographyDark.Primary,
+                color:
+                  theme.scheme === 'LIGHT'
+                    ? Typography.Primary
+                    : TypographyDark.Primary,
               },
               headerStyle: {
-                backgroundColor: theme.scheme === 'LIGHT' ? Color.Background : ColorDark.Background,
+                backgroundColor:
+                  theme.scheme === 'LIGHT'
+                    ? Color.Background
+                    : ColorDark.Background,
               },
               headerBlurEffect: 'regular',
             }}
@@ -103,10 +114,16 @@ const RootScreen: React.FC = () => {
               headerTransparent: true,
               headerTitle: tCommon('settings') + '',
               headerTitleStyle: {
-                color: theme.scheme === 'LIGHT' ? Typography.Primary : TypographyDark.Primary,
+                color:
+                  theme.scheme === 'LIGHT'
+                    ? Typography.Primary
+                    : TypographyDark.Primary,
               },
               headerStyle: {
-                backgroundColor: theme.scheme === 'LIGHT' ? Color.Background : ColorDark.Background,
+                backgroundColor:
+                  theme.scheme === 'LIGHT'
+                    ? Color.Background
+                    : ColorDark.Background,
               },
               headerBlurEffect: 'regular',
             }}
@@ -141,7 +158,11 @@ const Navigation: React.FC = () => {
     return <Splash />
   }
 
-  return <NavigationContainer linking={linking}>{!isLogin ? <LoginScreen /> : <RootScreen />}</NavigationContainer>
+  return (
+    <NavigationContainer linking={linking}>
+      {!isLogin ? <LoginScreen /> : <RootScreen />}
+    </NavigationContainer>
+  )
 }
 
 export default Navigation

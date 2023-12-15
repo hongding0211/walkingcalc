@@ -22,7 +22,10 @@ const SettingButton: React.FC = () => {
     <ThemedPressable onPress={handlePress}>
       <FontAwesomeIcon
         style={{
-          color: theme.scheme === 'LIGHT' ? Typography.Primary : TypographyDark.Primary,
+          color:
+            theme.scheme === 'LIGHT'
+              ? Typography.Primary
+              : TypographyDark.Primary,
         }}
         icon={faEllipsis}
       />

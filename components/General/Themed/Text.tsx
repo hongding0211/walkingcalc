@@ -4,7 +4,9 @@ import { StyleSheet, Text } from 'react-native'
 import { Typography, TypographyDark } from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
 
-const ThemedText: React.FC<Text['props'] & { type?: 'FIRST' | 'SECOND' }> = props => {
+const ThemedText: React.FC<
+  Text['props'] & { type?: 'FIRST' | 'SECOND' }
+> = props => {
   const theme = useContext(ThemeContext)
   const { style, type, ...restProps } = props
 

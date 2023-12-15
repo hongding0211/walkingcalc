@@ -24,15 +24,15 @@ const BackButton: React.FC<{ title: string }> = ({ title }) => {
   }, [])
 
   return (
-    <Pressable
-      style={styles.container}
-      onPress={handleBack}
-    >
+    <Pressable style={styles.container} onPress={handleBack}>
       <FontAwesomeIcon
         icon={faAngleLeft}
         size={18}
         style={{
-          color: theme.scheme === 'LIGHT' ? Typography.Primary : TypographyDark.Primary,
+          color:
+            theme.scheme === 'LIGHT'
+              ? Typography.Primary
+              : TypographyDark.Primary,
         }}
       />
       <ThemedText style={styles.title}>{title}</ThemedText>

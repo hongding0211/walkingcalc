@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, StyleSheet, View, Dimensions } from 'react-native'
+import { Dimensions, Image, StyleSheet, View } from 'react-native'
 
 const Splash: React.FC = () => {
   return (

@@ -2,14 +2,19 @@ import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, ScrollView } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 import { useAppSelector } from '../../../app/store'
 import Card from '../../../components/Card'
 import Tag from '../../../components/General/Tag'
 import ThemedText from '../../../components/General/Themed/Text'
 import categoryMap from '../../../constants/Category'
-import { Color, ColorDark, Typography, TypographyDark } from '../../../constants/Colors'
+import {
+  Color,
+  ColorDark,
+  Typography,
+  TypographyDark,
+} from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
 import { MembersContext } from '../../../feature/user/membersContext'
 import { numberToString } from '../../../utils/moeny'
@@ -33,23 +38,34 @@ const ItemCard: React.FC<IItemCard> = props => {
       <View style={styles.container}>
         <View style={{ flexDirection: 'row', alignItems: 'center', flex: 0 }}>
           <View style={{ alignItems: 'center' }}>
-            <ThemedText style={styles.emoji}>{categoryMap[data?.type] || '🍎'}</ThemedText>
+            <ThemedText style={styles.emoji}>
+              {categoryMap[data?.type] || '🍎'}
+            </ThemedText>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <FontAwesomeIcon
                 icon={faUser}
                 size={10}
-                style={{ color: theme.scheme === 'LIGHT' ? Typography.Second : TypographyDark.Second, marginRight: 2 }}
+                style={{
+                  color:
+                    theme.scheme === 'LIGHT'
+                      ? Typography.Second
+                      : TypographyDark.Second,
+                  marginRight: 2,
+                }}
               />
-              <ThemedText
-                type="SECOND"
-                style={{ fontSize: 12 }}
-              >
+              <ThemedText type="SECOND" style={{ fontSize: 12 }}>
                 {data?.forWhom?.length}
               </ThemedText>
             </View>
           </View>
           <View
-            style={[styles.divider, { backgroundColor: theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third }]}
+            style={[
+              styles.divider,
+              {
+                backgroundColor:
+                  theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third,
+              },
+            ]}
           />
           <View style={{ flexShrink: 1, paddingRight: 8 }}>
             <View
@@ -58,22 +74,18 @@ const ItemCard: React.FC<IItemCard> = props => {
             >
               <Tag text={member.get(data?.who)?.name || ''} />
             </View>
-            <ThemedText
-              type="SECOND"
-              style={styles.time}
-            >
+            <ThemedText type="SECOND" style={styles.time}>
               {time(data?.createdAt)}
             </ThemedText>
           </View>
         </View>
 
         <View style={{ alignItems: 'flex-end', flex: 1 }}>
-          <ThemedText style={styles.amount}>{numberToString(data?.paid)}</ThemedText>
+          <ThemedText style={styles.amount}>
+            {numberToString(data?.paid)}
+          </ThemedText>
           {data?.isDebtResolve ? (
-            <ThemedText
-              type="SECOND"
-              style={styles.myPart}
-            >
+            <ThemedText type="SECOND" style={styles.myPart}>
               {t('debtResolveMark')}
             </ThemedText>
           ) : (
@@ -88,10 +100,7 @@ const ItemCard: React.FC<IItemCard> = props => {
                 </ThemedText>
               )}
               {!data?.text && (
-                <ThemedText
-                  type="SECOND"
-                  style={styles.myPart}
-                >
+                <ThemedText type="SECOND" style={styles.myPart}>
                   {t('myPart')}:{' '}
                   {data?.forWhom?.indexOf(userInfo?.uuid) === -1
                     ? 0

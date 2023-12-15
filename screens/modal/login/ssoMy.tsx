@@ -18,12 +18,7 @@ const SsoMy: React.FC = () => {
     }
   }, [])
 
-  return (
-    <WebView
-      source={{ uri: SSO_MY }}
-      cacheEnabled={false}
-    />
-  )
+  return <WebView source={{ uri: SSO_MY }} cacheEnabled={false} />
 }
 
 export default SsoMy
