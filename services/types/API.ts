@@ -1,7 +1,7 @@
 const DEFAULT_LOCAL_API = 'http://localhost:3001'
 
 const BASE_URL_PROD =
-  process.env.EXPO_PUBLIC_WALKCALC_API_BASE_URL || 'https://hong97.ltd'
+  process.env.EXPO_PUBLIC_WALKCALC_API_BASE_URL || 'https://hong97.ltd/api'
 const BASE_URL_DEV =
   process.env.EXPO_PUBLIC_WALKCALC_API_BASE_URL || DEFAULT_LOCAL_API
 

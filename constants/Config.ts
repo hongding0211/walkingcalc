@@ -1,2 +1,12 @@
-export const SSO_URL = 'https://hong97.ltd/sso/login?client%3Dwalkingcalc'
-export const SSO_MY = 'https://hong97.ltd/sso/my'
+const trimTrailingSlash = (value: string) => value.replace(/\/+$/, '')
+
+const env = process.env['NODE_ENV']
+
+export const HONG97_WEB_BASE_URL = trimTrailingSlash(
+  process.env.EXPO_PUBLIC_HONG97_WEB_BASE_URL ||
+    (env === 'development' ? 'http://localhost:3000' : 'https://hong97.ltd')
+)
+
+export const SSO_LOGIN_URL = `${HONG97_WEB_BASE_URL}/sso/login`
+export const SSO_URL = SSO_LOGIN_URL
+export const SSO_MY = `${HONG97_WEB_BASE_URL}/sso/my`
