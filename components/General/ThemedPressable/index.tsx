@@ -23,18 +23,18 @@ const ThemedPressable: React.FC<IThemedPressable & PressableProps> = props => {
 
   return (
     <Pressable
-      style={({ pressed }) => [
+      style={state => [
         {
           padding,
           borderRadius,
         },
-        highLight && pressed
+        highLight && state.pressed
           ? {
               backgroundColor:
                 theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third,
             }
           : {},
-        style,
+        typeof style === 'function' ? style(state) : style,
       ]}
       {...restProps}
     />

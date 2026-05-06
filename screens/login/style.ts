@@ -20,6 +20,9 @@ export default StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
   },
+  form: {
+    rowGap: 12,
+  },
   img: {
     width: 35,
     height: 52,
@@ -28,6 +31,7 @@ export default StyleSheet.create({
   },
   btnGroup: {
     flexDirection: 'column',
+    rowGap: 12,
     position: 'absolute',
     bottom: 60,
     left: 30,

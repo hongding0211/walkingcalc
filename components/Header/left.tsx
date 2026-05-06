@@ -6,11 +6,12 @@ import { Pressable, StyleSheet } from 'react-native'
 
 import { Typography, TypographyDark } from '../../constants/Colors'
 import { ThemeContext } from '../../feature/theme/themeContext'
+import { GroupProps } from '../../navigation/types'
 import ThemedText from '../General/Themed/Text'
 
 const BackButton: React.FC<{ title: string }> = ({ title }) => {
   const theme = useContext(ThemeContext)
-  const navigation = useNavigation()
+  const navigation = useNavigation<GroupProps['navigation']>()
 
   const handleBack = useCallback(() => {
     if (navigation.canGoBack()) {

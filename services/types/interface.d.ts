@@ -1,7 +1,7 @@
 // ======================================
 //                 Types
 // ======================================
-type Method = 'GET' | 'POST' | 'DELETE'
+type Method = 'GET' | 'POST' | 'DELETE' | 'PATCH'
 
 // ======================================
 //               Interface
@@ -39,15 +39,39 @@ interface IApi {
 // ======================================
 export interface IGetUserLogin extends IApi {
   request: IRequest<
+    undefined,
     {
-      type: string
-      ticket: string
-    },
-    undefined
+      type: 'local'
+      credentials: {
+        email: string
+        password: string
+      }
+    }
   >
   response: IResponse<{
     token: string
     uid?: string
+  }>
+}
+
+export interface IPostUserRegister extends IApi {
+  request: IRequest<
+    undefined,
+    {
+      type: 'local'
+      credentials: {
+        email: string
+        password: string
+        profile: {
+          name: string
+        }
+      }
+    }
+  >
+  response: IResponse<{
+    uuid: string
+    name: string
+    avatar: string
   }>
 }
 
@@ -129,7 +153,7 @@ export interface IPostGroupJoin extends IApi {
 }
 
 export interface IGetGroupMy extends IApi {
-  request: IRequest<undefined, undefined>
+  request: IRequest<{}, undefined>
   response: IResponse<
     {
       tempUsers: {

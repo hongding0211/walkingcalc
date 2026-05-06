@@ -11,6 +11,7 @@ import ItemCard from '../../components/ItemCard'
 import { Color, ColorDark } from '../../constants/Colors'
 import { ThemeContext } from '../../feature/theme/themeContext'
 import { setToken, setUpdate } from '../../feature/user/userSlice'
+import { SettingsProps } from '../../navigation/types'
 import use1l8n from '../../utils/use1l8n'
 
 const Settings: React.FC = () => {
@@ -19,7 +20,7 @@ const Settings: React.FC = () => {
   const t = use1l8n('settings')
   const userData = useAppSelector(state => state.user.data)
   const dispatch = useDispatch()
-  const navigation = useNavigation()
+  const navigation = useNavigation<SettingsProps['navigation']>()
 
   const logout = useCallback(() => {
     dispatch(

@@ -16,15 +16,17 @@ const Container: React.FC<IContainer> = props => {
 
   const theme = useContext(ThemeContext)
 
-  const items = useMemo(
-    () =>
-      Array.isArray(children)
-        ? React.Children.map(children, (child, index) =>
-            React.cloneElement(child, { index, total: children.length })
-          )
-        : React.cloneElement(children, { index: 0, total: 1 }),
-    [children]
-  )
+  const items = useMemo(() => {
+    const childArray = React.Children.toArray(children)
+    return childArray.map((child, index) =>
+      React.isValidElement(child)
+        ? React.cloneElement(child as React.ReactElement<any>, {
+            index,
+            total: childArray.length,
+          })
+        : child
+    )
+  }, [children])
 
   return (
     <View>
@@ -34,24 +36,20 @@ const Container: React.FC<IContainer> = props => {
         </ThemedText>
       )}
       <ThemedView style={styles.container}>
-        {Array.isArray(items) ? (
-          items.map((item, index) => (
-            <View
-              style={[
-                {
-                  borderBottomColor:
-                    theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third,
-                  borderBottomWidth: index === items.length - 1 ? 0 : 1,
-                },
-              ]}
-              key={index}
-            >
-              {item}
-            </View>
-          ))
-        ) : (
-          <View>{items}</View>
-        )}
+        {items.map((item, index) => (
+          <View
+            style={[
+              {
+                borderBottomColor:
+                  theme.scheme === 'LIGHT' ? Color.Third : ColorDark.Third,
+                borderBottomWidth: index === items.length - 1 ? 0 : 1,
+              },
+            ]}
+            key={index}
+          >
+            {item}
+          </View>
+        ))}
       </ThemedView>
     </View>
   )

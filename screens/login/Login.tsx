@@ -1,42 +1,43 @@
-import { useNavigation, useRoute } from '@react-navigation/native'
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Image, View } from 'react-native'
 import { useDispatch } from 'react-redux'
 
 import Button from '../../components/General/Button'
+import Input from '../../components/General/Input'
 import ThemedText from '../../components/General/Themed/Text'
 import ThemedView from '../../components/General/Themed/View'
 import useToast from '../../components/Toast/useToast'
 import { setLoading } from '../../feature/general/generalSlice'
 import { setToken } from '../../feature/user/userSlice'
-import { LoginProps } from '../../navigation/types'
-import { useLogin } from '../../services/user'
+import { useLogin, useRegister } from '../../services/user'
 import styles from './style'
 
 const Login: React.FC = () => {
-  const navigation = useNavigation<LoginProps['navigation']>()
   const { t } = useTranslation('login')
-  const route = useRoute<LoginProps['route']>()
   const { trigger: triggerLogin } = useLogin()
+  const { trigger: triggerRegister } = useRegister()
   const dispatch = useDispatch()
   const toast = useToast()
 
-  const { ticket, type } = route.params || {}
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [name, setName] = useState('')
+  const [isRegister, setIsRegister] = useState(false)
 
-  const handleLoginWithSSO = useCallback(() => {
-    navigation.navigate('SSO')
-  }, [])
-
-  useEffect(() => {
-    if (!ticket || !type) {
+  const login = useCallback(() => {
+    if (!email || !password) {
+      toast(t('loginFail') + '')
       return
     }
     dispatch(setLoading({ status: true }))
     triggerLogin({
-      params: {
-        type,
-        ticket,
+      body: {
+        type: 'local',
+        credentials: {
+          email,
+          password,
+        },
       },
     })
       .then(res => {
@@ -56,7 +57,70 @@ const Login: React.FC = () => {
       .finally(() => {
         dispatch(setLoading({ status: false }))
       })
-  }, [ticket, type])
+  }, [email, password])
+
+  const register = useCallback(() => {
+    if (!email || !password || !name) {
+      toast(t('registerFail') + '')
+      return
+    }
+    dispatch(setLoading({ status: true }))
+    triggerRegister({
+      body: {
+        type: 'local',
+        credentials: {
+          email,
+          password,
+          profile: {
+            name,
+          },
+        },
+      },
+    })
+      .then(res => {
+        if (res?.success) {
+          return triggerLogin({
+            body: {
+              type: 'local',
+              credentials: {
+                email,
+                password,
+              },
+            },
+          })
+        }
+        return Promise.reject(new Error('registerFail'))
+      })
+      .then(res => {
+        if (res?.success && res?.data?.token) {
+          dispatch(
+            setToken({
+              token: res.data.token,
+            })
+          )
+          return
+        }
+        return Promise.reject(new Error('loginFail'))
+      })
+      .catch(() => {
+        toast(t('registerFail') + '')
+      })
+      .finally(() => {
+        dispatch(setLoading({ status: false }))
+      })
+  }, [email, password, name])
+
+  const handleSubmit = useCallback(() => {
+    if (isRegister) {
+      register()
+    } else {
+      login()
+    }
+  }, [isRegister, login, register])
+
+  const handleSwitchMode = useCallback(() => {
+    setIsRegister(!isRegister)
+  }, [isRegister])
 
   return (
     <ThemedView style={{ flex: 1 }}>
@@ -72,8 +136,40 @@ const Login: React.FC = () => {
           </ThemedText>
         </View>
 
+        <View style={styles.form}>
+          {isRegister && (
+            <Input
+              value={name}
+              onChangeText={setName}
+              placeholder={t('name') + ''}
+              textContentType="name"
+            />
+          )}
+          <Input
+            value={email}
+            onChangeText={setEmail}
+            placeholder={t('email') + ''}
+            keyboardType="email-address"
+            textContentType="emailAddress"
+          />
+          <Input
+            value={password}
+            onChangeText={setPassword}
+            placeholder={t('password') + ''}
+            secureTextEntry
+            textContentType="password"
+          />
+        </View>
+
         <View style={styles.btnGroup}>
-          <Button title={t('login')} onPress={handleLoginWithSSO} />
+          <Button
+            title={isRegister ? t('register') : t('login')}
+            onPress={handleSubmit}
+          />
+          <Button
+            title={isRegister ? t('useLogin') : t('useRegister')}
+            onPress={handleSwitchMode}
+          />
         </View>
       </View>
     </ThemedView>

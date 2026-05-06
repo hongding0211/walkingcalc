@@ -1,6 +1,13 @@
 {
   "subTitle": "Login to continue",
   "login": "Login",
+  "register": "Register",
+  "useLogin": "Use login",
+  "useRegister": "Create account",
+  "email": "Email",
+  "password": "Password",
+  "name": "Name",
   "loginFail": "Login fail",
+  "registerFail": "Register fail",
   "timeout": "Network timeout"
 }

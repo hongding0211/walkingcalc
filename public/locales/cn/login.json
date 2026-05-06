@@ -1,6 +1,13 @@
 {
   "subTitle": "登录以继续",
   "login": "登录",
+  "register": "注册",
+  "useLogin": "已有账号，去登录",
+  "useRegister": "没有账号，去注册",
+  "email": "邮箱",
+  "password": "密码",
+  "name": "昵称",
   "loginFail": "登录失败",
+  "registerFail": "注册失败",
   "timeout": "网络超时"
 }

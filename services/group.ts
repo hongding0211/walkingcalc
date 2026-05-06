@@ -71,5 +71,5 @@ export function useUnarchiveGroup() {
 }
 
 export function useChangeGroupName() {
-  return useMutation<IPostGroupChangeName>('POST', POST_GROUP_CHANGE_NAME)
+  return useMutation<IPostGroupChangeName>('PATCH', POST_GROUP_CHANGE_NAME)
 }
