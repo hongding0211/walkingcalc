@@ -1,5 +1,5 @@
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import useSWR from 'swr'
 
 import { useAppSelector } from '../../app/store'
 import { setToken } from '../../feature/user/userSlice'
@@ -13,29 +13,33 @@ function useFetcher<T extends IApi>(
 ): (url: string) => Promise<T['response']> {
   const token = useAppSelector(state => state.user.token)
   const dispatch = useDispatch()
-  return async url => {
-    const request = prepareRequest(url, params)
-    const fetchConfig: Record<string, any> = {
-      method,
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8;',
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      },
-    }
-    if (request.body && method !== 'GET') {
-      fetchConfig.body = JSON.stringify(request.body)
-    }
-    const r = await fetch(request.url, fetchConfig)
-    if (r.status === 401 || r.status === 403) {
-      dispatch(
-        setToken({
-          token: undefined,
-        })
-      )
-    }
-    return normalizeResponse(url, await r.json())
-  }
+  const paramsKey = JSON.stringify(params || null)
+  return useCallback(
+    async url => {
+      const request = prepareRequest(url, params)
+      const fetchConfig: Record<string, any> = {
+        method,
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8;',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+      }
+      if (request.body && method !== 'GET') {
+        fetchConfig.body = JSON.stringify(request.body)
+      }
+      const r = await fetch(request.url, fetchConfig)
+      if (r.status === 401 || r.status === 403) {
+        dispatch(
+          setToken({
+            token: undefined,
+          })
+        )
+      }
+      return normalizeResponse(url, await r.json())
+    },
+    [method, paramsKey, token, dispatch]
+  )
 }
 
 export default function useFetch<T extends IApi>(
@@ -44,6 +48,70 @@ export default function useFetch<T extends IApi>(
   params?: T['request'],
   shouldFetch = true
 ) {
+  const [data, setData] = useState<T['response'] | undefined>()
+  const [error, setError] = useState<any>()
+  const [isLoading, setIsLoading] = useState(false)
   const fetcher = useFetcher<T>(method, url, params)
-  return useSWR(shouldFetch ? url : null, fetcher)
+  const key = useMemo(
+    () => JSON.stringify([url, params || null]),
+    [url, params]
+  )
+
+  const mutate = useCallback(
+    async (...args: [T['response']?]) => {
+      if (args.length > 0) {
+        const [nextData] = args
+        setData(nextData)
+        return nextData
+      }
+      setIsLoading(true)
+      setError(undefined)
+      try {
+        const result = await fetcher(url)
+        setData(result)
+        return result
+      } catch (e) {
+        setError(e)
+        throw e
+      } finally {
+        setIsLoading(false)
+      }
+    },
+    [fetcher, url]
+  )
+
+  useEffect(() => {
+    if (!shouldFetch) {
+      return
+    }
+    let ignore = false
+    setIsLoading(true)
+    setError(undefined)
+    fetcher(url)
+      .then(result => {
+        if (!ignore) {
+          setData(result)
+        }
+      })
+      .catch(e => {
+        if (!ignore) {
+          setError(e)
+        }
+      })
+      .finally(() => {
+        if (!ignore) {
+          setIsLoading(false)
+        }
+      })
+    return () => {
+      ignore = true
+    }
+  }, [fetcher, key, shouldFetch, url])
+
+  return {
+    data,
+    error,
+    isLoading,
+    mutate,
+  }
 }

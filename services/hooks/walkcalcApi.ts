@@ -45,11 +45,14 @@ const compact = (value?: Record<string, any>) => {
 }
 
 const withQuery = (url: string, params?: Record<string, any>) => {
-  const query = new URLSearchParams()
-  Object.entries(compact(params)).forEach(([key, value]) => {
-    query.set(key === 'size' ? 'pageSize' : key, String(value))
-  })
-  const queryString = query.toString()
+  const queryString = Object.entries(compact(params))
+    .map(([key, value]) => {
+      const requestKey = key === 'size' ? 'pageSize' : key
+      return `${encodeURIComponent(requestKey)}=${encodeURIComponent(
+        String(value)
+      )}`
+    })
+    .join('&')
   return queryString ? `${url}?${queryString}` : url
 }
 
