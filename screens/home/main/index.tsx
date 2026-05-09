@@ -28,11 +28,11 @@ interface IMain {
   groupData?: any
   total?: number
   onRefresh?: () => void
-  loading?: boolean
+  refreshing?: boolean
 }
 
 const Main: React.FC<IMain> = props => {
-  const { userDebt, groupData, total = 0, onRefresh, loading } = props
+  const { userDebt, groupData, total = 0, onRefresh, refreshing } = props
 
   const navigation = useNavigation<GroupProps['navigation']>()
   const insets = useSafeAreaInsets()
@@ -182,7 +182,7 @@ const Main: React.FC<IMain> = props => {
           keyExtractor={item => item.id}
           estimatedItemSize={140}
           onRefresh={handleRefresh}
-          refreshing={loading}
+          refreshing={refreshing}
           ListFooterComponent={<View style={{ height: 60 }} />}
           showsVerticalScrollIndicator={false}
         />

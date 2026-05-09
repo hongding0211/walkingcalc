@@ -30,7 +30,7 @@ import styles from './style'
 const Home: React.FC = () => {
   const [showAddGroupModal, setShowAddGroupModal] = useState(false)
   const [showAboutModal, setShowAboutModal] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isRefreshing, setIsRefreshing] = useState(false)
   const [addGroupComponent, setAddGroupComponent] = useState<
     'DEFAULT' | 'CREATE' | 'JOIN'
   >('DEFAULT')
@@ -45,31 +45,25 @@ const Home: React.FC = () => {
   const { trigger: triggerGroupCreate } = useGroupCreate()
   const { trigger: triggerGroupJoin } = useGroupJoin()
 
-  const {
-    data: userDebt,
-    mutate: mutateUserDebt,
-    isLoading: userDebtLoading,
-  } = useUserDebt()
-  const {
-    data: groupData,
-    mutate: mutateGroup,
-    isLoading: groupLoading,
-  } = useGroupMy()
+  const { data: userDebt, mutate: mutateUserDebt } = useUserDebt()
+  const { data: groupData, mutate: mutateGroup } = useGroupMy()
 
-  const refresh = useCallback(() => {
-    mutateUserDebt().then()
-    mutateGroup().then()
-  }, [])
+  const refresh = useCallback(async () => {
+    await Promise.allSettled([mutateUserDebt(), mutateGroup()])
+  }, [mutateGroup, mutateUserDebt])
 
-  useEffect(() => {
-    setIsLoading(userDebtLoading && groupLoading)
-  }, [userDebtLoading, groupLoading])
+  const handleRefresh = useCallback(() => {
+    setIsRefreshing(true)
+    refresh().finally(() => {
+      setIsRefreshing(false)
+    })
+  }, [refresh])
 
   useEffect(() => {
     return navigation.addListener('focus', () => {
       refresh()
     })
-  }, [navigation])
+  }, [navigation, refresh])
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -78,7 +72,7 @@ const Home: React.FC = () => {
     return () => {
       clearInterval(timer)
     }
-  }, [])
+  }, [refresh])
 
   const handleCloseAddGroupModal = useCallback(() => {
     setAddGroupComponent('DEFAULT')
@@ -165,8 +159,8 @@ const Home: React.FC = () => {
             userDebt={userDebt}
             groupData={unarchivedGroupData}
             total={groupData?.data?.length || 0}
-            loading={isLoading}
-            onRefresh={refresh}
+            refreshing={isRefreshing}
+            onRefresh={handleRefresh}
           />
         </View>
       </SafeAreaView>

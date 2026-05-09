@@ -81,6 +81,7 @@ const GroupHome: React.FC = () => {
   const [showAddMember, setShowAddMember] = useState(false)
   const [selectedItem, setSelectedItem] = useState<any>(undefined)
   const [isLoading, setIsLoading] = useState(false)
+  const [isRefreshing, setIsRefreshing] = useState(false)
   const [listData, setListData] = useState<any>(undefined)
   const [recordLoading, setRecordLoading] = useState(false)
   const [total, setTotal] = useState(0)
@@ -152,9 +153,12 @@ const GroupHome: React.FC = () => {
       })
   }, [groupId])
 
-  const refreshData = useCallback(() => {
-    mutateGroup().then()
-    triggerRecord({
+  const refreshData = useCallback(async () => {
+    if (!groupId) {
+      return
+    }
+    setPage(1)
+    const recordRequest = triggerRecord({
       params: {
         id: groupId,
         page: 1 + '',
@@ -169,12 +173,15 @@ const GroupHome: React.FC = () => {
       .catch(() => {
         toast(t('generalError') + '')
       })
-    setPage(1)
-  }, [])
+    await Promise.allSettled([mutateGroup(), recordRequest])
+  }, [groupId, mutateGroup, t, toast, triggerRecord])
 
   const handleRefresh = useCallback(() => {
-    refreshData()
-  }, [])
+    setIsRefreshing(true)
+    refreshData().finally(() => {
+      setIsRefreshing(false)
+    })
+  }, [refreshData])
 
   const scrollToTop = useCallback(() => {
     flashListRef.current.scrollToOffset({
@@ -240,9 +247,9 @@ const GroupHome: React.FC = () => {
           )
           if (idx !== -1) {
             setListData([...listData.slice(0, idx), ...listData.slice(idx + 1)])
-            setTotal(listData.length - 1)
+            setTotal(Math.max(total - 1, 0))
             setShowItemDetail(false)
-            return
+            return refreshData()
           }
         }
         refreshData()
@@ -259,7 +266,7 @@ const GroupHome: React.FC = () => {
           })
         )
       })
-  }, [groupId, selectedItem, listData])
+  }, [groupId, selectedItem, listData, total, refreshData, scrollToTop])
 
   const dismissGroup = useCallback(() => {
     if (!groupId) {
@@ -647,7 +654,7 @@ const GroupHome: React.FC = () => {
               paddingTop: 12,
               paddingBottom: 32,
             }}
-            refreshing={isLoading}
+            refreshing={isRefreshing}
             onRefresh={handleRefresh}
             onEndReached={handleReachEnd}
             onScrollBeginDrag={handleScroll}
