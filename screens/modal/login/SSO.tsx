@@ -97,6 +97,8 @@ const SSO: React.FC = () => {
           onNavigationStateChange={handleNavStateChange}
           onShouldStartLoadWithRequest={request => !handleRedirect(request.url)}
           cacheEnabled={false}
+          sharedCookiesEnabled
+          thirdPartyCookiesEnabled
           injectedJavaScript="(function(){localStorage.clear()})()"
         />
       )}

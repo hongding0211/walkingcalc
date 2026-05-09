@@ -21,6 +21,7 @@ import {
   POST_RECORD_RESOLVE_DEBTS,
   POST_RECORD_UPDATE,
   POST_USER_META,
+  POST_USER_REFRESH,
   POST_USER_REGISTER,
 } from '../types/API'
 
@@ -187,6 +188,11 @@ const mapDataForUrl = (url: string, data: any) => {
     return {
       token: data?.accessToken,
       uid: data?.user?.userId,
+    }
+  }
+  if (url === POST_USER_REFRESH) {
+    return {
+      token: data?.accessToken,
     }
   }
   if (url === POST_USER_REGISTER || url === GET_USER_INFO) {

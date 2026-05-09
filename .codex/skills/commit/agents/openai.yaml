@@ -1,0 +1,3 @@
+display_name: Commit
+short_description: Archive OpenSpec changes, commit, and push.
+default_prompt: Archive the current completed OpenSpec change, create a Conventional Commit, and push the branch.

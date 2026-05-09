@@ -10,6 +10,7 @@ const env = process.env['NODE_ENV']
 const BASE_URL = env === 'development' ? BASE_URL_DEV : BASE_URL_PROD
 
 export const GET_USER_LOGIN = BASE_URL + '/auth/login'
+export const POST_USER_REFRESH = BASE_URL + '/auth/refreshToken'
 export const POST_USER_REGISTER = BASE_URL + '/auth/register'
 export const GET_USER_INFO = BASE_URL + '/auth/info'
 export const GET_USER_SEARCH = BASE_URL + '/walkcalc/users/search'

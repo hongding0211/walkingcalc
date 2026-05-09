@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { useAppSelector } from '../../app/store'
 import { setToken } from '../../feature/user/userSlice'
 import { IApi, Method } from '../types/interface'
-import { normalizeResponse, prepareRequest } from './walkcalcApi'
+import { requestWithAuth } from './authRequest'
 
 function useFetcher<T extends IApi>(
   method: Method,
@@ -15,29 +15,14 @@ function useFetcher<T extends IApi>(
   const dispatch = useDispatch()
   const paramsKey = JSON.stringify(params || null)
   return useCallback(
-    async url => {
-      const request = prepareRequest(url, params)
-      const fetchConfig: Record<string, any> = {
-        method,
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8;',
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        },
-      }
-      if (request.body && method !== 'GET') {
-        fetchConfig.body = JSON.stringify(request.body)
-      }
-      const r = await fetch(request.url, fetchConfig)
-      if (r.status === 401 || r.status === 403) {
+    async url =>
+      requestWithAuth<T>(method, url, params, token, nextToken =>
         dispatch(
           setToken({
-            token: undefined,
+            token: nextToken,
           })
         )
-      }
-      return normalizeResponse(url, await r.json())
-    },
+      ),
     [method, paramsKey, token, dispatch]
   )
 }
