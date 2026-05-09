@@ -17,6 +17,7 @@ import {
   POST_GROUP_UNARCHIVE,
   POST_RECORD,
   POST_RECORD_DROP,
+  POST_RECORD_RESOLVE_DEBTS,
   POST_RECORD_UPDATE,
   POST_USER_META,
   POST_USER_REGISTER,
@@ -109,6 +110,10 @@ export const prepareRequest = (
     const { groupId, ...body } = arg?.body || {}
     return { url, body: { ...body, groupCode: groupId } }
   }
+  if (url === POST_RECORD_RESOLVE_DEBTS) {
+    const { groupId, ...body } = arg?.body || {}
+    return { url, body: { ...body, groupCode: groupId } }
+  }
   if (url === POST_RECORD_DROP) {
     const { groupId, ...body } = arg?.body || {}
     return { url, body: { ...body, groupCode: groupId } }
@@ -189,6 +194,12 @@ const mapDataForUrl = (url: string, data: any) => {
   }
   if (url === POST_RECORD || url === POST_RECORD_UPDATE) {
     return { ...data, groupId: data?.groupCode }
+  }
+  if (url === POST_RECORD_RESOLVE_DEBTS) {
+    return (data || []).map((record: any) => ({
+      ...record,
+      groupId: record?.groupCode,
+    }))
   }
   if (url === POST_RECORD_DROP) {
     return { groupId: data?.groupCode, recordId: data?.recordId }

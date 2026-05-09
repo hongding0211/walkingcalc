@@ -4,6 +4,7 @@ import {
   GET_RECORD_GROUP,
   POST_RECORD,
   POST_RECORD_DROP,
+  POST_RECORD_RESOLVE_DEBTS,
   POST_RECORD_UPDATE,
 } from './types/API'
 import {
@@ -11,6 +12,7 @@ import {
   IGetRecordGroup,
   IPostRecord,
   IPostRecordDrop,
+  IPostRecordResolveDebts,
   IPostRecordUpdate,
 } from './types/interface'
 
@@ -24,6 +26,10 @@ export function useRecordById() {
 
 export function useAddRecord() {
   return useMutation<IPostRecord>('POST', POST_RECORD)
+}
+
+export function useResolveDebts() {
+  return useMutation<IPostRecordResolveDebts>('POST', POST_RECORD_RESOLVE_DEBTS)
 }
 
 export function useEditRecord() {

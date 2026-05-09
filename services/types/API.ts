@@ -25,6 +25,8 @@ export const POST_GROUP_UNARCHIVE =
 export const GET_RECORD_GROUP = BASE_URL + '/walkcalc/records/group/:code'
 export const GET_RECORD_BY_ID = BASE_URL + '/walkcalc/records/:recordId'
 export const POST_RECORD = BASE_URL + '/walkcalc/records'
+export const POST_RECORD_RESOLVE_DEBTS =
+  BASE_URL + '/walkcalc/records/resolve-debts'
 export const POST_RECORD_UPDATE = BASE_URL + '/walkcalc/records/update'
 export const POST_RECORD_DROP = BASE_URL + '/walkcalc/records/drop'
 export const DELETE_GROUP = BASE_URL + '/walkcalc/groups/:code'

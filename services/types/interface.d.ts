@@ -283,6 +283,37 @@ export interface IPostRecord extends IApi {
   }>
 }
 
+export interface IPostRecordResolveDebts extends IApi {
+  request: IRequest<
+    undefined,
+    {
+      groupId: string
+      transfers: {
+        from: string
+        to: string
+        amount: number
+      }[]
+    }
+  >
+  response: IResponse<
+    {
+      who: string
+      paid: number
+      forWhom: string[]
+      type: string
+      text: string
+      long: string
+      lat: string
+      recordId: string
+      createdAt: number
+      modifiedAt: number
+      isDebtResolve?: boolean
+      createdBy?: string
+      modifiedBy?: string
+    }[]
+  >
+}
+
 export interface IPostRecordUpdate extends IApi {
   request: IRequest<
     undefined,

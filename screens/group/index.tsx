@@ -39,6 +39,7 @@ import {
   useDropRecord,
   useRecordById,
   useRecordGroup,
+  useResolveDebts,
 } from '../../services/record'
 import { IResolvedDebt } from '../../utils/debt'
 import { useDate } from '../../utils/useDate'
@@ -99,6 +100,7 @@ const GroupHome: React.FC = () => {
   } = useGroup(groupId)
   const { trigger: triggerRecord } = useRecordGroup()
   const { trigger: triggerAddRecord } = useAddRecord()
+  const { trigger: triggerResolveDebts } = useResolveDebts()
   const { trigger: triggerDropRecord } = useDropRecord()
   const { trigger: triggerDismissGroup } = useDeleteGroup()
   const { trigger: triggerInvite } = useGroupInvite()
@@ -369,24 +371,20 @@ const GroupHome: React.FC = () => {
         status: true,
       })
     )
-    Promise.all(
-      debtToBeResolved.map(d => {
-        return triggerAddRecord({
-          body: {
-            groupId,
-            who: d.from?.uuid || '',
-            paid: d.amount,
-            forWhom: [d.to?.uuid || ''],
-            type: 'debtResolve',
-            text: t('debtResolveMark'),
-            long: '',
-            lat: '',
-            isDebtResolve: true,
-          },
-        })
-      })
-    )
-      .then(() => {
+    triggerResolveDebts({
+      body: {
+        groupId,
+        transfers: debtToBeResolved.map(d => ({
+          from: d.from?.uuid || '',
+          to: d.to?.uuid || '',
+          amount: d.amount,
+        })),
+      },
+    })
+      .then(result => {
+        if (!result?.success) {
+          throw new Error(result?.msg || 'Resolve debts failed')
+        }
         setShowDebtDetail(false)
       })
       .catch(() => {
