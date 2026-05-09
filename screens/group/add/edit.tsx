@@ -16,7 +16,12 @@ import useToast from '../../../components/Toast/useToast'
 import { setLoading } from '../../../feature/general/generalSlice'
 import { MembersContext } from '../../../feature/user/membersContext'
 import { useEditRecord } from '../../../services/record'
-import { stringToNumber } from '../../../utils/moeny'
+import {
+  formatMoneyMinor,
+  isZeroMoneyMinor,
+  parseDisplayMoneyToMinor,
+  toMoneyMinor,
+} from '../../../utils/moeny'
 import CategoryRadio from './categoryRadio'
 import NumberInput from './numberInput'
 
@@ -31,7 +36,9 @@ const EditRecord: React.FC<IEditGroup> = props => {
 
   const userInfo = useAppSelector(state => state.user.data)
 
-  const [paid, setPaid] = useState((+data?.paid || 0) / 100 + '')
+  const [paid, setPaid] = useState(
+    formatMoneyMinor(toMoneyMinor(data?.paidMinor || data?.paid || 0))
+  )
   const [who, setWho] = useState(data?.who || userInfo?.uuid)
   const [forWhom, setForWhom] = useState<any>(data?.forWhom || [])
   const [type, setType] = useState(data?.type || 'food')
@@ -66,6 +73,16 @@ const EditRecord: React.FC<IEditGroup> = props => {
       toast(t('atLeastOnePeople') + '')
       return
     }
+    let paidMinor: string
+    try {
+      paidMinor = parseDisplayMoneyToMinor(paid)
+      if (isZeroMoneyMinor(paidMinor)) {
+        throw new Error('zero amount')
+      }
+    } catch {
+      toast(t('invalidAmount') + '')
+      return
+    }
     dispatch(
       setLoading({
         status: true,
@@ -76,7 +93,7 @@ const EditRecord: React.FC<IEditGroup> = props => {
         groupId,
         recordId: data?.recordId,
         who,
-        paid: stringToNumber(paid),
+        paidMinor,
         forWhom,
         type,
         text,

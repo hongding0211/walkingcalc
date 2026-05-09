@@ -16,7 +16,7 @@ import categoryMap from '../../../constants/Category'
 import { Color, ColorDark } from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
 import { MembersContext } from '../../../feature/user/membersContext'
-import { numberToString } from '../../../utils/moeny'
+import { firstSplitMoneyMinor, numberToString } from '../../../utils/moeny'
 import { useDate } from '../../../utils/useDate'
 
 interface IItemDetail {
@@ -28,7 +28,7 @@ interface IItemDetail {
 interface IUserBar {
   name?: string
   avatar?: string
-  debt?: number
+  debt?: number | string
 }
 
 const UserBar: React.FC<IUserBar> = props => {
@@ -104,10 +104,14 @@ const ItemDetail: React.FC<IItemDetail> = props => {
           <FontAwesomeIcon
             icon={faUser}
             size={14}
-            style={{ color: Color.Primary }}
+            style={{ color: theme.primaryColor }}
           />
           <Text
-            style={{ marginLeft: 4, color: Color.Primary, fontWeight: '500' }}
+            style={{
+              marginLeft: 4,
+              color: theme.primaryColor,
+              fontWeight: '500',
+            }}
           >
             {data?.forWhom?.length}
           </Text>
@@ -118,19 +122,22 @@ const ItemDetail: React.FC<IItemDetail> = props => {
         <UserBar
           name={member.get(data?.who)?.name}
           avatar={member.get(data?.who)?.avatar}
-          debt={data?.paid}
+          debt={data?.paidMinor || data?.paid}
         />
       </FormItem>
       <Divider />
       <FormItem title={t('for') + `(${data?.forWhom?.length})`}>
         <ScrollView style={{ maxHeight: 135 }}>
           <View style={{ gap: 8 }} onStartShouldSetResponder={() => true}>
-            {data?.forWhom?.map((u: any, idx: any) => (
+            {data?.forWhom?.map((u: any) => (
               <View key={u} style={{ gap: 8 }}>
                 <UserBar
                   name={member.get(u)?.name}
                   avatar={member.get(u)?.avatar}
-                  debt={data?.paid / data?.forWhom?.length}
+                  debt={firstSplitMoneyMinor(
+                    data?.paidMinor || data?.paid,
+                    data?.forWhom?.length
+                  )}
                 />
                 <Divider />
               </View>

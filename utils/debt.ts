@@ -1,63 +1,106 @@
 import { cloneDeep } from 'lodash'
 
+import {
+  MoneyMinor,
+  compareMoneyMinor,
+  fromMoneyMinorBigInt,
+  isZeroMoneyMinor,
+  negateMoneyMinor,
+  toMoneyMinor,
+  toMoneyMinorBigInt,
+} from './moeny'
+
 interface IUser {
   name?: string
   uuid?: string
   avatar?: string
-  debt: number
+  debt: number | MoneyMinor
+  debtMinor?: MoneyMinor
+}
+
+type IResolvedDebtUser = Omit<IUser, 'debt'> & {
+  debt: MoneyMinor
+  debtMinor: MoneyMinor
 }
 
 export type IResolvedDebt = {
-  from: IUser
-  to: IUser
-  amount: number
+  from: IResolvedDebtUser
+  to: IResolvedDebtUser
+  amount: MoneyMinor
+  amountMinor: MoneyMinor
 }
 
 export function resolveDebt(u: IUser[]): IResolvedDebt[] {
   const res: IResolvedDebt[] = []
 
-  const users = cloneDeep(u)
+  const users = cloneDeep(u).map(user => {
+    const debtMinor = toMoneyMinor(user.debtMinor || user.debt)
+    return {
+      ...user,
+      debt: debtMinor,
+      debtMinor,
+    }
+  })
 
   const receivers = users
-    .filter(u => u.debt >= 0)
-    .sort((x, y) => y.debt - x.debt)
+    .filter(u => compareMoneyMinor(u.debtMinor, '0') >= 0)
+    .sort((x, y) => compareMoneyMinor(y.debtMinor, x.debtMinor))
   const payers = users
-    .filter(u => u.debt < 0)
-    .sort((x, y) => x.debt - y.debt)
-    .map(e => ({ ...e, debt: -e.debt }))
+    .filter(u => compareMoneyMinor(u.debtMinor, '0') < 0)
+    .sort((x, y) => compareMoneyMinor(x.debtMinor, y.debtMinor))
+    .map(e => ({
+      ...e,
+      debt: negateMoneyMinor(e.debtMinor),
+      debtMinor: negateMoneyMinor(e.debtMinor),
+    }))
 
-  // check if resolvable
-  if (
-    Math.abs(
-      receivers.map(e => e.debt).reduce((pre, cur) => pre + cur, 0) -
-        payers.map(e => e.debt).reduce((pre, cur) => pre + cur, 0)
-    ) > 1e-1
-  ) {
+  const receiverTotal = receivers.reduce(
+    (sum, user) => sum + toMoneyMinorBigInt(user.debtMinor),
+    0n
+  )
+  const payerTotal = payers.reduce(
+    (sum, user) => sum + toMoneyMinorBigInt(user.debtMinor),
+    0n
+  )
+  if (receiverTotal !== payerTotal) {
     return []
   }
 
   for (const receiver of receivers) {
-    while (Math.abs(receiver.debt) > 1e-10) {
+    while (!isZeroMoneyMinor(receiver.debtMinor)) {
       for (const payer of payers) {
-        if (Math.abs(payer.debt) < 1e-10) {
+        if (isZeroMoneyMinor(payer.debtMinor)) {
           continue
         }
-        if (receiver.debt >= payer.debt) {
+
+        if (compareMoneyMinor(receiver.debtMinor, payer.debtMinor) >= 0) {
           res.push({
             from: payer,
             to: receiver,
-            amount: payer.debt,
+            amount: payer.debtMinor,
+            amountMinor: payer.debtMinor,
           })
-          receiver.debt -= payer.debt
-          payer.debt = 0
+          receiver.debtMinor = fromMoneyMinorBigInt(
+            toMoneyMinorBigInt(receiver.debtMinor) -
+              toMoneyMinorBigInt(payer.debtMinor)
+          )
+          receiver.debt = receiver.debtMinor
+          payer.debtMinor = '0'
+          payer.debt = '0'
         } else {
           res.push({
             from: payer,
             to: receiver,
-            amount: receiver.debt,
+            amount: receiver.debtMinor,
+            amountMinor: receiver.debtMinor,
           })
-          payer.debt -= receiver.debt
-          receiver.debt = 0
+          payer.debtMinor = fromMoneyMinorBigInt(
+            toMoneyMinorBigInt(payer.debtMinor) -
+              toMoneyMinorBigInt(receiver.debtMinor)
+          )
+          payer.debt = payer.debtMinor
+          receiver.debtMinor = '0'
+          receiver.debt = '0'
           break
         }
       }

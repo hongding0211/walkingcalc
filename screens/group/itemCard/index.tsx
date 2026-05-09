@@ -17,7 +17,7 @@ import {
 } from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
 import { MembersContext } from '../../../feature/user/membersContext'
-import { numberToString } from '../../../utils/moeny'
+import { firstSplitMoneyMinor, numberToString } from '../../../utils/moeny'
 import { useDate } from '../../../utils/useDate'
 
 interface IItemCard {
@@ -82,7 +82,7 @@ const ItemCard: React.FC<IItemCard> = props => {
 
         <View style={{ alignItems: 'flex-end', flex: 1 }}>
           <ThemedText style={styles.amount}>
-            {numberToString(data?.paid)}
+            {numberToString(data?.paidMinor || data?.paid)}
           </ThemedText>
           {data?.isDebtResolve ? (
             <ThemedText type="SECOND" style={styles.myPart}>
@@ -104,7 +104,12 @@ const ItemCard: React.FC<IItemCard> = props => {
                   {t('myPart')}:{' '}
                   {data?.forWhom?.indexOf(userInfo?.uuid) === -1
                     ? 0
-                    : numberToString(data?.paid / data?.forWhom?.length)}
+                    : numberToString(
+                        firstSplitMoneyMinor(
+                          data?.paidMinor || data?.paid,
+                          data?.forWhom?.length
+                        )
+                      )}
                 </ThemedText>
               )}
             </>

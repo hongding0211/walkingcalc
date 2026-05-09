@@ -45,6 +45,7 @@
   "duplicateName": "Duplicated name",
   "noPaidSelf": "Cannot pay for yourself",
   "enterAmount": "Enter amount",
+  "invalidAmount": "Enter a valid amount with up to 2 decimal places",
   "end": "The End",
   "debtResolve": "Resolve all debt",
   "zeroDebt": "All debts are resolved",

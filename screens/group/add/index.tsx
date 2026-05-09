@@ -23,7 +23,10 @@ import useToast from '../../../components/Toast/useToast'
 import { setLoading } from '../../../feature/general/generalSlice'
 import { MembersContext } from '../../../feature/user/membersContext'
 import { useAddRecord } from '../../../services/record'
-import { stringToNumber } from '../../../utils/moeny'
+import {
+  isZeroMoneyMinor,
+  parseDisplayMoneyToMinor,
+} from '../../../utils/moeny'
 import CategoryRadio from './categoryRadio'
 import NumberInput from './numberInput'
 
@@ -68,6 +71,16 @@ const AddRecord: React.FC<IAddGroup> = props => {
       toast(t('atLeastOnePeople') + '')
       return
     }
+    let paidMinor: string
+    try {
+      paidMinor = parseDisplayMoneyToMinor(paid)
+      if (isZeroMoneyMinor(paidMinor)) {
+        throw new Error('zero amount')
+      }
+    } catch {
+      toast(t('invalidAmount') + '')
+      return
+    }
     dispatch(
       setLoading({
         status: true,
@@ -78,7 +91,7 @@ const AddRecord: React.FC<IAddGroup> = props => {
       body: {
         groupId,
         who,
-        paid: stringToNumber(paid),
+        paidMinor,
         forWhom,
         type,
         text,

@@ -1,3 +1,4 @@
+import { moneyMinorToLegacyNumber, toMoneyMinor } from '../../utils/moeny'
 import {
   DELETE_GROUP,
   GET_GROUP,
@@ -137,22 +138,49 @@ const profileToLegacyUser = (user: any) => ({
   avatar: user?.profile?.avatar || user?.avatar || '',
 })
 
+const exactAmount = (exact: any, legacy: any) => toMoneyMinor(exact ?? legacy)
+
 const groupToLegacy = (group: any) => ({
   id: group?.code,
   name: group?.name,
   createdAt: group?.createdAt,
   modifiedAt: group?.modifiedAt,
   isOwner: group?.isOwner,
-  tempUsers: group?.tempUsers || [],
+  tempUsers: (group?.tempUsers || []).map((tempUser: any) => {
+    const debtMinor = exactAmount(tempUser?.debtMinor, tempUser?.debt)
+    const costMinor = exactAmount(tempUser?.costMinor, tempUser?.cost)
+    return {
+      ...tempUser,
+      debt: moneyMinorToLegacyNumber(debtMinor),
+      cost: moneyMinorToLegacyNumber(costMinor),
+      debtMinor,
+      costMinor,
+    }
+  }),
   archivedUsers: group?.archivedUserIds || [],
-  membersInfo: (group?.members || []).map((member: any) => ({
-    uuid: member?.userId,
-    name: member?.profile?.name || member?.userId || '',
-    avatar: member?.profile?.avatar || '',
-    debt: member?.debt || 0,
-    cost: member?.cost || 0,
-  })),
+  membersInfo: (group?.members || []).map((member: any) => {
+    const debtMinor = exactAmount(member?.debtMinor, member?.debt)
+    const costMinor = exactAmount(member?.costMinor, member?.cost)
+    return {
+      uuid: member?.userId,
+      name: member?.profile?.name || member?.userId || '',
+      avatar: member?.profile?.avatar || '',
+      debt: moneyMinorToLegacyNumber(debtMinor),
+      cost: moneyMinorToLegacyNumber(costMinor),
+      debtMinor,
+      costMinor,
+    }
+  }),
 })
+
+const recordToLegacy = (record: any) => {
+  const paidMinor = exactAmount(record?.paidMinor, record?.paid)
+  return {
+    ...record,
+    paid: moneyMinorToLegacyNumber(paidMinor),
+    paidMinor,
+  }
+}
 
 const mapDataForUrl = (url: string, data: any) => {
   if (url === GET_USER_LOGIN) {
@@ -166,6 +194,12 @@ const mapDataForUrl = (url: string, data: any) => {
   }
   if (url === GET_USER_SEARCH) {
     return (data || []).map(profileToLegacyUser)
+  }
+  if (url === GET_RECORD_GROUP) {
+    return (data || []).map(recordToLegacy)
+  }
+  if (url === GET_RECORD_BY_ID) {
+    return Array.isArray(data) ? data.map(recordToLegacy) : recordToLegacy(data)
   }
   if (url === GET_GROUP || url === GET_GROUP_MY || url === GET_USER_MY_DEBT) {
     if (Array.isArray(data)) {
@@ -193,11 +227,11 @@ const mapDataForUrl = (url: string, data: any) => {
     return { id: data?.code, name: data?.name }
   }
   if (url === POST_RECORD || url === POST_RECORD_UPDATE) {
-    return { ...data, groupId: data?.groupCode }
+    return { ...recordToLegacy(data), groupId: data?.groupCode }
   }
   if (url === POST_RECORD_RESOLVE_DEBTS) {
     return (data || []).map((record: any) => ({
-      ...record,
+      ...recordToLegacy(record),
       groupId: record?.groupCode,
     }))
   }

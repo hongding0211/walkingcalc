@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 
 import { useAppSelector } from '../app/store'
+import { addMoneyMinor, moneyMinorToLegacyNumber } from '../utils/moeny'
 import useFetch from './hooks/useFetch'
 import useMutation from './hooks/useMutation'
 import {
@@ -52,17 +53,18 @@ export function useUserDebt() {
     if (!result.data) {
       return undefined
     }
-    const debt =
+    const debtMinor =
       result.data.data?.reduce((sum, group) => {
         const currentMember = group.membersInfo.find(
           member => member.uuid === userInfo?.uuid
         )
-        return sum + (currentMember?.debt || 0)
-      }, 0) || 0
+        return addMoneyMinor(sum, currentMember?.debtMinor || '0')
+      }, '0') || '0'
     return {
       success: result.data.success,
       data: {
-        debt,
+        debt: moneyMinorToLegacyNumber(debtMinor),
+        debtMinor,
       },
       msg: result.data.msg,
     }

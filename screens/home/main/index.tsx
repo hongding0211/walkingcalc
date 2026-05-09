@@ -150,7 +150,7 @@ const Main: React.FC<IMain> = props => {
         },
       ]}
     >
-      <TopCard total={userDebt?.data?.debt || 0} />
+      <TopCard total={userDebt?.data?.debtMinor || userDebt?.data?.debt || 0} />
       {!groupData?.data && <GroupCardSkeleton />}
       {groupData?.data && (
         <FlashList

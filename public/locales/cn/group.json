@@ -45,6 +45,7 @@
   "duplicateName": "名字不能重复",
   "noPaidSelf": "不能为自己付款",
   "enterAmount": "填写金额",
+  "invalidAmount": "请输入最多 2 位小数的有效金额",
   "end": "已经到底啦",
   "debtResolve": "和解所有债务",
   "zeroDebt": "所有债务已和解",

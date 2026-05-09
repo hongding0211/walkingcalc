@@ -140,7 +140,10 @@ const GroupSetting: React.FC<IGroupSetting> = props => {
           <ThemedText style={styles.text}>
             {numberToString(
               data?.membersInfo.find((e: any) => e.uuid === userData?.uuid)
-                .cost || 0
+                ?.costMinor ||
+                data?.membersInfo.find((e: any) => e.uuid === userData?.uuid)
+                  ?.cost ||
+                0
             )}
           </ThemedText>
         </FormItem>

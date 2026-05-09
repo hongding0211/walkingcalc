@@ -2,6 +2,7 @@
 //                 Types
 // ======================================
 type Method = 'GET' | 'POST' | 'DELETE' | 'PATCH'
+export type MoneyMinor = string
 
 // ======================================
 //               Interface
@@ -109,6 +110,7 @@ export interface IGetUserMyDebt extends IApi {
   request: IRequest<undefined, undefined>
   response: IResponse<{
     debt: number
+    debtMinor: MoneyMinor
   }>
 }
 
@@ -160,6 +162,9 @@ export interface IGetGroupMy extends IApi {
         uuid: string
         name: string
         debt: number
+        debtMinor: MoneyMinor
+        cost?: number
+        costMinor?: MoneyMinor
       }[]
       id: string
       name: string
@@ -170,6 +175,9 @@ export interface IGetGroupMy extends IApi {
         name: string
         avatar: string
         debt: number
+        debtMinor: MoneyMinor
+        cost?: number
+        costMinor?: MoneyMinor
       }[]
       archivedUsers: string[]
     }[]
@@ -188,6 +196,9 @@ export interface IGetGroup extends IApi {
       uuid: string
       name: string
       debt: number
+      debtMinor: MoneyMinor
+      cost?: number
+      costMinor?: MoneyMinor
     }[]
     id: string
     name: string
@@ -198,6 +209,9 @@ export interface IGetGroup extends IApi {
       name: string
       avatar: string
       debt: number
+      debtMinor: MoneyMinor
+      cost?: number
+      costMinor?: MoneyMinor
     }[]
   }>
 }
@@ -213,6 +227,7 @@ export interface IGetRecordGroup extends IApi {
     {
       who: string
       paid: number
+      paidMinor: MoneyMinor
       forWhom: string[]
       type: string
       text: string
@@ -239,6 +254,7 @@ export interface IGetRecordById extends IApi {
     {
       who: string
       paid: number
+      paidMinor: MoneyMinor
       forWhom: string[]
       type: string
       text: string
@@ -260,7 +276,7 @@ export interface IPostRecord extends IApi {
     {
       groupId: string
       who: string
-      paid: number
+      paidMinor: MoneyMinor
       forWhom: string[]
       type: string
       text: string
@@ -272,6 +288,7 @@ export interface IPostRecord extends IApi {
   response: IResponse<{
     groupId: string
     paid: number
+    paidMinor: MoneyMinor
     forWhom: string[]
     type: string
     text: string
@@ -291,7 +308,7 @@ export interface IPostRecordResolveDebts extends IApi {
       transfers: {
         from: string
         to: string
-        amount: number
+        amountMinor: MoneyMinor
       }[]
     }
   >
@@ -299,6 +316,7 @@ export interface IPostRecordResolveDebts extends IApi {
     {
       who: string
       paid: number
+      paidMinor: MoneyMinor
       forWhom: string[]
       type: string
       text: string
@@ -321,7 +339,7 @@ export interface IPostRecordUpdate extends IApi {
       groupId: string
       recordId: string
       who: string
-      paid: number
+      paidMinor: MoneyMinor
       forWhom: string[]
       type: string
       text: string
@@ -332,6 +350,7 @@ export interface IPostRecordUpdate extends IApi {
     groupId: string
     recordId: string
     paid: number
+    paidMinor: MoneyMinor
     forWhom: string[]
     type: string
     text: string

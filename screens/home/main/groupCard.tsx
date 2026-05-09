@@ -8,7 +8,7 @@ import { useAppSelector } from '../../../app/store'
 import Card from '../../../components/Card'
 import ThemedText from '../../../components/General/Themed/Text'
 import { Color } from '../../../constants/Colors'
-import { numberToString } from '../../../utils/moeny'
+import { isNegativeMoney, numberToString } from '../../../utils/moeny'
 import { useDate } from '../../../utils/useDate'
 
 interface IGroupCard {
@@ -39,7 +39,8 @@ const GroupCard: React.FC<IGroupCard> = props => {
 
   const debt = props.data?.membersInfo.find(
     (e: any) => e.uuid === userInfo?.uuid
-  )?.debt
+  )
+  const debtAmount = debt?.debtMinor || debt?.debt || 0
 
   return (
     <Card>
@@ -60,8 +61,11 @@ const GroupCard: React.FC<IGroupCard> = props => {
             align="flex-start"
           />
           <StackText
-            top={debt < 0 ? t('myOwn') : t('ownMe')}
-            bottom={(debt < -1e-10 ? '' : '+') + numberToString(debt)}
+            top={isNegativeMoney(debtAmount) ? t('myOwn') : t('ownMe')}
+            bottom={
+              (isNegativeMoney(debtAmount) ? '' : '+') +
+              numberToString(debtAmount)
+            }
             align="flex-end"
           />
         </View>

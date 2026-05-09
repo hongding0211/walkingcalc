@@ -1,33 +1,4 @@
-# bulk-debt-resolution Specification
-
-## Purpose
-
-Define the backend-owned bulk debt resolution behavior used by WalkingCalc to resolve all displayed group settlements in one consistent operation.
-
-## Requirements
-
-### Requirement: Resolve multiple group debts in one backend operation
-
-The system SHALL provide an authenticated backend operation that resolves multiple settlement transfers for one walkcalc group in a single request.
-
-#### Scenario: Successful bulk debt resolution
-
-- **WHEN** a group owner or member submits a valid group code and multiple settlement transfers
-- **THEN** the system SHALL create one debt-resolution record for each transfer
-- **AND** the system SHALL apply all corresponding member and temporary-user balance updates
-- **AND** the system SHALL return the created records
-
-#### Scenario: No partial persistence
-
-- **WHEN** any transfer in a bulk debt-resolution request is invalid
-- **THEN** the system SHALL reject the request
-- **AND** the system SHALL NOT persist any records or balance changes from that request
-
-#### Scenario: Record limit enforcement
-
-- **WHEN** the number of existing records plus requested settlement transfers would exceed the group record limit
-- **THEN** the system SHALL reject the request
-- **AND** the system SHALL NOT persist any records or balance changes from that request
+## MODIFIED Requirements
 
 ### Requirement: Validate bulk debt-resolution transfers
 

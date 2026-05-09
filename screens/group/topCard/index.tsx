@@ -21,7 +21,7 @@ import {
   TypographyDark,
 } from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
-import { numberToString } from '../../../utils/moeny'
+import { isNegativeMoney, numberToString } from '../../../utils/moeny'
 
 interface ITopCard {
   data?: Record<string, any>
@@ -72,7 +72,8 @@ const TopCard: React.FC<ITopCard> = props => {
 
   const debt = props.data?.membersInfo.find(
     (e: any) => e.uuid === userInfo?.uuid
-  )?.debt
+  )
+  const debtAmount = debt?.debtMinor || debt?.debt || 0
 
   if (!data) {
     return null
@@ -140,8 +141,11 @@ const TopCard: React.FC<ITopCard> = props => {
             />
           </ThemedPressable>
           <StackText
-            top={debt < -1e-10 ? t('myOwn') : t('ownMe')}
-            bottom={(debt < -1e-10 ? '' : '+') + numberToString(debt)}
+            top={isNegativeMoney(debtAmount) ? t('myOwn') : t('ownMe')}
+            bottom={
+              (isNegativeMoney(debtAmount) ? '' : '+') +
+              numberToString(debtAmount)
+            }
             align="flex-end"
           />
         </View>

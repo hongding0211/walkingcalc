@@ -18,7 +18,7 @@ import {
 } from '../../../constants/Colors'
 import { ThemeContext } from '../../../feature/theme/themeContext'
 import { IResolvedDebt, resolveDebt } from '../../../utils/debt'
-import { numberToString } from '../../../utils/moeny'
+import { isNegativeMoney, numberToString } from '../../../utils/moeny'
 
 interface IDebtDetail {
   data?: Record<string, any>
@@ -29,13 +29,15 @@ interface IDebtDetail {
 interface IUserBar {
   name?: string
   avatar?: string
-  debt?: number
+  debt?: number | string
+  debtMinor?: string
 }
 
 const height = Dimensions.get('screen').height
 
 const UserBar: React.FC<IUserBar> = props => {
-  const { name, avatar, debt } = props
+  const { name, avatar, debt, debtMinor } = props
+  const amount = debtMinor || debt || 0
 
   return (
     <View style={styles.bar}>
@@ -49,15 +51,12 @@ const UserBar: React.FC<IUserBar> = props => {
         style={[
           { fontWeight: '500', fontSize: 16 },
           {
-            color:
-              debt !== undefined && debt < -1e-10
-                ? Color.Danger
-                : Color.Success,
+            color: isNegativeMoney(amount) ? Color.Danger : Color.Success,
           },
         ]}
       >
-        {debt && debt < -1e-10 ? '' : '+'}
-        {numberToString(debt || 0)}
+        {isNegativeMoney(amount) ? '' : '+'}
+        {numberToString(amount)}
       </ThemedText>
     </View>
   )
@@ -165,13 +164,22 @@ const DebtDetail: React.FC<IDebtDetail> = props => {
             <View style={styles.list} onStartShouldSetResponder={() => true}>
               {data?.membersInfo?.map(m => (
                 <View key={m.uuid} style={{ rowGap: 8 }}>
-                  <UserBar name={m.name} debt={m.debt} avatar={m.avatar} />
+                  <UserBar
+                    name={m.name}
+                    debt={m.debt}
+                    debtMinor={m.debtMinor}
+                    avatar={m.avatar}
+                  />
                   <Divider />
                 </View>
               ))}
               {data?.tempUsers?.map(m => (
                 <View key={m.uuid} style={{ rowGap: 8 }}>
-                  <UserBar name={m.name} debt={m.debt} />
+                  <UserBar
+                    name={m.name}
+                    debt={m.debt}
+                    debtMinor={m.debtMinor}
+                  />
                   <Divider />
                 </View>
               ))}

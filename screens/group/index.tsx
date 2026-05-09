@@ -377,7 +377,7 @@ const GroupHome: React.FC = () => {
         transfers: debtToBeResolved.map(d => ({
           from: d.from?.uuid || '',
           to: d.to?.uuid || '',
-          amount: d.amount,
+          amountMinor: d.amountMinor,
         })),
       },
     })
@@ -411,7 +411,7 @@ const GroupHome: React.FC = () => {
       body: {
         groupId,
         who: debtToBeResolved.from?.uuid || '',
-        paid: debtToBeResolved.amount,
+        paidMinor: debtToBeResolved.amountMinor,
         forWhom: [debtToBeResolved.to?.uuid || ''],
         type: 'debtResolve',
         text: t('debtResolveMark'),

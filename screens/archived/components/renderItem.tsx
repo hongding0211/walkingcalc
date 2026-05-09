@@ -11,7 +11,7 @@ import useToast from '../../../components/Toast/useToast'
 import { setLoading } from '../../../feature/general/generalSlice'
 import { GroupProps } from '../../../navigation/types'
 import { useUnarchiveGroup } from '../../../services/group'
-import { numberToString } from '../../../utils/moeny'
+import { isNegativeMoney, numberToString } from '../../../utils/moeny'
 import use1l8n from '../../../utils/use1l8n'
 import Unarchive from './unarchive'
 
@@ -35,9 +35,8 @@ const RenderItem: React.FC<IRenderItem> = props => {
   const { trigger: triggerGroupUnarchive } = useUnarchiveGroup()
 
   const userInfo = useAppSelector(state => state.user.data)
-  const debt = item?.membersInfo.find(
-    (e: any) => e.uuid === userInfo?.uuid
-  )?.debt
+  const debt = item?.membersInfo.find((e: any) => e.uuid === userInfo?.uuid)
+  const debtAmount = debt?.debtMinor || debt?.debt || 0
 
   const handlePress = useCallback(() => {
     setTimeout(() => {
@@ -108,7 +107,8 @@ const RenderItem: React.FC<IRenderItem> = props => {
         onPress={handlePress}
         rightComponent={
           <ThemedText type="SECOND">
-            {(debt < -1e-10 ? '' : '+') + numberToString(debt)}
+            {(isNegativeMoney(debtAmount) ? '' : '+') +
+              numberToString(debtAmount)}
           </ThemedText>
         }
       />

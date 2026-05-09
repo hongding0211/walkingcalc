@@ -7,10 +7,10 @@ import { StyleSheet, Text, View } from 'react-native'
 import Card from '../../../components/Card'
 import ThemedText from '../../../components/General/Themed/Text'
 import { Color } from '../../../constants/Colors'
-import { numberToString } from '../../../utils/moeny'
+import { isNegativeMoney, numberToString } from '../../../utils/moeny'
 
 interface ITopCard {
-  total: number
+  total: number | string
 }
 
 const TopCard: React.FC<ITopCard> = props => {
@@ -24,14 +24,14 @@ const TopCard: React.FC<ITopCard> = props => {
         <FontAwesomeIcon
           icon={faWallet}
           style={{
-            color: total < -1e-10 ? Color.Danger : Color.Success,
+            color: isNegativeMoney(total) ? Color.Danger : Color.Success,
           }}
         />
         <Text
           style={[
             styles.title,
             {
-              color: total < -1e-10 ? Color.Danger : Color.Success,
+              color: isNegativeMoney(total) ? Color.Danger : Color.Success,
             },
           ]}
         >
@@ -39,7 +39,7 @@ const TopCard: React.FC<ITopCard> = props => {
         </Text>
       </View>
       <ThemedText style={styles.amount}>
-        {`${total < -1e-10 ? '' : '+'}` + numberToString(total)}
+        {`${isNegativeMoney(total) ? '' : '+'}` + numberToString(total)}
       </ThemedText>
     </Card>
   )
