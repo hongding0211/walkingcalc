@@ -146,18 +146,16 @@ export function toMoneyMinor(value: number | MoneyMinor | undefined | null) {
 
 export function formatMoneyMinor(value: MoneyMinor): string {
   const minor = toMoneyMinorBigInt(value)
-  if (minor === 0n) {
-    return '0'
-  }
 
   const negative = minor < 0n
   const abs = negative ? -minor : minor
   const integerPart = abs / 100n
   const fractionPart = (abs % 100n).toString().padStart(2, '0')
-  const displayFraction =
-    fractionPart === '00' ? '0' : fractionPart.replace(/0$/, '')
+  const groupedIntegerPart = integerPart
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
-  return `${negative ? '-' : ''}${integerPart.toString()}.${displayFraction}`
+  return `${negative ? '-' : ''}${groupedIntegerPart}.${fractionPart}`
 }
 
 function absMoneyMinor(value: bigint): bigint {

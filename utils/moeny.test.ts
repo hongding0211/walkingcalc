@@ -11,7 +11,10 @@ describe('money helpers', () => {
   it('parses and formats exact cent values', () => {
     expect(parseDisplayMoneyToMinor('12.34')).toBe('1234')
     expect(parseDisplayMoneyToMinor('0.01')).toBe('1')
-    expect(formatMoneyMinor('-500')).toBe('-5.0')
+    expect(formatMoneyMinor('-500')).toBe('-5.00')
+    expect(formatMoneyMinor('111111100')).toBe('1,111,111.00')
+    expect(formatMoneyMinor('111111111')).toBe('1,111,111.11')
+    expect(formatMoneyMinor('0')).toBe('0.00')
   })
 
   it('rejects sub-cent display values', () => {
