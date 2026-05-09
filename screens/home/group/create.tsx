@@ -5,7 +5,6 @@ import { StyleSheet, View } from 'react-native'
 import FormItem from '../../../components/FormItem'
 import Button from '../../../components/General/Button'
 import Input from '../../../components/General/Input'
-import { Color } from '../../../constants/Colors'
 
 interface ICreateGroup {
   onConfirm?: (groupName: string) => void
@@ -38,9 +37,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     gap: 16,
-  },
-  icon: {
-    color: Color.Primary,
   },
   btn: {
     marginTop: 12,

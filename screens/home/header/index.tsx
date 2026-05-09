@@ -42,7 +42,10 @@ const Header: React.FC<IHeader> = ({ onAdd, onShowAbout }) => {
         ]}
       >
         <ThemedText style={styles.title}>{t('group')}</ThemedText>
-        <FontAwesomeIcon icon={faCirclePlus} style={styles.addBtn} />
+        <FontAwesomeIcon
+          icon={faCirclePlus}
+          style={{ marginLeft: 8, color: theme.primaryColor }}
+        />
       </Pressable>
       <Popover
         from={
@@ -107,9 +110,5 @@ const styles = StyleSheet.create({
   pressedDark: {
     backgroundColor: ColorDark.Highlight,
     borderRadius: 8,
-  },
-  addBtn: {
-    color: Color.Primary,
-    marginLeft: 8,
   },
 })

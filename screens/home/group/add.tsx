@@ -30,8 +30,12 @@ const IconItem: React.FC<{
       ]}
       onPress={onPress}
     >
-      <FontAwesomeIcon icon={icon} size={40} style={styles.icon} />
-      <Text style={styles.title}>{title}</Text>
+      <FontAwesomeIcon
+        icon={icon}
+        size={40}
+        style={{ color: theme.primaryColor }}
+      />
+      <Text style={[styles.title, { color: theme.primaryColor }]}>{title}</Text>
     </Pressable>
   )
 }
@@ -71,12 +75,8 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 8,
   },
-  icon: {
-    color: Color.Primary,
-  },
   title: {
     fontWeight: '600',
-    color: Color.Primary,
     marginTop: 16,
   },
   container: {

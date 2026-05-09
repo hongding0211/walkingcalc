@@ -1,6 +1,13 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { useCallback, useContext, useEffect } from 'react'
-import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native'
+import {
+  Alert,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useDispatch } from 'react-redux'
 
@@ -86,18 +93,48 @@ const Settings: React.FC = () => {
           />
         </ItemCard.Container>
 
-        {/* // TODO - HongD 06/27 00:18  */}
-        {/* <ItemCard.Container title={t('general')}>
-          <ItemCard.Item
-            title={t('theme')}
-          >
-            <Text>{theme.scheme === 'LIGHT' ? t('light') : t('dark')}</Text>
+        <ItemCard.Container title={t('general')}>
+          <ItemCard.Item title={t('themeColor')}>
+            <View style={styles.themeColorList}>
+              {theme.themeColorOptions.map(option => {
+                const selected = option.id === theme.themeColor
+
+                return (
+                  <Pressable
+                    accessibilityLabel={option.label}
+                    accessibilityRole="button"
+                    accessibilityState={{ selected }}
+                    hitSlop={8}
+                    key={option.id}
+                    onPress={() => theme.setThemeColor(option.id)}
+                    style={[
+                      styles.themeColorButton,
+                      selected
+                        ? {
+                            borderColor: theme.primaryColor,
+                          }
+                        : {
+                            borderColor: 'transparent',
+                          },
+                    ]}
+                  >
+                    <View
+                      style={[
+                        styles.themeColorSwatch,
+                        {
+                          backgroundColor:
+                            theme.scheme === 'DARK'
+                              ? option.darkColor || option.color
+                              : option.color,
+                        },
+                      ]}
+                    />
+                  </Pressable>
+                )
+              })}
+            </View>
           </ItemCard.Item>
-          <ItemCard.Item
-            title={t('language')}
-          >
-          </ItemCard.Item>
-        </ItemCard.Container> */}
+        </ItemCard.Container>
 
         <ItemCard.Container>
           <ItemCard.Item onPress={handlePressLogout}>
@@ -121,5 +158,25 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: Color.Danger,
     fontWeight: '500',
+  },
+  themeColorList: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    gap: 12,
+    flex: 1,
+  },
+  themeColorButton: {
+    width: 34,
+    height: 34,
+    borderWidth: 2,
+    borderRadius: 999,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  themeColorSwatch: {
+    width: 22,
+    height: 22,
+    borderRadius: 999,
   },
 })

@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux'
 import ThemedText from '../../../components/General/Themed/Text'
 import ThemedPressable from '../../../components/General/ThemedPressable'
 import useToast from '../../../components/Toast/useToast'
-import { Color, Typography, TypographyDark } from '../../../constants/Colors'
+import { Typography, TypographyDark } from '../../../constants/Colors'
 import { setLoading } from '../../../feature/general/generalSlice'
 import { ThemeContext } from '../../../feature/theme/themeContext'
 import { GroupProps } from '../../../navigation/types'
@@ -134,7 +134,16 @@ const Main: React.FC<IMain> = props => {
             }}
           />
           {total !== groupData?.data?.length && (
-            <FontAwesomeIcon icon={faCircle} style={styles.dot} size={6} />
+            <FontAwesomeIcon
+              icon={faCircle}
+              style={{
+                color: theme.primaryColor,
+                position: 'absolute',
+                right: 2,
+                top: 2,
+              }}
+              size={6}
+            />
           )}
         </ThemedPressable>
       </View>
@@ -197,11 +206,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignContent: 'center',
     justifyContent: 'space-between',
-  },
-  dot: {
-    color: Color.Primary,
-    position: 'absolute',
-    right: 2,
-    top: 2,
   },
 })

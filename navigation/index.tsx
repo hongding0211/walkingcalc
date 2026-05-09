@@ -66,7 +66,11 @@ const RootScreen: React.FC = () => {
 
   return (
     <NativeBaseProvider>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerTintColor: theme.primaryColor,
+        }}
+      >
         <Stack.Group>
           <Stack.Screen
             name="Home"

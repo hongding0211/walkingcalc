@@ -59,11 +59,18 @@ const Loading = () => {
   return <Spinner size="sm" color="muted.300" />
 }
 
-const AddButton: React.FC<{ onPress?: () => void }> = ({ onPress }) => (
-  <Pressable style={styles.addBtn} onPress={onPress}>
-    <FontAwesomeIcon icon={faPlus} size={28} style={{ color: '#fff' }} />
-  </Pressable>
-)
+const AddButton: React.FC<{ onPress?: () => void }> = ({ onPress }) => {
+  const theme = useContext(ThemeContext)
+
+  return (
+    <Pressable
+      style={[styles.addBtn, { backgroundColor: theme.primaryColor }]}
+      onPress={onPress}
+    >
+      <FontAwesomeIcon icon={faPlus} size={28} style={{ color: '#fff' }} />
+    </Pressable>
+  )
+}
 
 const GroupHome: React.FC = () => {
   const [showAddRecord, setShowAddRecord] = useState(false)
@@ -716,7 +723,6 @@ const styles = StyleSheet.create({
     height: 60,
     width: 60,
     borderRadius: 99999,
-    backgroundColor: Color.Primary,
     zIndex: 10,
     alignItems: 'center',
     justifyContent: 'center',

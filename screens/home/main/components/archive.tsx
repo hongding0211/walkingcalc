@@ -1,13 +1,12 @@
 import { faArchive } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import React from 'react'
+import React, { useContext } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-import { Color } from '../../../../constants/Colors'
+import { ThemeContext } from '../../../../feature/theme/themeContext'
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Color.Primary,
     justifyContent: 'center',
     flex: 1,
     borderRadius: 16,
@@ -29,9 +28,10 @@ interface IArchive {
 
 const Archive: React.FC<IArchive> = props => {
   const { title } = props
+  const theme = useContext(ThemeContext)
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.primaryColor }]}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <FontAwesomeIcon icon={faArchive} style={styles.icon} />
         <Text style={styles.text}>{title}</Text>

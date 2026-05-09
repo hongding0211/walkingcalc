@@ -4,7 +4,6 @@ import { useNavigation } from '@react-navigation/native'
 import React, { useCallback, useContext } from 'react'
 import { Pressable, StyleSheet } from 'react-native'
 
-import { Typography, TypographyDark } from '../../constants/Colors'
 import { ThemeContext } from '../../feature/theme/themeContext'
 import { GroupProps } from '../../navigation/types'
 import ThemedText from '../General/Themed/Text'
@@ -30,13 +29,12 @@ const BackButton: React.FC<{ title: string }> = ({ title }) => {
         icon={faAngleLeft}
         size={18}
         style={{
-          color:
-            theme.scheme === 'LIGHT'
-              ? Typography.Primary
-              : TypographyDark.Primary,
+          color: theme.primaryColor,
         }}
       />
-      <ThemedText style={styles.title}>{title}</ThemedText>
+      <ThemedText style={[styles.title, { color: theme.primaryColor }]}>
+        {title}
+      </ThemedText>
     </Pressable>
   )
 }

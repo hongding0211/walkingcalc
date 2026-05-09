@@ -37,7 +37,7 @@ const SingleCheckbox: React.FC<ISingleCheckbox> = props => {
           },
           props.selected
             ? {
-                backgroundColor: Color.Primary,
+                backgroundColor: theme.primaryColor,
               }
             : {},
         ]}

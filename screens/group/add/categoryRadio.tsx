@@ -1,9 +1,9 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useContext } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 
 import ThemedText from '../../../components/General/Themed/Text'
 import categoryMap from '../../../constants/Category'
-import { Color } from '../../../constants/Colors'
+import { ThemeContext } from '../../../feature/theme/themeContext'
 
 const options = Object.keys(categoryMap).map(k => ({
   key: k,
@@ -13,10 +13,15 @@ const options = Object.keys(categoryMap).map(k => ({
 
 const SingleRadio: React.FC<any> = props => {
   const { icon, selected } = props
+  const theme = useContext(ThemeContext)
+
   return (
     <Pressable
       onPress={props.onPress}
-      style={[styles.container, selected ? { borderColor: Color.Primary } : {}]}
+      style={[
+        styles.container,
+        selected ? { borderColor: theme.primaryColor } : {},
+      ]}
     >
       <ThemedText style={[{ fontSize: 20 }]}>{icon}</ThemedText>
     </Pressable>

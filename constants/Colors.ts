@@ -38,3 +38,37 @@ export enum AvatarColorPalettes {
   '#F05A4A',
   '#81DBDA',
 }
+
+export const DefaultThemeColorId: ThemeColorId = 'blue'
+
+export const ThemeColorOptions: ThemeColorOption[] = [
+  {
+    id: 'blue',
+    label: 'Blue',
+    color: Color.Primary,
+  },
+  {
+    id: 'green',
+    label: 'Green',
+    color: '#22A06B',
+  },
+  {
+    id: 'rose',
+    label: 'Rose',
+    color: '#E0527C',
+  },
+  {
+    id: 'gold',
+    label: 'Gold',
+    color: Color.Gold,
+    darkColor: '#C99700',
+  },
+]
+
+export const getThemeColorOption = (id?: string | null): ThemeColorOption => {
+  return (
+    ThemeColorOptions.find(option => option.id === id) ||
+    ThemeColorOptions.find(option => option.id === DefaultThemeColorId) ||
+    ThemeColorOptions[0]
+  )
+}

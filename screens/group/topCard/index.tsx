@@ -95,7 +95,10 @@ const TopCard: React.FC<ITopCard> = props => {
               />
             )}
             <ThemedPressable highLight onPress={onPressQrcode}>
-              <FontAwesomeIcon icon={faQrcode} style={styles.topRight} />
+              <FontAwesomeIcon
+                icon={faQrcode}
+                style={{ color: theme.primaryColor }}
+              />
             </ThemedPressable>
           </View>
         </View>
@@ -170,10 +173,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: '600',
-  },
-  topRight: {
-    color: Color.Primary,
-    fontWeight: '500',
   },
   stackText: {
     flexDirection: 'column',

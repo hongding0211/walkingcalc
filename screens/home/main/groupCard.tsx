@@ -1,13 +1,13 @@
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 
 import { useAppSelector } from '../../../app/store'
 import Card from '../../../components/Card'
 import ThemedText from '../../../components/General/Themed/Text'
-import { Color } from '../../../constants/Colors'
+import { ThemeContext } from '../../../feature/theme/themeContext'
 import { isNegativeMoney, numberToString } from '../../../utils/moeny'
 import { useDate } from '../../../utils/useDate'
 
@@ -35,6 +35,7 @@ const StackText: React.FC<{
 const GroupCard: React.FC<IGroupCard> = props => {
   const { t } = useTranslation('home')
   const { date } = useDate()
+  const theme = useContext(ThemeContext)
   const userInfo = useAppSelector(state => state.user.data)
 
   const debt = props.data?.membersInfo.find(
@@ -48,8 +49,19 @@ const GroupCard: React.FC<IGroupCard> = props => {
         <View style={styles.bar}>
           <ThemedText style={styles.title}>{props.data?.name || ''}</ThemedText>
           <View style={styles.topRightContainer}>
-            <FontAwesomeIcon style={styles.topRight} icon={faUser} size={12} />
-            <Text style={styles.topRight}>
+            <FontAwesomeIcon
+              style={{ color: theme.primaryColor }}
+              icon={faUser}
+              size={12}
+            />
+            <Text
+              style={[
+                styles.topRightText,
+                {
+                  color: theme.primaryColor,
+                },
+              ]}
+            >
               {props.data?.membersInfo?.length + props.data?.tempUsers?.length}
             </Text>
           </View>
@@ -96,8 +108,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     columnGap: 4,
   },
-  topRight: {
-    color: Color.Primary,
+  topRightText: {
     fontWeight: '500',
   },
   stackText: {

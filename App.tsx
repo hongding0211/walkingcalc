@@ -1,6 +1,5 @@
 import * as Notifications from 'expo-notifications'
 import { StatusBar } from 'expo-status-bar'
-import { useColorScheme } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { Provider } from 'react-redux'
@@ -9,7 +8,7 @@ import store from './app/store'
 import Loading from './components/General/Loading'
 import Toast from './components/Toast'
 import { LangContext } from './feature/lang/langContext'
-import { ThemeContext } from './feature/theme/themeContext'
+import { ThemeProvider } from './feature/theme/themeContext'
 import useCachedResources from './hooks/useCachedResources'
 import './i18n'
 import Navigation from './navigation'
@@ -19,7 +18,6 @@ const locales = getLocales()
 
 export default function App() {
   const isLoadingComplete = useCachedResources()
-  const colorScheme = useColorScheme()
 
   Notifications.getPermissionsAsync()
     .then(res => {
@@ -42,9 +40,7 @@ export default function App() {
   } else {
     return (
       <SafeAreaProvider>
-        <ThemeContext.Provider
-          value={{ scheme: colorScheme === 'light' ? 'LIGHT' : 'DARK' }}
-        >
+        <ThemeProvider>
           <LangContext.Provider value={locales}>
             <GestureHandlerRootView style={{ flex: 1 }}>
               <Provider store={store}>
@@ -55,7 +51,7 @@ export default function App() {
               </Provider>
             </GestureHandlerRootView>
           </LangContext.Provider>
-        </ThemeContext.Provider>
+        </ThemeProvider>
       </SafeAreaProvider>
     )
   }

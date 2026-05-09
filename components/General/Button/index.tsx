@@ -1,8 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import React from 'react'
+import React, { useContext } from 'react'
 import { Pressable, StyleSheet, Text } from 'react-native'
 
 import { Color } from '../../../constants/Colors'
+import { ThemeContext } from '../../../feature/theme/themeContext'
 
 interface IButton {
   type?: 'PRIMARY' | 'DANGER'
@@ -21,12 +22,16 @@ const Button: React.FC<IButton> = ({
   disabled = false,
   onPress,
 }) => {
+  const theme = useContext(ThemeContext)
+
   return (
     <Pressable
       onPress={onPress}
       style={[
         styles.btn,
-        type === 'PRIMARY' ? styles.color : styles.colorDanger,
+        type === 'PRIMARY'
+          ? { backgroundColor: theme.primaryColor }
+          : styles.colorDanger,
         block ? styles.block : {},
       ]}
       disabled={disabled}
@@ -43,9 +48,6 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 8,
     alignItems: 'center',
-  },
-  color: {
-    backgroundColor: Color.Primary,
   },
   colorDanger: {
     backgroundColor: Color.Danger,
