@@ -5,7 +5,7 @@ import WebView from 'react-native-webview'
 import { useDispatch } from 'react-redux'
 
 import useToast from '../../../components/Toast/useToast'
-import { HONG97_WEB_BASE_URL, SSO_LOGIN_URL } from '../../../constants/Config'
+import { SSO_LOGIN_URL, SSO_REDIRECT_URL } from '../../../constants/Config'
 import { setLoading } from '../../../feature/general/generalSlice'
 import { setToken } from '../../../feature/user/userSlice'
 import { LoginProps } from '../../../navigation/types'
@@ -44,7 +44,7 @@ const SSO: React.FC = () => {
   const toast = useToast()
   const { t } = useTranslation('login')
 
-  const redirectUrl = useMemo(() => `${HONG97_WEB_BASE_URL}/auth/callback`, [])
+  const redirectUrl = useMemo(() => SSO_REDIRECT_URL, [])
   const authUrl = useMemo(
     () => `${SSO_LOGIN_URL}?redirect=${encodeURIComponent(redirectUrl)}`,
     [redirectUrl]
